@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -46,13 +46,19 @@ const StyledMark = styled.span`
   border-radius: 50%;
   background: none;
   transition: all 0.35s;
+
+  ${({ type }) =>
+    type !== 'radio' &&
+    css`
+      border-radius: 1px;
+    `}
 `;
 
 const ChooseInput = ({ type, id, name }) => (
   <>
     <StyledWrapper>
-      <StyledInput id={id} type={'radio' || type} name={name} />
-      <StyledMark />
+      <StyledInput id={id} type={type || 'radio'} name={name} />
+      <StyledMark type={type} />
     </StyledWrapper>
   </>
 );
