@@ -8,11 +8,6 @@ const StyledLink = styled(Link)`
   padding: 4px 10px 10px 10px;
   margin: 0 0 0 -10px;
   text-decoration: none;
-
-  &:focus {
-    outline: 1;
-    outline-color: ${({ theme }) => theme.colors.lines};
-  }
 `;
 
 const StyledLogo = styled.span`

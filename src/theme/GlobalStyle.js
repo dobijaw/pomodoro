@@ -7,6 +7,11 @@ const GlobalStyle = createGlobalStyle`
         -moz-osx-font-smoothing: grayscale;
     }
 
+    *:focus {
+        outline: 1;
+        outline-color: #343943;
+    }
+
     html {
         font-size: 62.5%;
     }

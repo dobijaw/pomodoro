@@ -1,5 +1,6 @@
 import React from 'react';
+import Modal from 'components/organisms/Modal/Modal';
 
-const CycleModal = () => <h1>Modal Here!! Hello ;)</h1>;
+const CycleModal = () => <Modal />;
 
 export default CycleModal;
