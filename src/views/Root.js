@@ -23,7 +23,7 @@ const Root = () => (
           <Route path={routes.history} component={HistoryPage} />
           <Route path={routes.projects} component={ProjectsPage} />
         </Switch>
-        {true && <CycleModal />}
+        {false && <CycleModal />}
       </ThemeProvider>
     </BrowserRouter>
   </>

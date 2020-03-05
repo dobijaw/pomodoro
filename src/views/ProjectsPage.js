@@ -1,5 +1,6 @@
 import React from 'react';
+import Title from 'components/atoms/Title/Title';
 
-const ProjectsPage = () => <h1>Hello projects Page</h1>;
+const ProjectsPage = () => <Title onlyScreenreader>Projects</Title>;
 
 export default ProjectsPage;

@@ -1,5 +1,6 @@
 import React from 'react';
+import Title from 'components/atoms/Title/Title';
 
-const SettingsPage = () => <h1>Settings Page here</h1>;
+const SettingsPage = () => <Title onlyScreenreader>Settings</Title>;
 
 export default SettingsPage;
