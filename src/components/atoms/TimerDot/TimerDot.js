@@ -18,7 +18,7 @@ const TimerDot = styled.span`
         position: absolute;
         top: 50%;
         left: 100%;
-        z-index: -1;
+        z-index: 0;
         display: block;
         width: 30px;
         height: 1px;
