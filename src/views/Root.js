@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { routes } from 'routes/index';
 import GlobalStyle from 'theme/GlobalStyle';
 import { theme } from 'theme/mainTheme';
+import Navbar from 'components/organisms/Navbar/Navbar';
 import TimerPage from './TimerPage';
 import CycleModal from './CycleModal';
 import SettingsPage from './SettingsPage';
@@ -15,6 +16,7 @@ const Root = () => (
     <BrowserRouter>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
+        <Navbar />
         <Switch>
           <Route exact path={routes.timer} component={TimerPage} />
           <Route path={routes.settings} component={SettingsPage} />

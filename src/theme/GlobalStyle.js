@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         font-size: 1.6rem;
         font-family: 'Exo 2', sans-serif;
-        background: red;
+        background: #192532;
     }
 `;
 
