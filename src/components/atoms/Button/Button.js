@@ -20,6 +20,11 @@ const Button = styled.button`
     background: ${({ theme }) => theme.colors.buttons};
     color: ${({ theme }) => theme.colors.background};
   }
+
+  &:focus {
+    outline: 1;
+    outline-color: ${({ theme }) => theme.colors.lines};
+  }
 `;
 
 export default Button;

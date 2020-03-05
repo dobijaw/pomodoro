@@ -5,9 +5,14 @@ import { routes } from 'routes/index';
 
 const StyledLink = styled(Link)`
   display: inline-block;
-  padding: 4px 10px 10px 0;
-  margin: 0;
+  padding: 4px 10px 10px 10px;
+  margin: 0 0 0 -10px;
   text-decoration: none;
+
+  &:focus {
+    outline: 1;
+    outline-color: ${({ theme }) => theme.colors.lines};
+  }
 `;
 
 const StyledLogo = styled.span`

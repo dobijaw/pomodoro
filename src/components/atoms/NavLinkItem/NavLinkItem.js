@@ -17,6 +17,11 @@ const NavLinkItem = styled(NavLink).attrs({
   text-transform: uppercase;
   transition: all 0.35s;
 
+  &:focus {
+    outline: 1;
+    outline-color: ${({ theme }) => theme.colors.lines};
+  }
+
   &:hover {
     color: ${({ theme }) => theme.colors.details};
   }
