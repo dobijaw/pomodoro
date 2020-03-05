@@ -1,16 +1,18 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Button = styled.button`
   display: block;
   padding: 16px 32px;
   border: 1px solid ${({ theme }) => theme.colors.buttons};
   border-radius: 60px;
-  margin: 0;
+  margin: 10px 0;
+  min-width: 220px;
   background: none;
   color: ${({ theme }) => theme.colors.buttons};
   font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   letter-spacing: 0.08em;
+  line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
   transition: all 0.35s;
@@ -20,6 +22,18 @@ const Button = styled.button`
     background: ${({ theme }) => theme.colors.buttons};
     color: ${({ theme }) => theme.colors.background};
   }
+
+  ${({ fill }) =>
+    fill &&
+    css`
+      background: ${({ theme }) => theme.colors.buttons};
+      color: ${({ theme }) => theme.colors.background};
+
+      &:hover {
+        background: none;
+        color: ${({ theme }) => theme.colors.buttons};
+      }
+    `}
 `;
 
 export default Button;
