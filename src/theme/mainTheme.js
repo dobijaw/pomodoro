@@ -7,6 +7,7 @@ export const theme = {
     details: '#9E8588',
     text: '#D3BABB',
     importantText: '#ffffff',
+    lightGray: '#424550',
   },
   fontWeights: {
     light: 300,

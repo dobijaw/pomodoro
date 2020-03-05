@@ -1,12 +1,14 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Button = styled.button`
+export const activeClassName = 'active';
+
+const NavLinkItem = styled(NavLink).attrs({
+  activeClassName,
+})`
   display: block;
-  padding: 16px 32px;
-  border: 1px solid ${({ theme }) => theme.colors.buttons};
-  border-radius: 60px;
+  padding: 5px 10px;
   margin: 0;
-  background: none;
   color: ${({ theme }) => theme.colors.buttons};
   font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.xs};
@@ -14,12 +16,14 @@ const Button = styled.button`
   text-decoration: none;
   text-transform: uppercase;
   transition: all 0.35s;
-  cursor: pointer;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.buttons};
-    color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.details};
+  }
+
+  &.${activeClassName} {
+    color: ${({ theme }) => theme.colors.lightGray};
   }
 `;
 
-export default Button;
+export default NavLinkItem;
