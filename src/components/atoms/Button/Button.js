@@ -23,8 +23,8 @@ const Button = styled.button`
     color: ${({ theme }) => theme.colors.background};
   }
 
-  ${({ fill }) =>
-    fill &&
+  ${({ fillButton }) =>
+    fillButton &&
     css`
       background: ${({ theme }) => theme.colors.buttons};
       color: ${({ theme }) => theme.colors.background};

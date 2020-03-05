@@ -7,8 +7,8 @@ const TimerDot = styled.span`
   border-radius: 50%;
   background: ${({ theme }) => theme.colors.lines};
 
-  ${({ fill }) =>
-    fill &&
+  ${({ fillDot }) =>
+    fillDot &&
     css`
       position: relative;
       background: ${({ theme }) => theme.colors.details};

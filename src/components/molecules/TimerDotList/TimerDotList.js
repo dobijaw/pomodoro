@@ -18,13 +18,13 @@ const StyledItem = styled.li`
 const TimerDotList = () => (
   <StyledList>
     <StyledItem>
-      <TimerDot fill />
+      <TimerDot fillDot />
     </StyledItem>
     <StyledItem>
-      <TimerDot fill />
+      <TimerDot fillDot />
     </StyledItem>
     <StyledItem>
-      <TimerDot fill />
+      <TimerDot fillDot />
     </StyledItem>
     <StyledItem>
       <TimerDot />

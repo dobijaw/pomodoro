@@ -8,8 +8,10 @@ export const theme = {
     text: '#D3BABB',
     importantText: '#ffffff',
     lightGray: '#424550',
+    placeholder: '#323844',
   },
   fontWeights: {
+    xLight: 200,
     light: 300,
     regular: 500,
     bold: 700,

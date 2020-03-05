@@ -18,7 +18,7 @@ const Description = styled.span`
 
 const NextTimer = () => (
   <StyledWrapper>
-    <Description>Next Slide</Description>
+    <Description>Next Break</Description>
     <Timer>5:00</Timer>
   </StyledWrapper>
 );
