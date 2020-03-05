@@ -1,6 +1,9 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { routes } from 'routes/index';
+import GlobalStyle from 'theme/GlobalStyle';
+import { theme } from 'theme/mainTheme';
 import TimerPage from './TimerPage';
 import CycleModal from './CycleModal';
 import SettingsPage from './SettingsPage';
@@ -10,13 +13,16 @@ import ProjectsPage from './ProjectsPage';
 const Root = () => (
   <>
     <BrowserRouter>
-      <Switch>
-        <Route exact path={routes.timer} component={TimerPage} />
-        <Route path={routes.settings} component={SettingsPage} />
-        <Route path={routes.history} component={HistoryPage} />
-        <Route path={routes.projects} component={ProjectsPage} />
-      </Switch>
-      {false && <CycleModal />}
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        <Switch>
+          <Route exact path={routes.timer} component={TimerPage} />
+          <Route path={routes.settings} component={SettingsPage} />
+          <Route path={routes.history} component={HistoryPage} />
+          <Route path={routes.projects} component={ProjectsPage} />
+        </Switch>
+        {false && <CycleModal />}
+      </ThemeProvider>
     </BrowserRouter>
   </>
 );
