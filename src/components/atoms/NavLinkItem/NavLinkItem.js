@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 export const activeClassName = 'active';
 
-const NavLinkItem = styled(NavLink).attrs({
-  activeClassName,
-})`
+const NavLinkItem = styled(NavLink)`
   display: block;
   padding: 5px 10px;
   margin: 0;

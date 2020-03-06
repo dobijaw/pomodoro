@@ -5,6 +5,7 @@ import NavLinkItem from './NavLinkItem';
 
 storiesOf('NavLink Item', module)
   .addDecorator(StoryRouter())
+  .add('Link', () => <NavLinkItem to="/somewhere">Hello World</NavLinkItem>)
   .add('Active Link', () => (
     <NavLinkItem activeClassName="active" to="/">
       Hello World

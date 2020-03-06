@@ -14,11 +14,17 @@ const StyledWrapper = styled.div`
   background: ${({ theme }) => theme.colors.backgroundLighter};
   box-shadow: 5px 2px 10px 0px rgba(24, 27, 30, 0.3);
   transform: translate(-50%, -50%);
+
+  > .modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
 `;
 
 const Modal = () => (
   <StyledWrapper>
-    <CloseButton />
+    <CloseButton parentElementClass="modal" />
   </StyledWrapper>
 );
 

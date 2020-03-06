@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
   display: block;
   width: auto;
   height: 30px;
@@ -27,8 +24,8 @@ const ButtonItem = styled.span`
   }
 `;
 
-const CloseButton = ({ handleClick }) => (
-  <Button type="button" onClick={handleClick}>
+const CloseButton = ({ handleClick, ...props }) => (
+  <Button type="button" onClick={handleClick} className={props.parentElementClass}>
     <ButtonItem />
     <ButtonItem />
   </Button>
