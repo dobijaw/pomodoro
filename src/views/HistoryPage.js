@@ -1,6 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Title from 'components/atoms/Title/Title';
+import UserTemplate from 'templates/UserTemplate';
 
-const HistoryPage = () => <Title onlyScreenreader>History</Title>;
+// eslint-disable-next-line
+const HistoryPage = ({ IAmPropsInYourComponent }) => (
+  <UserTemplate>
+    <Title onlyScreenreader>History</Title>
+  </UserTemplate>
+);
 
-export default HistoryPage;
+const mapStateToProps = state => {
+  const { note } = state; // biore ze statu to ;p destrukturyzuje ze state globalnego
+  return { IAmPropsInYourComponent: note }; // zwracam pdo nazwa jaka chce porpsa
+};
+
+export default connect(mapStateToProps)(HistoryPage);

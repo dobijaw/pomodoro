@@ -9,6 +9,7 @@ const Button = styled.button`
   min-width: 220px;
   background: none;
   color: ${({ theme }) => theme.colors.buttons};
+  font-family: inherit;
   font-weight: ${({ theme }) => theme.fontWeights.light};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   letter-spacing: 0.08em;
