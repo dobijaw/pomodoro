@@ -22,7 +22,7 @@ const TimerPage = () => (
     <FormChooseItem name="typ" type="radio" id="other">
       All custom session
     </FormChooseItem>
-    <Headline tag="h3" width="22px">
+    <Headline customWidth="40px" as="h5">
       Hello Wojtula
     </Headline>
     <Date>24-05-2015</Date>
