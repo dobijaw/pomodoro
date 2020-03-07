@@ -5,7 +5,7 @@ import FormCooseItem from 'components/molecules/FormChooseItem/FormChooseItem';
 import FormItem from 'components/molecules/FormItem/FormItem';
 
 const SettingsWrapper = styled.div`
-  margin-top: 10px;
+  margin: 0;
 `;
 
 const StyledInnerWrapper = styled.section`
