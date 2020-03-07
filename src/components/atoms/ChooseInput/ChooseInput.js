@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 const StyledWrapper = styled.div`
@@ -62,5 +63,15 @@ const ChooseInput = ({ type, id, name }) => (
     </StyledWrapper>
   </>
 );
+
+ChooseInput.propTypes = {
+  type: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
+
+ChooseInput.defaultProps = {
+  type: 'radio',
+};
 
 export default ChooseInput;

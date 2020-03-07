@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Label from 'components/atoms/Label/Label';
 import ChooseInput from 'components/atoms/ChooseInput/ChooseInput';
@@ -20,5 +21,16 @@ const FormCooseItem = ({ children, name, type, id }) => (
     <ChooseInput type={type} name={name} id={id} />
   </StyledWrapper>
 );
+
+FormCooseItem.propTypes = {
+  children: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  id: PropTypes.string.isRequired,
+};
+
+FormCooseItem.defaultProps = {
+  type: 'radio',
+};
 
 export default FormCooseItem;

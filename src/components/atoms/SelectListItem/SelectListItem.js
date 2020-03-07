@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledBtnItem = styled.button`
@@ -21,5 +22,11 @@ const SelectListItem = ({ value, project, closeListFn }) => (
     {project}
   </StyledBtnItem>
 );
+
+SelectListItem.propTypes = {
+  value: PropTypes.string.isRequired,
+  project: PropTypes.string.isRequired,
+  closeListFn: PropTypes.func.isRequired,
+};
 
 export default SelectListItem;
