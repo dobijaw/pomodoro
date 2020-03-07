@@ -7,7 +7,7 @@ const Input = styled.input`
   margin: 8px 0;
   background: none;
   color: ${({ theme }) => theme.colors.importantText};
-  font-size: ${({ theme }) => theme.fontSizes.m};
+  font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeights.light};
   letter-spacing: 0.12em;
 

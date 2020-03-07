@@ -5,6 +5,7 @@ import SelectListItem from 'components/atoms/SelectListItem/SelectListItem';
 const StyledList = styled.ul`
   padding: 0;
   margin: 0;
+  background: ${({ theme }) => theme.colors.background};
   list-style: none;
 `;
 
@@ -14,8 +15,8 @@ const StyledItem = styled.li`
   }
 `;
 
-const SelectProjectList = ({ closeListFn }) => (
-  <StyledList>
+const SelectProjectList = ({ classProps, closeListFn }) => (
+  <StyledList className={classProps}>
     <StyledItem>
       <SelectListItem value="avatar" project="Avatar" closeListFn={closeListFn} />
     </StyledItem>

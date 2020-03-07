@@ -10,10 +10,10 @@ const StyledWrapper = styled.div`
   margin: 20px 0;
 `;
 
-const FormItem = ({ width }) => (
+const FormItem = ({ width, label }) => (
   <StyledWrapper width={width}>
-    <Label>Text here</Label>
-    <Input placeholder="Type here..." />
+    <Label>{label}</Label>
+    <Input placeholder="e.g. 5:00" />
   </StyledWrapper>
 );
 

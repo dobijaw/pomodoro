@@ -16,10 +16,14 @@ const Description = styled.span`
   text-transform: uppercase;
 `;
 
+const StyledTimer = styled(Timer)`
+  margin-bottom: 40px;
+`;
+
 const NextTimer = ({ next, time }) => (
   <StyledWrapper>
     <Description>{next}</Description>
-    <Timer>{time}</Timer>
+    <StyledTimer>{time}</StyledTimer>
   </StyledWrapper>
 );
 

@@ -17,6 +17,10 @@ const StyledButton = styled.button`
   font-weight: ${({ theme }) => theme.fontWeights.light};
   text-transform: uppercase;
   letter-spacing: 0.12em;
+
+  &:focus {
+    outline: 0;
+  }
 `;
 
 const StyledName = styled.span`
