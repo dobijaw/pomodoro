@@ -1,14 +1,5 @@
 const initialState = {
-  projects: [
-    {
-      title: 'Ziom',
-      sessions: 2,
-    },
-    {
-      title: 'Elo',
-      sessions: 3,
-    },
-  ],
+  projects: [],
 };
 
 // action = {type, payload}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
@@ -23,15 +23,26 @@ const StyledInputContainer = styled.div`
   margin-right: 60px;
 `;
 
-const AddProject = ({ addProjectName }) => {
+const AddProject = ({ projects, addProjectName }) => {
   const [inputValue, getInputValue] = useState('');
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  });
 
   const handleChange = e => {
     getInputValue(e.target.value);
   };
 
+  const isNameRepeat = (arr, input) =>
+    arr.some(item => item.title.toLowerCase() === input.toLowerCase());
+
   const handleSumbit = e => {
     e.preventDefault();
+    if (!inputValue.length) return;
+    if (isNameRepeat(projects, inputValue)) return;
     addProjectName({ id: 2, title: inputValue, sessions: 0 });
     getInputValue('');
   };
@@ -39,7 +50,12 @@ const AddProject = ({ addProjectName }) => {
   return (
     <StyledForm onSubmit={handleSumbit}>
       <StyledInputContainer>
-        <Input placeholder="Project Name" onChange={handleChange} value={inputValue} />
+        <Input
+          placeholder="Project Name"
+          onChange={handleChange}
+          value={inputValue}
+          ref={inputRef}
+        />
       </StyledInputContainer>
       <Button type="submit" fillButton>
         Add project
@@ -48,8 +64,14 @@ const AddProject = ({ addProjectName }) => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    projects: state.projects,
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
   addProjectName: project => dispatch(addProject(project)),
 });
 
-export default connect(null, mapDispatchToProps)(AddProject);
+export default connect(mapStateToProps, mapDispatchToProps)(AddProject);

@@ -8,6 +8,7 @@ const Button = styled.button`
   height: 30px;
   border: 0;
   background: none;
+  cursor: pointer;
 `;
 
 const ButtonItem = styled.span`

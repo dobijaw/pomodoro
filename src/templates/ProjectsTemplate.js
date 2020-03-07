@@ -23,7 +23,7 @@ const ProjectsTemplate = ({ projects }) => {
       <AddProject />
       <StyledList>
         {projects.map(item => (
-          <StyledItemList key={item.title}>
+          <StyledItemList key={item.title + Math.random()}>
             <ProjectItem name={item.title} sessionNum={item.sessions} />
           </StyledItemList>
         ))}

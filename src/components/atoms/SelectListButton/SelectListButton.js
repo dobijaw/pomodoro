@@ -18,6 +18,7 @@ const StyledButton = styled.button`
   font-weight: ${({ theme }) => theme.fontWeights.light};
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  cursor: pointer;
 
   &:focus {
     outline: 0;
