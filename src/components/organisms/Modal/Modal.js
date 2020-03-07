@@ -5,6 +5,7 @@ import Headline from 'components/atoms/Headline/Headline';
 import FormChooseItem from 'components/molecules/FormChooseItem/FormChooseItem';
 import FormItem from 'components/molecules/FormItem/FormItem';
 import Select from 'components/organisms/Select/Select';
+import Button from 'components/atoms/Button/Button';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -48,6 +49,12 @@ const StyledChoice = styled.div`
   margin-top: 60px;
 `;
 
+const StyledButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+`;
+
 const Modal = () => {
   return (
     <StyledWrapper>
@@ -68,6 +75,11 @@ const Modal = () => {
           <FormItem label="session time" />
           <FormItem label="break time" />
         </StyledCustomSession>
+        <StyledButtonContainer>
+          <Button type="button" fillButton>
+            Add Cycle
+          </Button>
+        </StyledButtonContainer>
       </StyledChoice>
     </StyledWrapper>
   );

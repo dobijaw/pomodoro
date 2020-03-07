@@ -38,12 +38,25 @@ const StyledImg = styled.img`
   width: 100%;
 `;
 
-const SelectList = ({ selectedName, handleClickFn }) => (
+const StyledRightSide = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StyledNum = styled.span`
+  margin-right: 40px;
+`;
+
+const SelectList = ({ projectsNum, selectedName, handleClickFn }) => (
   <StyledButton onClick={handleClickFn}>
     <StyledName>{selectedName}</StyledName>
-    <StyledImgContainer>
-      <StyledImg src={arrow} alt="arrow" />
-    </StyledImgContainer>
+    <StyledRightSide>
+      {projectsNum && <StyledNum>{projectsNum}</StyledNum>}
+      <StyledImgContainer>
+        <StyledImg src={arrow} alt="arrow" />
+      </StyledImgContainer>
+    </StyledRightSide>
   </StyledButton>
 );
 

@@ -10,6 +10,7 @@
     "fetch": false
   },
   "rules": {
+    "default-case": "off",
     "no-undef": "off",
     "react/destructuring-assignment": 0,
     "react/state-in-constructor": 0,
