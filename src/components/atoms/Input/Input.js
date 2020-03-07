@@ -16,7 +16,7 @@ const Input = styled.input`
   }
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.placeholder};
+    color: ${({ theme }) => theme.colors.lines};
     font-weight: ${({ theme }) => theme.fontWeights.xLight};
   }
 `;

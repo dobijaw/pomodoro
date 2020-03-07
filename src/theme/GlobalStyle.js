@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
 
     *:focus {
         outline: 1;
-        outline-color: #343943;
+        outline-color: ${({ theme }) => theme.colors.lines};
     }
 
     html {
@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         font-size: 1.6rem;
         font-family: 'Exo 2', sans-serif;
-        background: #192532;
+        background: ${({ theme }) => theme.colors.background};
     }
 
     ::-webkit-scrollbar {
@@ -30,15 +30,15 @@ const GlobalStyle = createGlobalStyle`
     }
 
     ::-webkit-scrollbar-track {
-        background: #1E2A37;
+        background: ${({ theme }) => theme.colors.backgroundLighter};
     }
 
     ::-webkit-scrollbar-thumb {
-        background: #9E8588;
+        background: ${({ theme }) => theme.colors.details};
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: #E8C7C8;
+        background: ${({ theme }) => theme.colors.buttons};
     }
 `;
 

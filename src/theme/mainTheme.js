@@ -1,4 +1,22 @@
-export const theme = {
+const fontSizes = {
+  xxs: '1.4rem',
+  xs: '1.6rem',
+  s: '1.8rem',
+  m: '2.2rem',
+  l: '2.8rem',
+  xl: '3.2rem',
+  xxl: '4.8rem',
+  xxxl: '18rem',
+};
+
+const fontWeights = {
+  xLight: 200,
+  light: 300,
+  regular: 500,
+  bold: 700,
+};
+
+export const themeDark = {
   colors: {
     background: '#192532',
     backgroundLighter: '#1E2A37',
@@ -8,22 +26,36 @@ export const theme = {
     text: '#D3BABB',
     importantText: '#ffffff',
     lightGray: '#424550',
-    placeholder: '#323844',
   },
-  fontWeights: {
-    xLight: 200,
-    light: 300,
-    regular: 500,
-    bold: 700,
+  fontWeights,
+  fontSizes,
+};
+
+export const themeLight = {
+  colors: {
+    background: '#fff',
+    backgroundLighter: '#F8F8F8',
+    lines: '#EBEBEB',
+    buttons: '#67E1D9',
+    details: '#2FA59D',
+    text: '#2ABEB5',
+    importantText: '#4B545D',
+    lightGray: '#E2E2E2',
   },
-  fontSizes: {
-    xxs: '1.4rem',
-    xs: '1.6rem',
-    s: '1.8rem',
-    m: '2.2rem',
-    l: '2.8rem',
-    xl: '3.2rem',
-    xxl: '4.8rem',
-    xxxl: '18rem',
+  fontWeights,
+  fontSizes,
+};
+export const themeColor = {
+  colors: {
+    background: 'red',
+    backgroundLighter: '#F8F8F8',
+    lines: '#EBEBEB',
+    buttons: '#67E1D9',
+    details: '#2FA59D',
+    text: '#2ABEB5',
+    importantText: '#4B545D',
+    lightGray: '#E2E2E2',
   },
+  fontWeights,
+  fontSizes,
 };

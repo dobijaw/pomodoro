@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Timer from 'components/atoms/Timer/Timer';
 import NextTimer from 'components/molecules/NextTimer/NextTimer';
@@ -33,21 +33,60 @@ const StyledPanel = styled.div`
 `;
 
 const TimerTemplate = () => {
+  const [timer, setTimer] = useState(25);
+  const [isGoing, setIsGoing] = useState(false);
+  const [initialButton, setInitialButton] = useState(true);
+
+  const countdown = () => {
+    if (!isGoing) return;
+
+    const interval = setInterval(() => {
+      setTimer(timer - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  };
+
+  const handleClickStart = () => {
+    setIsGoing(!isGoing);
+    setInitialButton(false);
+  };
+
+  useEffect(() => {
+    const clearHere = countdown();
+
+    return clearHere;
+  });
+
   return (
     <StyledWrapper>
       <StyledTimer>
         <NextTimer next="Next break" time="5:00" />
-        <Timer active>25:00</Timer>
+        <Timer active>{timer}</Timer>
       </StyledTimer>
       <StyledPanel>
         <Select />
         <StyledBtnsContainer>
-          <Button type="button" fillButton>
-            stop
+          {/* <Button type="button" fillButton>
+            continue
           </Button>
-          <Button type="button" fillButton>
-            start
-          </Button>
+          <Button type="button" fillButton onClick={handleClickStart}>
+            {!isGoing ? 'start' : 'stop'}
+          </Button> */}
+          {initialButton ? (
+            <Button type="button" fillButton onClick={handleClickStart}>
+              {!isGoing ? 'start' : 'stop'}
+            </Button>
+          ) : (
+            <>
+              <Button type="button" fillButton onClick={handleClickStart}>
+                {!isGoing ? 'start' : 'pause'}
+              </Button>
+              <Button type="button" fillButton onClick={handleClickStart}>
+                {!isGoing ? 'start' : 'end now'}
+              </Button>
+            </>
+          )}
         </StyledBtnsContainer>
       </StyledPanel>
     </StyledWrapper>

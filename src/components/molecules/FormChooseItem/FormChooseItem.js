@@ -15,10 +15,16 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const FormCooseItem = ({ children, name, type, id }) => (
+const FormCooseItem = ({ children, name, type, id, isChecked, handleOnChange }) => (
   <StyledWrapper>
     <Label htmlFor={id}>{children}</Label>
-    <ChooseInput type={type} name={name} id={id} />
+    <ChooseInput
+      type={type}
+      name={name}
+      id={id}
+      isChecked={isChecked}
+      handleOnChange={handleOnChange}
+    />
   </StyledWrapper>
 );
 

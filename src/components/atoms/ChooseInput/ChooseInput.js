@@ -55,10 +55,16 @@ const StyledMark = styled.span`
     `}
 `;
 
-const ChooseInput = ({ type, id, name }) => (
+const ChooseInput = ({ type, id, name, isChecked, handleOnChange }) => (
   <>
     <StyledWrapper>
-      <StyledInput id={id} type={type || 'radio'} name={name} />
+      <StyledInput
+        id={id}
+        type={type || 'radio'}
+        name={name}
+        checked={isChecked}
+        onChange={handleOnChange}
+      />
       <StyledMark type={type} />
     </StyledWrapper>
   </>

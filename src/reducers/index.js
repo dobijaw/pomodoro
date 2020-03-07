@@ -1,5 +1,6 @@
 const initialState = {
   projects: [],
+  colorTheme: 'dark',
 };
 
 // action = {type, payload}
@@ -16,6 +17,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         projects: [...state.projects.filter(item => item.title !== payload.title)],
+      };
+    case 'CHANGE_THEME':
+      return {
+        ...state,
+        colorTheme: payload,
       };
     default:
       return state;
