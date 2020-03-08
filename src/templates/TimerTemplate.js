@@ -31,9 +31,13 @@ const StyledPanel = styled.div`
 `;
 
 const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
-  const [timer, setTimer] = useState(defaultSessionTime);
+  const [timer, setTimer] = useState(
+    defaultSessionTime.length <= 5 ? `${defaultSessionTime}:00` : defaultSessionTime,
+  );
   // eslint-disable-next-line
-  const [nextTimer, setNextTimer] = useState(defaultBreakTime);
+  const [nextTimer, setNextTimer] = useState(
+    defaultBreakTime.length <= 5 ? `${defaultBreakTime}:00` : defaultBreakTime,
+  );
   const [isGoing, setIsGoing] = useState(false);
   const [initialButton, setInitialButton] = useState(true);
 
@@ -76,6 +80,11 @@ const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
     setInitialButton(false);
   };
 
+  const handleClickStop = () => {
+    setInitialButton(true);
+    console.log('save');
+  };
+
   useEffect(() => {
     const clearHere = countdown();
 
@@ -97,12 +106,20 @@ const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
             </Button>
           ) : (
             <>
-              <Button type="button" fillButton onClick={handleClickStart}>
-                {!isGoing ? 'start' : 'pause'}
-              </Button>
-              <Button type="button" fillButton onClick={handleClickStart}>
-                {!isGoing ? 'start' : 'end now'}
-              </Button>
+              {isGoing ? (
+                <Button type="button" fillButton onClick={handleClickStart}>
+                  pause
+                </Button>
+              ) : (
+                <>
+                  <Button type="button" fillButton onClick={handleClickStart}>
+                    continue
+                  </Button>
+                  <Button type="button" fillButton onClick={handleClickStop}>
+                    stop
+                  </Button>
+                </>
+              )}
             </>
           )}
         </StyledBtnsContainer>
