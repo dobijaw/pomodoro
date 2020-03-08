@@ -12,3 +12,8 @@ export const changeTheme = color => ({
   type: 'CHANGE_THEME',
   payload: color,
 });
+
+export const changeDefaultCycle = (type, time) => ({
+  type: 'CHANGE_DEFAULT_CYCLE',
+  payload: { type, time },
+});

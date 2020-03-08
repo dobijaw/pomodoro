@@ -1,6 +1,8 @@
 const initialState = {
   projects: [],
   colorTheme: 'dark',
+  defaultSessionTime: '00:25:00',
+  defaultBreakTime: '00:05:00',
 };
 
 // action = {type, payload}
@@ -22,6 +24,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         colorTheme: payload,
+      };
+    case 'CHANGE_DEFAULT_CYCLE':
+      return {
+        ...state,
+        [payload.type]: payload.time,
       };
     default:
       return state;

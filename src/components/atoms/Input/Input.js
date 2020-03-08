@@ -10,6 +10,35 @@ const Input = styled.input`
   font-size: ${({ theme }) => theme.fontSizes.s};
   font-weight: ${({ theme }) => theme.fontWeights.light};
   letter-spacing: 0.12em;
+  font-family: inherit;
+
+  &[type='time'] {
+    margin: 8px 0 0 -10px;
+  }
+
+  &[type='time']::-webkit-datetime-edit-fields-wrapper {
+    display: flex;
+  }
+
+  &[type='time']::-webkit-datetime-edit-text {
+    padding: 19px 4px;
+  }
+
+  &[type='time']::-webkit-datetime-edit-hour-field,
+  &[type='time']::-webkit-datetime-edit-minute-field,
+  &[type='time']::-webkit-datetime-edit-second-field {
+    border-radius: 100px;
+    padding: 20px 10px;
+
+    &:focus {
+      background: ${({ theme }) => theme.colors.backgroundLighter};
+    }
+  }
+
+  &[type='time']::-webkit-clear-button,
+  &[type='time']::-webkit-inner-spin-button {
+    display: none;
+  }
 
   &:focus {
     outline: 0;

@@ -14,6 +14,8 @@ const MainTemplate = ({ children, colorTheme }) => {
         return themeLight;
       case 'color':
         return themeColor;
+      default:
+        return themeDark;
     }
   };
 

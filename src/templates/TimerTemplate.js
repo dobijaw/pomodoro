@@ -4,12 +4,9 @@ import Timer from 'components/atoms/Timer/Timer';
 import NextTimer from 'components/molecules/NextTimer/NextTimer';
 import Button from 'components/atoms/Button/Button';
 import Select from 'components/organisms/Select/Select';
+import { connect } from 'react-redux';
 
-const StyledWrapper = styled.div`
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-`;
+const StyledWrapper = styled.div``;
 
 const StyledTimer = styled.div`
   padding: 40px 0 80px;
@@ -25,15 +22,18 @@ const StyledBtnsContainer = styled.div`
 `;
 
 const StyledPanel = styled.div`
-  margin-top: 40px;
+  max-width: 500px;
+  margin: 40px auto 0;
 
   ${StyledBtnsContainer} {
     margin-top: 40px;
   }
 `;
 
-const TimerTemplate = () => {
-  const [timer, setTimer] = useState(25);
+const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
+  const [timer, setTimer] = useState(defaultSessionTime);
+  // eslint-disable-next-line
+  const [nextTimer, setNextTimer] = useState(defaultBreakTime);
   const [isGoing, setIsGoing] = useState(false);
   const [initialButton, setInitialButton] = useState(true);
 
@@ -61,18 +61,12 @@ const TimerTemplate = () => {
   return (
     <StyledWrapper>
       <StyledTimer>
-        <NextTimer next="Next break" time="5:00" />
+        <NextTimer next="Next break" time={nextTimer} />
         <Timer active>{timer}</Timer>
       </StyledTimer>
       <StyledPanel>
         <Select />
         <StyledBtnsContainer>
-          {/* <Button type="button" fillButton>
-            continue
-          </Button>
-          <Button type="button" fillButton onClick={handleClickStart}>
-            {!isGoing ? 'start' : 'stop'}
-          </Button> */}
           {initialButton ? (
             <Button type="button" fillButton onClick={handleClickStart}>
               {!isGoing ? 'start' : 'stop'}
@@ -93,4 +87,9 @@ const TimerTemplate = () => {
   );
 };
 
-export default TimerTemplate;
+const mapStateToProps = state => ({
+  defaultSessionTime: state.defaultSessionTime,
+  defaultBreakTime: state.defaultBreakTime,
+});
+
+export default connect(mapStateToProps)(TimerTemplate);

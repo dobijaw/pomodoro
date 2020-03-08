@@ -4,7 +4,7 @@ import Headline from 'components/atoms/Headline/Headline';
 import FormCooseItem from 'components/molecules/FormChooseItem/FormChooseItem';
 import FormItem from 'components/molecules/FormItem/FormItem';
 import { connect } from 'react-redux';
-import { changeTheme } from 'actions';
+import { changeTheme, changeDefaultCycle } from 'actions';
 
 const SettingsWrapper = styled.div`
   margin: 0;
@@ -39,9 +39,19 @@ const StyledDataWrapper = styled.div`
   display: flex;
 `;
 
-const SettingsTemplate = ({ color, colorTheme }) => {
+const SettingsTemplate = ({
+  color,
+  colorTheme,
+  changeDefaultCycleInState,
+  defaultSessionTime,
+  defaultBreakTime,
+}) => {
   const [curRadio, setCurRadio] = useState(color);
   colorTheme(curRadio);
+
+  const handleCycleTimeChange = e => {
+    changeDefaultCycleInState(e.target.name, e.target.value);
+  };
 
   return (
     <SettingsWrapper>
@@ -80,8 +90,26 @@ const SettingsTemplate = ({ color, colorTheme }) => {
       <StyledInnerWrapper>
         <Headline as="h2">Default session</Headline>
         <StyledSessionWrapper>
-          <FormItem label="session time" />
-          <FormItem label="break time" />
+          <FormItem
+            handleOnChange={handleCycleTimeChange}
+            label="session time"
+            type="time"
+            step="1"
+            min="00:00:00"
+            max="20:00:00"
+            inputName="defaultSessionTime"
+            inputValue={defaultSessionTime}
+          />
+          <FormItem
+            handleOnChange={handleCycleTimeChange}
+            label="break time"
+            type="time"
+            step="1"
+            min="00:00:00"
+            max="20:00:00"
+            inputName="defaultBreakTime"
+            inputValue={defaultBreakTime}
+          />
         </StyledSessionWrapper>
       </StyledInnerWrapper>
       <StyledInnerWrapper>
@@ -103,12 +131,15 @@ const SettingsTemplate = ({ color, colorTheme }) => {
 const mapStateToProps = state => {
   return {
     color: state.colorTheme,
+    defaultSessionTime: state.defaultSessionTime,
+    defaultBreakTime: state.defaultBreakTime,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     colorTheme: color => dispatch(changeTheme(color)),
+    changeDefaultCycleInState: (type, time) => dispatch(changeDefaultCycle(type, time)),
   };
 };
 

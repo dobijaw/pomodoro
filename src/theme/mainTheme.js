@@ -47,14 +47,14 @@ export const themeLight = {
 };
 export const themeColor = {
   colors: {
-    background: 'red',
-    backgroundLighter: '#F8F8F8',
-    lines: '#EBEBEB',
-    buttons: '#67E1D9',
-    details: '#2FA59D',
-    text: '#2ABEB5',
-    importantText: '#4B545D',
-    lightGray: '#E2E2E2',
+    background: '#fff',
+    backgroundLighter: '#EBEBEB',
+    lines: '#D9D9D9',
+    buttons: '#BDC1C0',
+    details: '#72929B',
+    text: '#8EAAB0',
+    importantText: '#486C75',
+    lightGray: '#C9C9C9',
   },
   fontWeights,
   fontSizes,
