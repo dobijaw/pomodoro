@@ -19,12 +19,12 @@ const StyledRightNav = styled.div`
   align-items: center;
 `;
 
-const Navbar = () => (
+const Navbar = ({ handleModalButtonClick }) => (
   <StyledNav>
     <Logo />
     <StyledRightNav>
       <NavList />
-      <Button>Create Cycle</Button>
+      <Button onClick={handleModalButtonClick}>Create Cycle</Button>
     </StyledRightNav>
   </StyledNav>
 );

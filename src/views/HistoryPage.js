@@ -3,8 +3,8 @@ import Title from 'components/atoms/Title/Title';
 import UserTemplate from 'templates/UserTemplate';
 import HistoryTemplate from 'templates/HistoryTemplate';
 
-const HistoryPage = () => (
-  <UserTemplate>
+const HistoryPage = ({ handleModalButtonClick }) => (
+  <UserTemplate handleModalButtonClick={handleModalButtonClick}>
     <Title onlyScreenreader>History</Title>
     <HistoryTemplate />
   </UserTemplate>

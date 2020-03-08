@@ -7,9 +7,9 @@ const UserWrapper = styled.div`
   margin: 0 auto;
 `;
 
-const UserTemplate = ({ children }) => (
+const UserTemplate = ({ children, handleModalButtonClick }) => (
   <>
-    <Navbar />
+    <Navbar handleModalButtonClick={handleModalButtonClick} />
     <UserWrapper>{children}</UserWrapper>
   </>
 );
