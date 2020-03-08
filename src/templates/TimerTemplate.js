@@ -41,8 +41,32 @@ const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
     if (!isGoing) return;
 
     const interval = setInterval(() => {
-      setTimer(timer - 1);
-    }, 1000);
+      let [hours, minutes, seconds] = timer.split(':');
+
+      if (hours === '00' && minutes === '00' && seconds === '00')
+        return () => clearInterval(interval);
+
+      if (hours !== '00' && minutes === '00' && seconds === '00') {
+        hours -= 1;
+        seconds = 59;
+        minutes = 59;
+
+        hours = hours < 10 ? `0${hours}` : hours;
+
+        setTimer(`${hours}:${minutes}:${seconds}`);
+      } else if (seconds === '00') {
+        seconds = 59;
+        minutes -= 1;
+        minutes = minutes < 10 ? `0${minutes}` : minutes;
+
+        setTimer(`${hours}:${minutes}:${seconds}`);
+      } else {
+        seconds -= 1;
+        seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+        setTimer(`${hours}:${minutes}:${seconds}`);
+      }
+    }, 100);
 
     return () => clearInterval(interval);
   };
