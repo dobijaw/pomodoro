@@ -11,6 +11,11 @@ const StyledWrapper = styled.div`
   margin: 20px 0;
 `;
 
+const StyledInputWrapper = styled.div`
+  display: flex;
+  height: 80%;
+`;
+
 const FormItem = ({
   placeholder,
   inputName,
@@ -21,19 +26,23 @@ const FormItem = ({
   max,
   handleOnChange,
   inputValue,
+  focusBackgorund,
 }) => (
   <StyledWrapper>
     <Label>{label}</Label>
-    <Input
-      name={inputName}
-      placeholder={placeholder}
-      value={inputValue}
-      type={type}
-      step={step}
-      min={min}
-      max={max}
-      onChange={handleOnChange}
-    />
+    <StyledInputWrapper>
+      <Input
+        name={inputName}
+        placeholder={placeholder}
+        value={inputValue}
+        type={type}
+        step={step}
+        min={min}
+        max={max}
+        onChange={handleOnChange}
+        focusBackgorund={focusBackgorund}
+      />
+    </StyledInputWrapper>
   </StyledWrapper>
 );
 

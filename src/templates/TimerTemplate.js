@@ -82,7 +82,7 @@ const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
 
   const handleClickStop = () => {
     setInitialButton(true);
-    console.log('save');
+    // console.log('save');
   };
 
   useEffect(() => {

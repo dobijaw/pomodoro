@@ -3,6 +3,7 @@ const initialState = {
   colorTheme: 'dark',
   defaultSessionTime: '00:25:00',
   defaultBreakTime: '00:05:00',
+  modalSettigs: 'same',
 };
 
 // action = {type, payload}
@@ -30,6 +31,12 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         [payload.type]: payload.time,
       };
+    case 'CHANGE_MODAL_SETTINGS': {
+      return {
+        ...state,
+        modalSettigs: payload,
+      };
+    }
     default:
       return state;
   }

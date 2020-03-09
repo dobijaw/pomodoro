@@ -17,3 +17,8 @@ export const changeDefaultCycle = (type, time) => ({
   type: 'CHANGE_DEFAULT_CYCLE',
   payload: { type, time },
 });
+
+export const changeModalSettings = modalSettings => ({
+  type: 'CHANGE_MODAL_SETTINGS',
+  payload: modalSettings,
+});

@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 const Input = styled.input`
   width: 100%;
-  padding: 0;
+  padding: 8px 0;
   border: 0;
-  margin: 8px 0;
+  margin: 0;
   background: none;
   color: ${({ theme }) => theme.colors.importantText};
   font-size: ${({ theme }) => theme.fontSizes.s};
@@ -31,7 +31,8 @@ const Input = styled.input`
     padding: 20px 10px;
 
     &:focus {
-      background: ${({ theme }) => theme.colors.backgroundLighter};
+      background: ${({ focusBackgorund, theme }) =>
+        focusBackgorund ? theme.colors.background : theme.colors.backgroundLighter};
     }
   }
 

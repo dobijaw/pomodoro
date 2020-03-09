@@ -14,8 +14,12 @@ const Root = () => {
   // eslint-disable-next-line
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const handleModalButtonClick = () => {
+  const handleToggleModalVisible = () => {
     setModalVisible(!isModalVisible);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -27,22 +31,22 @@ const Root = () => {
               <Route
                 exact
                 path={routes.timer}
-                component={() => <TimerPage handleModalButtonClick={handleModalButtonClick} />}
+                component={() => <TimerPage handleModalButtonClick={handleToggleModalVisible} />}
               />
               <Route
                 path={routes.settings}
-                component={() => <SettingsPage handleModalButtonClick={handleModalButtonClick} />}
+                component={() => <SettingsPage handleModalButtonClick={handleToggleModalVisible} />}
               />
               <Route
                 path={routes.history}
-                component={() => <HistoryPage handleModalButtonClick={handleModalButtonClick} />}
+                component={() => <HistoryPage handleModalButtonClick={handleToggleModalVisible} />}
               />
               <Route
                 path={routes.projects}
-                component={() => <ProjectsPage handleModalButtonClick={handleModalButtonClick} />}
+                component={() => <ProjectsPage handleModalButtonClick={handleToggleModalVisible} />}
               />
             </Switch>
-            {isModalVisible && <CycleModal />}
+            {isModalVisible && <CycleModal handleCloseModal={handleCloseModal} />}
           </>
         </MainTemplate>
       </BrowserRouter>
