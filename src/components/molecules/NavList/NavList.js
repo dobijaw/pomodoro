@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { routes } from 'routes/index';
 import NavLinkItem, { activeClassName } from 'components/atoms/NavLinkItem/NavLinkItem';
 
@@ -8,6 +8,22 @@ const List = styled.ul`
   padding: 0;
   margin: 0 80px 0 0;
   list-style: none;
+
+  ${({ isMobile }) =>
+    isMobile &&
+    css`
+      flex-direction: column;
+      align-items: center;
+      margin: 0 0 60px 0;
+      text-align: center;
+
+      > li {
+        margin: 20px 0;
+        > a {
+          font-size: ${({ theme }) => theme.fontSizes.s};
+        }
+      }
+    `}
 `;
 
 const Item = styled.li`
@@ -15,8 +31,8 @@ const Item = styled.li`
   margin: 0 20px;
 `;
 
-const NavList = () => (
-  <List>
+const NavList = ({ isMobile }) => (
+  <List isMobile={isMobile}>
     <Item>
       <NavLinkItem activeClassName={activeClassName} to={routes.projects}>
         Projects

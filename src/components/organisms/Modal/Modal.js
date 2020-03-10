@@ -111,7 +111,7 @@ const Modal = ({ handleCloseModal, currentModalSettings, changeModalSettings }) 
       <StyledChoice>
         <Select />
         <StyledCustomSession>
-          <FormItem label="number of sessions" type="number" />
+          <FormItem label="number of sessions" type="number" inputValue="1" />
           <FormItem
             name="sessionTime"
             placeholder="here we go"
@@ -121,6 +121,7 @@ const Modal = ({ handleCloseModal, currentModalSettings, changeModalSettings }) 
             min="00:00:00"
             max="20:00:00"
             onChange={handleCycleTimeChange}
+            focusBackgorund
             label="Session Time"
           />
           <FormItem

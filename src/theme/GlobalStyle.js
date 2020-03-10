@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
+        height: 400vh;
         overflow-y: scroll;
         margin: 0;
         padding: 0;

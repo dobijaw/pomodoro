@@ -4,7 +4,10 @@ import Headline from 'components/atoms/Headline/Headline';
 import FormCooseItem from 'components/molecules/FormChooseItem/FormChooseItem';
 
 const StyledForm = styled.div`
-  display: flex;
+  margin-top: 10px;
+  @media (min-width: 960px) {
+    display: flex;
+  }
 
   > div {
     margin-right: 60px;

@@ -5,9 +5,14 @@ import { routes } from 'routes/index';
 
 const StyledLink = styled(Link)`
   display: inline-block;
-  padding: 4px 10px 10px 10px;
+  padding: 2px 10px 8px 10px;
   margin: 0 0 0 -10px;
   text-decoration: none;
+
+  @media (min-widh: 960px) {
+    padding: 4px 10px 10px 10px;
+    margin: 0 0 0 -10px;
+  }
 `;
 
 const StyledLogo = styled.span`
@@ -15,9 +20,13 @@ const StyledLogo = styled.span`
   padding: 0;
   margin: 0;
   color: ${({ theme }) => theme.colors.text};
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: ${({ theme }) => theme.fontSizes.l};
   letter-spacing: -0.06em;
   line-height: 1;
+
+  @media (min-width: 960px) {
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+  }
 `;
 
 const Logo = () => (
