@@ -13,15 +13,21 @@ const StyledWrapper = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 70vw;
+  width: 80vw;
   max-width: 800px;
-  height: 60vh;
-  padding: 70px;
+  height: 80vh;
+  padding: 50px 20px 20px;
   margin: 0 auto;
   background: ${({ theme }) => theme.colors.backgroundLighter};
   box-shadow: 5px 2px 10px 0px rgba(24, 27, 30, 0.3);
   transform: translate(-50%, -50%);
   z-index: 100;
+  overflow-y: scroll;
+
+  @media (min-width: 960px) {
+    height: 60vh;
+    padding: 70px;
+  }
 
   > .modal {
     position: absolute;
@@ -31,8 +37,11 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledSelect = styled.div`
-  display: flex;
   margin-top: 10px;
+
+  @media (min-width: 960px) {
+    display: flex;
+  }
 
   > div {
     margin: 0 30px 0 0;

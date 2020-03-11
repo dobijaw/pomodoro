@@ -6,12 +6,20 @@ import { connect } from 'react-redux';
 import { addProject } from 'actions';
 
 const StyledForm = styled.form`
-  display: flex;
-  justify-content: space-between;
   margin: 50px 0 100px;
 
+  @media (min-width: 960px) {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0 100px;
+  }
+
   > button {
-    margin: 0;
+    margin: 20px 0 0;
+
+    @media (min-width: 960px) {
+      margin: 0;
+    }
   }
 `;
 
