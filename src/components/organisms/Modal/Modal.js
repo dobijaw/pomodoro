@@ -83,6 +83,10 @@ const Modal = ({ handleCloseModal, currentModalSettings, changeModalSettings }) 
     }
   };
 
+  const handleOnChangeNumberInput = () => {
+    console.log('work');
+  };
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutsieModal);
 
@@ -120,7 +124,14 @@ const Modal = ({ handleCloseModal, currentModalSettings, changeModalSettings }) 
       <StyledChoice>
         <Select />
         <StyledCustomSession>
-          <FormItem label="number of sessions" type="number" inputValue="1" />
+          <FormItem
+            label="number of sessions"
+            type="number"
+            inputValue="1"
+            handleOnChange={handleOnChangeNumberInput}
+            name="sessionNumber"
+            placeholder="number of sessions"
+          />
           <FormItem
             name="sessionTime"
             placeholder="here we go"
