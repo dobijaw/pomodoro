@@ -30,7 +30,7 @@ const StyledPanel = styled.div`
   }
 `;
 
-const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
+const TimerTemplate = ({ defaultSessionTime, defaultBreakTime, counter }) => {
   const [timer, setTimer] = useState(
     defaultSessionTime.length <= 5 ? `${defaultSessionTime}:00` : defaultSessionTime,
   );
@@ -95,7 +95,7 @@ const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
     <StyledWrapper>
       <StyledTimer>
         <NextTimer next="Next break" time={nextTimer} />
-        <Timer active>{timer}</Timer>
+        <Timer active>{counter}</Timer>
       </StyledTimer>
       <StyledPanel>
         <Select />
@@ -131,6 +131,7 @@ const TimerTemplate = ({ defaultSessionTime, defaultBreakTime }) => {
 const mapStateToProps = state => ({
   defaultSessionTime: state.defaultSessionTime,
   defaultBreakTime: state.defaultBreakTime,
+  counter: state.counter,
 });
 
 export default connect(mapStateToProps)(TimerTemplate);

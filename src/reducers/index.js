@@ -4,6 +4,7 @@ const initialState = {
   defaultSessionTime: '00:25:00',
   defaultBreakTime: '00:05:00',
   modalSettigs: 'same',
+  counter: 0,
 };
 
 // action = {type, payload}
@@ -37,6 +38,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
         modalSettigs: payload,
       };
     }
+    case 'UPDATE_COUNT':
+      return {
+        ...state,
+        counter: payload,
+      };
     default:
       return state;
   }

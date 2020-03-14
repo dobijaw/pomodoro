@@ -22,3 +22,8 @@ export const changeModalSettings = modalSettings => ({
   type: 'CHANGE_MODAL_SETTINGS',
   payload: modalSettings,
 });
+
+export const updateCount = count => ({
+  type: 'UPDATE_COUNT',
+  payload: count,
+});
