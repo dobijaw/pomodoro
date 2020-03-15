@@ -7,7 +7,7 @@ import FormItem from 'components/molecules/FormItem/FormItem';
 import Select from 'components/organisms/Select/Select';
 import Button from 'components/atoms/Button/Button';
 import { connect } from 'react-redux';
-import { changeModalSettings } from 'actions';
+import { changeModalSettings, toggleModal } from 'actions';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -72,18 +72,19 @@ const handleCycleTimeChange = () => {
 };
 
 // eslint-disable-next-line
-const Modal = ({ handleCloseModal, currentModalSettings, changeModalSettings }) => {
+const Modal = ({ currentModalSettings, changeModalSettings, isModalOpen, toggleModal }) => {
   const modalRef = useRef(null);
   const [curSeetings, setCurSettings] = useState(currentModalSettings);
   changeModalSettings(curSeetings);
 
   const handleClickOutsieModal = e => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      handleCloseModal();
+      toggleModal(false);
     }
   };
 
   const handleOnChangeNumberInput = () => {
+    // eslint-disable-next-line
     console.log('work');
   };
 
@@ -97,7 +98,7 @@ const Modal = ({ handleCloseModal, currentModalSettings, changeModalSettings }) 
 
   return (
     <StyledWrapper ref={modalRef}>
-      <CloseButton parentElementClass="modal" handleClick={handleCloseModal} />
+      <CloseButton parentElementClass="modal" handleClick={() => toggleModal(false)} />
       <Headline>Create cycle</Headline>
       <StyledSelect>
         <FormChooseItem
@@ -170,12 +171,14 @@ const Modal = ({ handleCloseModal, currentModalSettings, changeModalSettings }) 
 const mapStateToProps = state => {
   return {
     currentModalSettings: state.modalSettigs,
+    isModalOpen: state.isModalOpen,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     changeModalSettings: modalSettings => dispatch(changeModalSettings(modalSettings)),
+    toggleModal: isModalOpen => dispatch(toggleModal(isModalOpen)),
   };
 };
 

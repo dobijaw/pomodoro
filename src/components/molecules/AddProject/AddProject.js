@@ -31,7 +31,7 @@ const StyledInputContainer = styled.div`
   margin-right: 60px;
 `;
 
-const AddProject = ({ projects, addProjectName }) => {
+const AddProject = ({ projects, addProject }) => {
   const [inputValue, getInputValue] = useState('');
 
   const inputRef = useRef(null);
@@ -51,7 +51,7 @@ const AddProject = ({ projects, addProjectName }) => {
     e.preventDefault();
     if (!inputValue.length) return;
     if (isNameRepeat(projects, inputValue)) return;
-    addProjectName({ id: 2, title: inputValue, sessions: 0 });
+    addProject({ id: 2, title: inputValue, sessions: 0 });
     getInputValue('');
   };
 
@@ -79,7 +79,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addProjectName: project => dispatch(addProject(project)),
+  addProject: project => dispatch(addProject(project)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProject);

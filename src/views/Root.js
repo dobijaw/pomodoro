@@ -10,13 +10,12 @@ import ProjectsPage from 'views/ProjectsPage';
 import { connect } from 'react-redux';
 import { updateCount } from 'actions';
 
-const Root = ({ updateCountInComponent }) => {
-  // eslint-disable-next-line
-  const [isModalVisible, setModalVisible] = useState(false);
+const Root = ({ updateCountInComponent, isModalOpen }) => {
   const [counter, setCounter] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // eslint-disable-next-line
       console.log(counter);
       setCounter(counter + 1);
       updateCountInComponent(counter);
@@ -24,10 +23,6 @@ const Root = ({ updateCountInComponent }) => {
 
     return () => clearInterval(interval);
   }, [counter, setCounter, updateCountInComponent]);
-
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
 
   return (
     <BrowserRouter>
@@ -39,11 +34,18 @@ const Root = ({ updateCountInComponent }) => {
             <Route path={routes.history} component={HistoryPage} />
             <Route path={routes.projects} component={ProjectsPage} />
           </Switch>
-          {isModalVisible && <CycleModal handleCloseModal={handleCloseModal} />}
+          {isModalOpen && <CycleModal />}
         </>
       </MainTemplate>
     </BrowserRouter>
   );
+};
+
+const mapStateToProps = state => {
+  return {
+    defaultSessionTime: state.defaultSessionTime,
+    isModalOpen: state.isModalOpen,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -52,4 +54,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Root);
+export default connect(mapStateToProps, mapDispatchToProps)(Root);

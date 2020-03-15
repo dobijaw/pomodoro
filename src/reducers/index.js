@@ -5,11 +5,9 @@ const initialState = {
   defaultBreakTime: '00:05:00',
   modalSettigs: 'same',
   counter: 0,
+  isModalOpen: false,
 };
 
-// action = {type, payload}
-
-// eslint-disable-next-line
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'ADD_PROJECT':
@@ -42,6 +40,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         counter: payload,
+      };
+    case 'TOGGLE_MODAL':
+      return {
+        ...state,
+        isModalOpen: payload,
       };
     default:
       return state;

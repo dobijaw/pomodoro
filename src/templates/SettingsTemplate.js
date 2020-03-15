@@ -15,10 +15,12 @@ const StyledInnerWrapper = styled.section`
 `;
 
 const StyledThemeWrapper = styled.div`
-  display: flex;
+  @media (min-width: 960px) {
+    display: flex;
 
-  > div {
-    margin-right: 60px;
+    > div {
+      margin-right: 60px;
+    }
   }
 `;
 

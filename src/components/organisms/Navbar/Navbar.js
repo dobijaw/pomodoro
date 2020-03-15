@@ -4,6 +4,8 @@ import Logo from 'components/atoms/Logo/Logo';
 import NavList from 'components/molecules/NavList/NavList';
 import Button from 'components/atoms/Button/Button';
 import Burger from 'components/atoms/Burger/Burger';
+import { toggleModal } from 'actions';
+import { connect } from 'react-redux';
 
 const StyledNav = styled.nav`
   display: flex;
@@ -56,10 +58,14 @@ const StyledModalNav = styled.div`
     `};
 `;
 
-const Navbar = ({ handleModalButtonClick }) => {
+const Navbar = ({ toggleModal, isModalOpen }) => {
   const [isMobile, checkIsMobile] = useState(window.innerWidth < 960);
   const [isActive, toggleIsActive] = useState(false);
   const [isFixed, toggleIsFixed] = useState(false);
+
+  const handleModalButtonClick = () => {
+    toggleModal(!isModalOpen);
+  };
 
   useEffect(() => {
     window.addEventListener('resize', () => checkIsMobile(window.innerWidth < 960));
@@ -118,4 +124,16 @@ const Navbar = ({ handleModalButtonClick }) => {
   );
 };
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    isModalOpen: state.isModalOpen,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleModal: isModalOpen => dispatch(toggleModal(isModalOpen)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

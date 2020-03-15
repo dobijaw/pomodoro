@@ -3,8 +3,8 @@ import Title from 'components/atoms/Title/Title';
 import UserTemplate from 'templates/UserTemplate';
 import ProjectsTemplate from 'templates/ProjectsTemplate';
 
-const ProjectsPage = ({ handleModalButtonClick }) => (
-  <UserTemplate handleModalButtonClick={handleModalButtonClick}>
+const ProjectsPage = () => (
+  <UserTemplate>
     <Title onlyScreenreader>Projects</Title>
     <ProjectsTemplate />
   </UserTemplate>

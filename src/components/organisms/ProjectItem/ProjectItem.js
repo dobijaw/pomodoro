@@ -17,13 +17,13 @@ const StyledRightSide = styled.div`
   align-items: center;
 `;
 
-const ProjectItem = ({ name, sessionNum, removeProjectHere }) => {
+const ProjectItem = ({ name, sessionNum, removeProject }) => {
   return (
     <StyledProjectWrapper>
       <Headline>{name}</Headline>
       <StyledRightSide>
         <NumberItem number={sessionNum} />
-        <CloseButton handleClick={() => removeProjectHere(name)} />
+        <CloseButton handleClick={() => removeProject(name)} />
       </StyledRightSide>
     </StyledProjectWrapper>
   );
@@ -31,7 +31,7 @@ const ProjectItem = ({ name, sessionNum, removeProjectHere }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeProjectHere: title => dispatch(removeProject({ title })),
+    removeProject: title => dispatch(removeProject({ title })),
   };
 };
 

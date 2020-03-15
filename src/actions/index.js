@@ -27,3 +27,8 @@ export const updateCount = count => ({
   type: 'UPDATE_COUNT',
   payload: count,
 });
+
+export const toggleModal = isModalOpen => ({
+  type: 'TOGGLE_MODAL',
+  payload: isModalOpen,
+});
