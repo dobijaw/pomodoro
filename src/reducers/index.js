@@ -3,9 +3,28 @@ const initialState = {
   colorTheme: 'dark',
   defaultSessionTime: '00:25:00',
   defaultBreakTime: '00:05:00',
+  creatingCycle: [
+    {
+      session: '00:02:00',
+      break: '00:05:00',
+    },
+    {
+      session: '00:40:00',
+      break: '00:105:00',
+    },
+    {
+      session: '00:20:00',
+      break: '00:10:00',
+    },
+    {
+      session: '00:25:00',
+      break: '00:10:00',
+    },
+  ],
   modalSettigs: 'same',
   counter: 0,
   isModalOpen: false,
+  isGoing: false,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -45,6 +64,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isModalOpen: payload,
+      };
+    case 'CHANGE_TIMER_STATUS':
+      return {
+        ...state,
+        isGoing: payload,
       };
     default:
       return state;

@@ -10,19 +10,50 @@ import ProjectsPage from 'views/ProjectsPage';
 import { connect } from 'react-redux';
 import { updateCount } from 'actions';
 
-const Root = ({ updateCountInComponent, isModalOpen }) => {
-  const [counter, setCounter] = useState(1);
+const Root = ({ updateCountInComponent, isModalOpen, creatingCycle, isGoing }) => {
+  const [cycle] = useState(creatingCycle);
+  const [timer, setTimer] = useState(cycle[0].session);
 
-  useEffect(() => {
+  const countdown = curTime => {
+    if (!isGoing) return;
     const interval = setInterval(() => {
-      // eslint-disable-next-line
-      console.log(counter);
-      setCounter(counter + 1);
-      updateCountInComponent(counter);
+      let [hours, minutes, seconds] = curTime.split(':');
+
+      if (hours === '00' && minutes === '00' && seconds === '00') {
+        updateCountInComponent(timer);
+      } else if (hours !== '00' && minutes === '00' && seconds === '00') {
+        hours -= 1;
+        seconds = 59;
+        minutes = 59;
+
+        hours = hours < 10 ? `0${hours}` : hours;
+
+        setTimer(`${hours}:${minutes}:${seconds}`);
+        updateCountInComponent(timer);
+      } else if (seconds === '00') {
+        seconds = 59;
+        minutes -= 1;
+        minutes = minutes < 10 ? `0${minutes}` : minutes;
+
+        setTimer(`${hours}:${minutes}:${seconds}`);
+        updateCountInComponent(timer);
+      } else {
+        seconds -= 1;
+        seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+        setTimer(`${hours}:${minutes}:${seconds}`);
+        updateCountInComponent(timer);
+      }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [counter, setCounter, updateCountInComponent]);
+  };
+
+  useEffect(() => {
+    const interval = countdown(timer);
+
+    return interval;
+  });
 
   return (
     <BrowserRouter>
@@ -45,6 +76,8 @@ const mapStateToProps = state => {
   return {
     defaultSessionTime: state.defaultSessionTime,
     isModalOpen: state.isModalOpen,
+    creatingCycle: state.creatingCycle,
+    isGoing: state.isGoing,
   };
 };
 

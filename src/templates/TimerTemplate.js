@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Timer from 'components/atoms/Timer/Timer';
 import NextTimer from 'components/molecules/NextTimer/NextTimer';
 import Button from 'components/atoms/Button/Button';
 import Select from 'components/organisms/Select/Select';
 import { connect } from 'react-redux';
+import { changeTimerStatus } from 'actions';
 
 const StyledWrapper = styled.div``;
 
@@ -30,71 +31,21 @@ const StyledPanel = styled.div`
   }
 `;
 
-const TimerTemplate = ({ defaultSessionTime, defaultBreakTime, counter }) => {
-  const [timer, setTimer] = useState(
-    defaultSessionTime.length <= 5 ? `${defaultSessionTime}:00` : defaultSessionTime,
-  );
-  // eslint-disable-next-line
-  const [nextTimer, setNextTimer] = useState(
-    defaultBreakTime.length <= 5 ? `${defaultBreakTime}:00` : defaultBreakTime,
-  );
-  const [isGoing, setIsGoing] = useState(false);
+const TimerTemplate = ({ counter, changeTimerStatus, isGoing }) => {
   const [initialButton, setInitialButton] = useState(true);
 
-  const countdown = () => {
-    if (!isGoing) return;
-
-    const interval = setInterval(() => {
-      let [hours, minutes, seconds] = timer.split(':');
-
-      if (hours === '00' && minutes === '00' && seconds === '00')
-        return () => clearInterval(interval);
-
-      if (hours !== '00' && minutes === '00' && seconds === '00') {
-        hours -= 1;
-        seconds = 59;
-        minutes = 59;
-
-        hours = hours < 10 ? `0${hours}` : hours;
-
-        setTimer(`${hours}:${minutes}:${seconds}`);
-      } else if (seconds === '00') {
-        seconds = 59;
-        minutes -= 1;
-        minutes = minutes < 10 ? `0${minutes}` : minutes;
-
-        setTimer(`${hours}:${minutes}:${seconds}`);
-      } else {
-        seconds -= 1;
-        seconds = seconds < 10 ? `0${seconds}` : seconds;
-
-        setTimer(`${hours}:${minutes}:${seconds}`);
-      }
-    }, 100);
-
-    return () => clearInterval(interval);
-  };
-
   const handleClickStart = () => {
-    setIsGoing(!isGoing);
-    setInitialButton(false);
+    changeTimerStatus(!isGoing);
   };
 
   const handleClickStop = () => {
     setInitialButton(true);
-    // console.log('save');
   };
-
-  useEffect(() => {
-    const clearHere = countdown();
-
-    return clearHere;
-  });
 
   return (
     <StyledWrapper>
       <StyledTimer>
-        <NextTimer next="Next break" time={nextTimer} />
+        <NextTimer next="Next break" time="00:05:00" />
         <Timer active>{counter}</Timer>
       </StyledTimer>
       <StyledPanel>
@@ -129,9 +80,15 @@ const TimerTemplate = ({ defaultSessionTime, defaultBreakTime, counter }) => {
 };
 
 const mapStateToProps = state => ({
-  defaultSessionTime: state.defaultSessionTime,
   defaultBreakTime: state.defaultBreakTime,
   counter: state.counter,
+  isGoing: state.isGoing,
 });
 
-export default connect(mapStateToProps)(TimerTemplate);
+const mapDispatchToProps = dispatch => {
+  return {
+    changeTimerStatus: isGoing => dispatch(changeTimerStatus(isGoing)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimerTemplate);

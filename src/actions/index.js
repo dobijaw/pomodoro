@@ -32,3 +32,8 @@ export const toggleModal = isModalOpen => ({
   type: 'TOGGLE_MODAL',
   payload: isModalOpen,
 });
+
+export const changeTimerStatus = isGoing => ({
+  type: 'CHANGE_TIMER_STATUS',
+  payload: isGoing,
+});
