@@ -4,7 +4,7 @@ import Headline from 'components/atoms/Headline/Headline';
 import FormCooseItem from 'components/molecules/FormChooseItem/FormChooseItem';
 import FormItem from 'components/molecules/FormItem/FormItem';
 import { connect } from 'react-redux';
-import { changeTheme, changeDefaultCycle } from 'actions';
+import { changeTheme, changeDefaultCycle, getName, getEmail } from 'actions';
 
 const SettingsWrapper = styled.div`
   margin: 0;
@@ -47,12 +47,24 @@ const SettingsTemplate = ({
   changeDefaultCycleInState,
   defaultSessionTime,
   defaultBreakTime,
+  getName,
+  getEmail,
+  name,
+  email,
 }) => {
   const [curRadio, setCurRadio] = useState(color);
   colorTheme(curRadio);
 
   const handleCycleTimeChange = e => {
     changeDefaultCycleInState(e.target.name, e.target.value);
+  };
+
+  const handleNameChange = e => {
+    getName(e.target.value);
+  };
+
+  const handleEmailChange = e => {
+    getEmail(e.target.value);
   };
 
   return (
@@ -117,8 +129,8 @@ const SettingsTemplate = ({
       <StyledInnerWrapper>
         <Headline as="h2">Your data</Headline>
         <StyledDataWrapper>
-          <FormItem label="name" />
-          <FormItem label="email" />
+          <FormItem handleOnChange={handleNameChange} label="name" inputValue={name} />
+          <FormItem handleOnChange={handleEmailChange} label="email" inputValue={email} />
         </StyledDataWrapper>
         <StyledDataWrapper>
           <FormItem label="old password" type="password" />
@@ -135,6 +147,8 @@ const mapStateToProps = state => {
     color: state.colorTheme,
     defaultSessionTime: state.defaultSessionTime,
     defaultBreakTime: state.defaultBreakTime,
+    name: state.name,
+    email: state.email,
   };
 };
 
@@ -142,6 +156,8 @@ const mapDispatchToProps = dispatch => {
   return {
     colorTheme: color => dispatch(changeTheme(color)),
     changeDefaultCycleInState: (type, time) => dispatch(changeDefaultCycle(type, time)),
+    getName: name => dispatch(getName(name)),
+    getEmail: email => dispatch(getEmail(email)),
   };
 };
 

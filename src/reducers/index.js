@@ -70,6 +70,16 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         isGoing: payload,
       };
+    case 'GET_NAME':
+      return {
+        ...state,
+        name: payload,
+      };
+    case 'GET_EMAIL':
+      return {
+        ...state,
+        email: payload,
+      };
     default:
       return state;
   }
