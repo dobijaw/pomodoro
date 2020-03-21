@@ -18,7 +18,7 @@ const StyledWrapper = styled.div`
   height: 80vh;
   padding: 50px 20px 20px;
   margin: 0 auto;
-  background: ${({ theme }) => theme.colors.backgroundLighter};
+  background: ${({ theme }) => theme.colors.background20};
   box-shadow: 5px 2px 10px 0px rgba(24, 27, 30, 0.3);
   transform: translate(-50%, -50%);
   z-index: 100;

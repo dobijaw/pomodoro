@@ -13,9 +13,9 @@ const StyledButton = styled.button`
   margin: 0;
   background: none;
   font-family: inherit;
-  color: ${({ theme }) => theme.colors.importantText};
+  color: ${({ theme }) => theme.colors.copy};
   font-size: ${({ theme }) => theme.fontSizes.m};
-  font-weight: ${({ theme }) => theme.fontWeights.light};
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   text-transform: uppercase;
   letter-spacing: 0.12em;
   cursor: pointer;

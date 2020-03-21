@@ -13,12 +13,12 @@ const StyledWrapper = styled.div`
   user-select: none;
 
   input:checked ~ span {
-    background-color: ${({ theme }) => theme.colors.details};
+    background-color: ${({ theme }) => theme.colors.primary};
   }
 
   &:hover {
     > input ~ span {
-      background: ${({ theme }) => theme.colors.details};
+      background: ${({ theme }) => theme.colors.primary};
     }
   }
 `;
@@ -43,7 +43,7 @@ const StyledMark = styled.span`
   display: block;
   width: 15px;
   height: 15px;
-  border: 2px solid ${({ theme }) => theme.colors.buttons};
+  border: 2px solid ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
   background: none;
   transition: all 0.35s;

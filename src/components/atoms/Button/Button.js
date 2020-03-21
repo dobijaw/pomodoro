@@ -3,15 +3,15 @@ import styled, { css } from 'styled-components';
 const Button = styled.button`
   display: block;
   padding: 18px 32px;
-  border: 1px solid ${({ theme }) => theme.colors.buttons};
+  border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 60px;
   margin: 10px 0;
   width: 100%;
   min-width: 220px;
   background: none;
-  color: ${({ theme }) => theme.colors.buttons};
+  color: ${({ theme }) => theme.colors.primary};
   font-family: inherit;
-  font-weight: ${({ theme }) => theme.fontWeights.light};
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   font-size: ${({ theme }) => theme.fontSizes.xxs};
   letter-spacing: 0.08em;
   line-height: 1;
@@ -30,19 +30,19 @@ const Button = styled.button`
   }
 
   &:hover {
-    background: ${({ theme }) => theme.colors.buttons};
+    background: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.background};
   }
 
   ${({ fillButton }) =>
     fillButton &&
     css`
-      background: ${({ theme }) => theme.colors.buttons};
+      background: ${({ theme }) => theme.colors.primary};
       color: ${({ theme }) => theme.colors.background};
 
       &:hover {
         background: none;
-        color: ${({ theme }) => theme.colors.buttons};
+        color: ${({ theme }) => theme.colors.primary};
       }
     `}
 `;

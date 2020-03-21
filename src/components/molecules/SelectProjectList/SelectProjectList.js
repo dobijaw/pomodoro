@@ -13,7 +13,7 @@ const StyledList = styled.ul`
 
 const StyledItem = styled.li`
   &:not(:last-of-type) {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.details};
+    border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
   }
 `;
 

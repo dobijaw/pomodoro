@@ -19,7 +19,7 @@ const StyledLogo = styled.span`
   display: block;
   padding: 0;
   margin: 0;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSizes.l};
   letter-spacing: -0.06em;
   line-height: 1;

@@ -47,7 +47,7 @@ const StyledModalNav = styled.div`
   width: 100%;
   min-height: 100vh;
   padding: 80px 40px;
-  background: ${({ theme }) => theme.colors.backgroundLighter};
+  background: ${({ theme }) => theme.colors.background20};
   transform: translateX(100%);
   transition: all 0.35s;
 

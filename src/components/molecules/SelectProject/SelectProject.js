@@ -5,7 +5,7 @@ import Label from 'components/atoms/Label/Label';
 
 const StyledWrapper = styled.div`
   padding: 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.details};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
 `;
 
 const StyledLabel = styled(Label)`

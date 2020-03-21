@@ -27,7 +27,7 @@ const StyledInputContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.details};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
   margin-right: 60px;
 `;
 

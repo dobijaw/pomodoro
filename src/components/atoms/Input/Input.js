@@ -6,9 +6,9 @@ const Input = styled.input`
   border: 0;
   margin: 0;
   background: none;
-  color: ${({ theme }) => theme.colors.importantText};
+  color: ${({ theme }) => theme.colors.copy};
   font-size: ${({ theme }) => theme.fontSizes.s};
-  font-weight: ${({ theme }) => theme.fontWeights.light};
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   letter-spacing: 0.12em;
   font-family: inherit;
 
@@ -32,7 +32,7 @@ const Input = styled.input`
 
     &:focus {
       background: ${({ focusBackgorund, theme }) =>
-        focusBackgorund ? theme.colors.background : theme.colors.backgroundLighter};
+        focusBackgorund ? theme.colors.background : theme.colors.background20};
     }
   }
 
@@ -46,8 +46,8 @@ const Input = styled.input`
   }
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.lines};
-    font-weight: ${({ theme }) => theme.fontWeights.xLight};
+    color: ${({ theme }) => theme.colors.background40};
+    font-weight: ${({ theme }) => theme.fontWeights.light};
   }
 `;
 

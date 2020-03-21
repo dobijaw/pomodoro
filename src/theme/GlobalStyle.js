@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
 
     *:focus {
         outline: 1;
-        outline-color: ${({ theme }) => theme.colors.lines};
+        outline-color: ${({ theme }) => theme.colors.background40};
     }
 
     html {
@@ -31,15 +31,15 @@ const GlobalStyle = createGlobalStyle`
     }
 
     ::-webkit-scrollbar-track {
-        background: ${({ theme }) => theme.colors.backgroundLighter};
+        background: ${({ theme }) => theme.colors.background20};
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${({ theme }) => theme.colors.details};
+        background: ${({ theme }) => theme.colors.secondary};
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: ${({ theme }) => theme.colors.buttons};
+        background: ${({ theme }) => theme.colors.primary};
     }
 `;
 

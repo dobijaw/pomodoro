@@ -15,7 +15,7 @@ const ButtonItem = styled.span`
   display: block;
   width: 15px;
   height: 2px;
-  background: ${({ theme }) => theme.colors.buttons};
+  background: ${({ theme }) => theme.colors.primary};
 
   &:first-child {
     transform: translateY(1px) rotate(45deg);

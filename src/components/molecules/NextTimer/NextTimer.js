@@ -12,7 +12,7 @@ const Description = styled.span`
   margin: 0;
   font-size: ${({ theme }) => theme.fontSizes.xxs};
   line-height: 1;
-  color: ${({ theme }) => theme.colors.details};
+  color: ${({ theme }) => theme.colors.secondary};
   text-transform: uppercase;
 `;
 

@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 const Title = styled.h1`
-  color: ${({ theme }) => theme.colors.importantText};
-  font-weight: ${({ theme }) => theme.fontWeights.regular};
+  color: ${({ theme }) => theme.colors.copy};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
   font-size: ${({ theme }) => theme.fontSizes.xxl};
   text-align: center;
 

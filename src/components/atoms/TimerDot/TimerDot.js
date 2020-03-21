@@ -5,13 +5,13 @@ const TimerDot = styled.span`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: ${({ theme }) => theme.colors.lines};
+  background: ${({ theme }) => theme.colors.background40};
 
   ${({ fillDot }) =>
     fillDot &&
     css`
       position: relative;
-      background: ${({ theme }) => theme.colors.details};
+      background: ${({ theme }) => theme.colors.secondary};
 
       &::before {
         content: '';
@@ -22,7 +22,7 @@ const TimerDot = styled.span`
         display: block;
         width: 30px;
         height: 1px;
-        background: ${({ theme }) => theme.colors.details};
+        background: ${({ theme }) => theme.colors.secondary};
       }
     `}
 `;

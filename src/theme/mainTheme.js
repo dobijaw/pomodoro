@@ -10,22 +10,21 @@ const fontSizes = {
 };
 
 const fontWeights = {
-  xLight: 200,
-  light: 300,
-  regular: 500,
+  light: 200,
+  regular: 300,
+  medium: 500,
   bold: 700,
 };
 
 export const themeDark = {
   colors: {
     background: '#192532',
-    backgroundLighter: '#1E2A37',
-    lines: '#343943',
-    buttons: '#E8C7C8',
-    details: '#9E8588',
-    text: '#D3BABB',
-    importantText: '#ffffff',
-    lightGray: '#424550',
+    background20: '#1E2A37',
+    background40: '#343943',
+    background60: '#424550',
+    primary: '#E8C7C8',
+    secondary: '#9E8588',
+    copy: '#ffffff',
   },
   fontWeights,
   fontSizes,
@@ -33,28 +32,26 @@ export const themeDark = {
 
 export const themeLight = {
   colors: {
-    background: '#fff',
-    backgroundLighter: '#F8F8F8',
-    lines: '#EBEBEB',
-    buttons: '#67E1D9',
-    details: '#2FA59D',
-    text: '#2ABEB5',
-    importantText: '#4B545D',
-    lightGray: '#E2E2E2',
+    background: '#ffffff',
+    background20: '#E9E8F5',
+    background40: '#DAD8EC',
+    background60: '#D1CFE6',
+    primary: '#270CD6',
+    secondary: '#1A00C4',
+    copy: '#1A1A1A',
   },
   fontWeights,
   fontSizes,
 };
 export const themeColor = {
   colors: {
-    background: '#fff',
-    backgroundLighter: '#EBEBEB',
-    lines: '#D9D9D9',
-    buttons: '#BDC1C0',
-    details: '#72929B',
-    text: '#8EAAB0',
-    importantText: '#486C75',
-    lightGray: '#C9C9C9',
+    background: '#ffffff',
+    background20: '#F4F4F6',
+    background40: '#ECEBF2',
+    background60: '#DBD9E5',
+    primary: '#48406E',
+    secondary: '#253256',
+    copy: '#0D1429',
   },
   fontWeights,
   fontSizes,

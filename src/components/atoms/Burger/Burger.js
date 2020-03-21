@@ -27,7 +27,7 @@ const StyledButton = styled.button`
 
 const StyledItem = styled.span`
   display: block;
-  background: ${({ theme }) => theme.colors.buttons};
+  background: ${({ theme }) => theme.colors.primary};
   width: 30px;
   height: 2px;
   transition: all 0.25s;

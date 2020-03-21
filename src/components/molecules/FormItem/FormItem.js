@@ -7,7 +7,7 @@ import Label from 'components/atoms/Label/Label';
 const StyledWrapper = styled.div`
   width: 100%;
   padding: 10px 0 10px 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.details};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.background40};
   margin: 20px 0;
 `;
 

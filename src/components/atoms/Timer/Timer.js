@@ -4,7 +4,7 @@ const Timer = styled.span`
   display: block;
   padding: 0;
   margin: 0;
-  color: ${({ theme }) => theme.colors.details};
+  color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fontSizes.xl};
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   text-align: center;
@@ -17,13 +17,13 @@ const Timer = styled.span`
   ${({ active }) =>
     active &&
     css`
-      color: ${({ theme }) => theme.colors.buttons};
+      color: ${({ theme }) => theme.colors.primary};
       font-size: ${({ theme }) => theme.fontSizes.xxl};
       font-weight: ${({ theme }) => theme.fontWeights.bold};
 
       @media (min-width: 960px) {
         font-size: ${({ theme }) => theme.fontSizes.xxxl};
-        font-weight: ${({ theme }) => theme.fontWeights.regular};
+        font-weight: ${({ theme }) => theme.fontWeights.medium};
       }
     `}
 `;

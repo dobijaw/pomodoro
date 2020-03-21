@@ -6,11 +6,11 @@ const NumberShape = styled.span`
   padding: 0;
   border-radius: 50%;
   margin: 0;
-  background: ${({ theme }) => theme.colors.backgroundLighter};
-  color: ${({ theme }) => theme.colors.importantText};
+  background: ${({ theme }) => theme.colors.background20};
+  color: ${({ theme }) => theme.colors.copy};
   line-height: 45px;
   font-size: ${({ theme }) => theme.fontSizes.m};
-  font-weight: ${({ theme }) => theme.fontWeights.regular};
+  font-weight: ${({ theme }) => theme.fontWeights.medium};
   text-align: center;
 `;
 
