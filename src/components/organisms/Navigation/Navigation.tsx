@@ -13,7 +13,7 @@ const Nav = styled.nav`
 
 function Navigation() {
   const [isMobileView, toggleMobileView] = useState<boolean>(true);
-  const [isMenuVisible, toggleMenuVisibility] = useState<boolean>(false);
+  const [isMenuVisible, toggleMenuVisibility] = useState<boolean>(true);
 
   const setMobile = () =>
     window.innerWidth < 960 ? toggleMobileView(true) : toggleMobileView(false);

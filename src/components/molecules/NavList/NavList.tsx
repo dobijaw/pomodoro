@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'components/atoms/Button/Button';
 import styled, { css } from 'styled-components';
 
 const List = styled.ul<{ asMobile?: boolean; isVisible?: boolean }>`
@@ -26,6 +27,10 @@ const List = styled.ul<{ asMobile?: boolean; isVisible?: boolean }>`
     `}
 `;
 
+const handleClick = () => {
+  'click';
+};
+
 type NavListProps = {
   asMobile?: boolean;
   isVisible?: boolean;
@@ -33,7 +38,7 @@ type NavListProps = {
 
 const NavList = ({ asMobile, isVisible }: NavListProps) => (
   <List asMobile={asMobile} isVisible={isVisible}>
-    <li>Timer</li>
+    <Button onClick={handleClick}>create cycle</Button>
   </List>
 );
 
