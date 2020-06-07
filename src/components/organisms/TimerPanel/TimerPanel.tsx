@@ -15,6 +15,7 @@ function TimerPanel() {
     onStartCountdow,
     onPauseCountdown,
     onStopCountdown,
+    nextCount,
     count,
   } = useContext(AppContext);
   const [isInitialView, setInitialView] = useState<boolean>(true);
@@ -44,7 +45,7 @@ function TimerPanel() {
 
   return (
     <div>
-      <TimerBox />
+      <TimerBox nextCount={nextCount} />
       <TimerBox isMain time={count.time} />
       <Wrapper>
         {isInitialView ? (

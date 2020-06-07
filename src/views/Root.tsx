@@ -16,15 +16,23 @@ type RootProps = {
 
 function Root({ countdownQueue, defaultCountdownQueue }: RootProps) {
   const [count, setCount] = useState<countdownQueueItem>(countdownQueue[0]);
+  const [nextCount, setNextCount] = useState<countdownQueueItem>(
+    countdownQueue[1]
+  );
   const [currentPosition, setCurrentPosition] = useState<number>(0);
+  const [nextPosition, setNextPosition] = useState<number>(1);
 
   useEffect(() => {
-    if (countdownQueue.length >= 1) {
-      setCount(countdownQueue[currentPosition]);
-    } else {
-      setCount(defaultCountdownQueue[currentPosition]);
-    }
+    countdownQueue.length >= 1
+      ? setCount(countdownQueue[currentPosition])
+      : setCount(defaultCountdownQueue[currentPosition]);
   }, [countdownQueue, currentPosition, defaultCountdownQueue]);
+
+  useEffect(() => {
+    countdownQueue.length >= 1
+      ? setNextCount(countdownQueue[nextPosition])
+      : setNextCount(defaultCountdownQueue[nextPosition]);
+  }, [countdownQueue, defaultCountdownQueue, nextPosition]);
 
   const getQueuePosition = (queue: countdownQueueItem[], position: number) =>
     position === queue.length - 1 ? 0 : position + 1;
@@ -37,12 +45,18 @@ function Root({ countdownQueue, defaultCountdownQueue }: RootProps) {
   const onPauseCountdown = () => stop();
 
   const onStopCountdown = () => {
-    let position =
+    const position =
       countdownQueue.length >= 1
         ? getQueuePosition(countdownQueue, currentPosition)
         : getQueuePosition(defaultCountdownQueue, currentPosition);
 
+    const nextCyclePosition =
+      countdownQueue.length >= 1
+        ? getQueuePosition(countdownQueue, nextPosition)
+        : getQueuePosition(defaultCountdownQueue, nextPosition);
+
     setCurrentPosition(position);
+    setNextPosition(nextCyclePosition);
     stop();
   };
 
@@ -50,6 +64,7 @@ function Root({ countdownQueue, defaultCountdownQueue }: RootProps) {
     onStartCountdow,
     onPauseCountdown,
     onStopCountdown,
+    nextCount,
     count,
   };
 

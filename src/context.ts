@@ -6,6 +6,7 @@ interface AppContextProps {
   onPauseCountdown: () => void;
   onStopCountdown: () => void;
   count: countdownQueueItem;
+  nextCount: countdownQueueItem;
 }
 
 export const AppContext = createContext({} as AppContextProps);

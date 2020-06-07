@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { countdownQueueItem } from 'models/countdownQueueItem.model';
 import styled, { css } from 'styled-components';
 import Timer from 'components/molecules/Timer/Timer';
 import CycleProgress from 'components/molecules/CycleProgress/CycleProgress';
@@ -21,6 +22,7 @@ type TimerBox = {
   isMain?: boolean;
   isCycle?: boolean;
   time?: number;
+  nextCount?: countdownQueueItem;
 };
 
 type currentTimeInterface = {
@@ -28,24 +30,40 @@ type currentTimeInterface = {
   stringSeconds: string;
 };
 
-const TimerBox = ({ isMain, isCycle, time = 0 }: TimerBox) => {
+const TimerBox = ({ isMain, isCycle, time = 0, nextCount }: TimerBox) => {
   const [currentTime, setCurrentTime] = useState<currentTimeInterface>({
     stringMinutes: '00',
     stringSeconds: '00',
   });
+  const [nextTime, setNextTime] = useState<currentTimeInterface>({
+    stringMinutes: '00',
+    stringSeconds: '00',
+  });
 
-  useEffect(() => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
+  const generateOutputTime = (timeInput: number) => {
+    const minutes = Math.floor(timeInput / 60);
+    const seconds = Math.floor(timeInput % 60);
 
     const stringMinutes = minutes <= 9 ? `0${minutes}` : `${minutes}`;
     const stringSeconds = seconds <= 9 ? `0${seconds}` : `${seconds}`;
 
-    setCurrentTime({
+    return {
       stringMinutes,
       stringSeconds,
-    });
+    };
+  };
+
+  useEffect(() => {
+    const curTimeOutput = generateOutputTime(time);
+    setCurrentTime(curTimeOutput);
   }, [time]);
+
+  useEffect(() => {
+    if (nextCount) {
+      const curTimeOutput = generateOutputTime(nextCount?.time);
+      setNextTime(curTimeOutput);
+    }
+  }, [nextCount]);
 
   return (
     <>
@@ -61,9 +79,12 @@ const TimerBox = ({ isMain, isCycle, time = 0 }: TimerBox) => {
       ) : (
         <Wraper>
           <Label as="span" asCopy asMedium>
-            Next break
+            Next {nextCount?.type}
           </Label>
-          <Timer minutes="05" seconds="00" />
+          <Timer
+            minutes={nextTime.stringMinutes}
+            seconds={nextTime.stringSeconds}
+          />
         </Wraper>
       )}
     </>
