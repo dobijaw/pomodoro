@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 
-const Button = styled.button<{ asPrimary?: boolean; asSecondary?: boolean }>`
+const Button = styled.button<{ asPrimary?: boolean; withMargin?: boolean }>`
   display: inline-block;
   min-width: 220px;
   padding: 18px 32px;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 60px;
-  margin: 10px 0;
+  margin: ${({ withMargin }) => (withMargin ? '10px' : '10px 0')};
   background: none;
   color: ${({ theme }) => theme.colors.primary};
   font-family: inherit;
@@ -22,7 +22,7 @@ const Button = styled.button<{ asPrimary?: boolean; asSecondary?: boolean }>`
     asPrimary &&
     css`
       background-color: ${({ theme }) => theme.colors.primary};
-      color: ${({ theme }) => theme.colors.copy};
+      color: ${({ theme }) => theme.colors.background};
     `}
 `;
 

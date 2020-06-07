@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 
 const BurgerButton = styled.button`
@@ -54,15 +54,19 @@ const BurgerBody = styled.span<{ isActive: boolean }>`
 `;
 
 type BurgerProps = {
-  type: 'button';
+  handleClick: Function;
+  isVisible: boolean;
 };
 
-function Burger({ type }: BurgerProps) {
-  const [isActive, toggleActivity] = useState<boolean>(false);
-
+function Burger({ handleClick, isVisible }: BurgerProps) {
   return (
-    <BurgerButton type={type} onClick={() => toggleActivity(!isActive)}>
-      <BurgerBody isActive={isActive} />
+    <BurgerButton
+      type="button"
+      onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+        handleClick(!isVisible)
+      }
+    >
+      <BurgerBody isActive={isVisible} />
     </BurgerButton>
   );
 }

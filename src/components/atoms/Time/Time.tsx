@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const Time = styled.span<{ asMain?: boolean }>`
+const Time = styled.span`
   display: inline-block;
-  color: ${({ theme }) => theme.colors.secondary};
-  font-size: 48px;
-  font-weight: 600;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
 `;
 
 export default Time;
