@@ -8,13 +8,19 @@ import PageTemplate from 'templates/PageTemplate';
 import { Routes } from 'routes';
 import { AppContext } from 'context';
 import { useInterval } from 'hooks/useInterval';
+import { clearCountdownQueue } from 'actions/timer';
 
 type RootProps = {
   countdownQueue: countdownQueueItem[];
   defaultCountdownQueue: countdownQueueItem[];
+  clearCountdownQueue: Function;
 };
 
-function Root({ countdownQueue, defaultCountdownQueue }: RootProps) {
+function Root({
+  countdownQueue,
+  defaultCountdownQueue,
+  clearCountdownQueue,
+}: RootProps) {
   const [count, setCount] = useState<countdownQueueItem>(countdownQueue[0]);
   const [nextCount, setNextCount] = useState<countdownQueueItem>(
     countdownQueue[1]
@@ -29,10 +35,17 @@ function Root({ countdownQueue, defaultCountdownQueue }: RootProps) {
   }, [countdownQueue, currentPosition, defaultCountdownQueue]);
 
   useEffect(() => {
-    countdownQueue.length >= 1
-      ? setNextCount(countdownQueue[nextPosition])
-      : setNextCount(defaultCountdownQueue[nextPosition]);
-  }, [countdownQueue, defaultCountdownQueue, nextPosition]);
+    if (
+      countdownQueue.length >= 1 &&
+      countdownQueue.length === currentPosition + 1
+    ) {
+      setNextCount(defaultCountdownQueue[0]);
+    } else if (countdownQueue.length >= 1) {
+      setNextCount(countdownQueue[nextPosition]);
+    } else {
+      setNextCount(defaultCountdownQueue[nextPosition]);
+    }
+  }, [countdownQueue, currentPosition, defaultCountdownQueue, nextPosition]);
 
   const getQueuePosition = (queue: countdownQueueItem[], position: number) =>
     position === queue.length - 1 ? 0 : position + 1;
@@ -45,10 +58,32 @@ function Root({ countdownQueue, defaultCountdownQueue }: RootProps) {
   const onPauseCountdown = () => stop();
 
   const onStopCountdown = () => {
+    if (countdownQueue.length - 1 === currentPosition) {
+      clearCountdownQueue();
+    }
+
     const position =
       countdownQueue.length >= 1
         ? getQueuePosition(countdownQueue, currentPosition)
         : getQueuePosition(defaultCountdownQueue, currentPosition);
+
+    if (countdownQueue.length === nextPosition + 1) {
+      setNextPosition(0);
+    }
+
+    // if (countdownQueue.length >= 1) {
+    //   if(countdownQueue.length === nextPosition + 1)
+    //   console.log(countdownQueue.length);
+    //   const nextCyclePosition = getQueuePosition(countdownQueue, nextPosition);
+    //   console.log(nextCyclePosition);
+    //   setNextPosition(nextCyclePosition);
+    // } else {
+    //   const nextCyclePosition = getQueuePosition(
+    //     defaultCountdownQueue,
+    //     nextPosition
+    //   );
+    //   setNextPosition(nextCyclePosition);
+    // }
 
     const nextCyclePosition =
       countdownQueue.length >= 1
@@ -90,9 +125,13 @@ type Props = {
   };
 };
 
+const mapDispatchToProps = (dispatch: Function) => ({
+  clearCountdownQueue: () => dispatch(clearCountdownQueue()),
+});
+
 const mapStateToProps = ({ timer }: Props) => ({
   countdownQueue: timer.countdownQueue,
   defaultCountdownQueue: timer.defaultCountdownQueue,
 });
 
-export default connect(mapStateToProps)(Root);
+export default connect(mapStateToProps, mapDispatchToProps)(Root);
