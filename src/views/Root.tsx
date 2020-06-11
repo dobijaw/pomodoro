@@ -9,6 +9,10 @@ import { Routes } from 'routes';
 import { AppContext } from 'context';
 import { useInterval } from 'hooks/useInterval';
 import { clearCountdownQueue } from 'actions/timer';
+import CycleModal from 'components/organisms/CycleModal/CycleModal';
+import ProjectsPage from './ProjectsPage';
+import HistoryPage from './HistoryPage';
+import SettingsPage from './SettingsPage';
 
 type RootProps = {
   countdownQueue: countdownQueueItem[];
@@ -21,6 +25,7 @@ function Root({
   defaultCountdownQueue,
   clearCountdownQueue,
 }: RootProps) {
+  const [isModalVisible, toggleModalVisibility] = useState(false);
   const [count, setCount] = useState<countdownQueueItem>(countdownQueue[0]);
   const [nextCount, setNextCount] = useState<countdownQueueItem>(
     countdownQueue[1]
@@ -95,7 +100,17 @@ function Root({
     stop();
   };
 
+  function handleOpenModal() {
+    toggleModalVisibility(true);
+  }
+
+  function handleCloseModal() {
+    toggleModalVisibility(false);
+  }
+
   const AppContextElements = {
+    handleOpenModal,
+    handleCloseModal,
     onStartCountdow,
     onPauseCountdown,
     onStopCountdown,
@@ -110,7 +125,11 @@ function Root({
           <PageTemplate>
             <Switch>
               <Route exact path={Routes.timer} component={TimerPage} />
+              <Route exact path={Routes.projects} component={ProjectsPage} />
+              <Route exact path={Routes.history} component={HistoryPage} />
+              <Route exact path={Routes.settings} component={SettingsPage} />
             </Switch>
+            {isModalVisible && <CycleModal onClose={handleCloseModal} />}
           </PageTemplate>
         </MainTemplate>
       </AppContext.Provider>

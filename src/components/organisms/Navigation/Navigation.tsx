@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
+import { AppContext } from 'context';
 
 import Logo from 'components/atoms/Logo/Logo';
 import Burger from 'components/atoms/Burger/Burger';
@@ -12,6 +13,7 @@ const Nav = styled.nav`
 `;
 
 function Navigation() {
+  const { handleOpenModal } = useContext(AppContext);
   const [isMobileView, toggleMobileView] = useState<boolean>(true);
   const [isMenuVisible, toggleMenuVisibility] = useState<boolean>(true);
 
@@ -38,7 +40,11 @@ function Navigation() {
           />
         )}
         {isMenuVisible && (
-          <NavList asMobile={isMobileView} isVisible={isMenuVisible} />
+          <NavList
+            asMobile={isMobileView}
+            isVisible={isMenuVisible}
+            onOpenModal={handleOpenModal}
+          />
         )}
       </Nav>
     </header>

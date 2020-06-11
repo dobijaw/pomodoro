@@ -1,8 +1,12 @@
 import React from 'react';
+import { Routes } from 'routes';
 import Button from 'components/atoms/Button/Button';
 import styled, { css } from 'styled-components';
+import NavLinkItem from 'components/atoms/NavLinkItem/NavLinkItem';
 
 const List = styled.ul<{ asMobile?: boolean; isVisible?: boolean }>`
+  display: flex;
+  align-items: center;
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -27,18 +31,29 @@ const List = styled.ul<{ asMobile?: boolean; isVisible?: boolean }>`
     `}
 `;
 
-const handleClick = () => {
-  'click';
-};
+const ListItem = styled.li`
+  padding: 0;
+  margin: 0 20px;
+`;
 
 type NavListProps = {
   asMobile?: boolean;
   isVisible?: boolean;
+  onOpenModal: () => void;
 };
 
-const NavList = ({ asMobile, isVisible }: NavListProps) => (
+const NavList = ({ asMobile, isVisible, onOpenModal }: NavListProps) => (
   <List asMobile={asMobile} isVisible={isVisible}>
-    <Button onClick={handleClick}>create cycle</Button>
+    <ListItem>
+      <NavLinkItem to={Routes.projects}>Projects</NavLinkItem>
+    </ListItem>
+    <ListItem>
+      <NavLinkItem to={Routes.history}>Pomodoro history</NavLinkItem>
+    </ListItem>
+    <ListItem>
+      <NavLinkItem to={Routes.settings}>Settings</NavLinkItem>
+    </ListItem>
+    <Button onClick={onOpenModal}>create cycle</Button>
   </List>
 );
 
