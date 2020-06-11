@@ -46,7 +46,7 @@ function TimerPanel() {
   return (
     <div>
       <TimerBox nextCount={nextCount} />
-      <TimerBox isMain time={count.time} />
+      <TimerBox isMain isCycle time={count.time} />
       <Wrapper>
         {isInitialView ? (
           <Button

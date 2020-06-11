@@ -74,7 +74,28 @@ const TimerBox = ({ isMain, isCycle, time = 0, nextCount }: TimerBox) => {
             seconds={currentTime.stringSeconds}
             asMain
           />
-          {/* {isCycle && <CycleProgress />} */}
+          {isCycle && (
+            <CycleProgress
+              cycle={[
+                {
+                  released: true,
+                  key: Math.random(),
+                },
+                {
+                  released: false,
+                  key: Math.random(),
+                },
+                {
+                  released: false,
+                  key: Math.random(),
+                },
+                {
+                  released: false,
+                  key: Math.random(),
+                },
+              ]}
+            />
+          )}
         </Wraper>
       ) : (
         <Wraper>
