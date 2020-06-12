@@ -5,15 +5,21 @@ const Label = styled.label<{
   asMedium?: boolean;
   asLarge?: boolean;
 }>`
+  position: relative;
+  display: block;
   padding: 0;
-  margin: 0;
+  margin: 18px 0;
   color: ${({ theme, asCopy }) =>
     asCopy ? theme.colors.copy : theme.colors.secondary};
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+
+  @media (min-width: 960px) {
+    font-size: 14px;
+  }
 
   ${({ asMedium }) =>
     asMedium &&

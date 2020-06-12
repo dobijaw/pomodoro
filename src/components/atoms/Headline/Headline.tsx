@@ -5,7 +5,7 @@ const Headline = styled.h1<{ customWidth?: string }>`
   padding: 0;
   margin: 0;
   color: ${({ theme }) => theme.colors.copy};
-  font-size: ${({ customWidth, theme }) => customWidth || '32px'};
+  font-size: ${({ customWidth, theme }) => customWidth || '26px'};
   font-weight: 400;
   letter-spacing: 0.08em;
   line-height: 1.5;

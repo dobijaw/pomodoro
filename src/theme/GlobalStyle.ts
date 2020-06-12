@@ -20,7 +20,11 @@ const GlobalStyle = createGlobalStyle`
     }
 
     ::-webkit-scrollbar {
-        width: 10px;
+        width: 4px;
+
+        @media(min-width:960px) {
+            width: 10px;
+        }
     }
 
     ::-webkit-scrollbar-track {
