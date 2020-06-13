@@ -1,9 +1,11 @@
 import React from 'react';
+import PageTemplate from 'templates/PageTemplate';
+import PageTitle from 'components/atoms/PageTitle/PageTitle';
 
 const HistoryPage = () => (
-  <div>
-    <h2>Pomodoro History</h2>
-  </div>
+  <PageTemplate isSubPage>
+    <PageTitle>Pomodoro History</PageTitle>
+  </PageTemplate>
 );
 
 export default HistoryPage;

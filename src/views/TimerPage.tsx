@@ -1,12 +1,14 @@
 import React from 'react';
-import TimerTemplate from 'templates/TimerTemplate';
+import PageTemplate from 'templates/PageTemplate';
 import TimerPanel from 'components/organisms/TimerPanel/TimerPanel';
+import PageTitle from 'components/atoms/PageTitle/PageTitle';
 
 function TimerView() {
   return (
-    <TimerTemplate title="Pomodoro timer">
+    <PageTemplate>
+      <PageTitle screenreaderOnly>Timer</PageTitle>
       <TimerPanel />
-    </TimerTemplate>
+    </PageTemplate>
   );
 }
 

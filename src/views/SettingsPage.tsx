@@ -1,10 +1,12 @@
 import React from 'react';
+import PageTemplate from 'templates/PageTemplate';
 import Input from 'components/atoms/Input/Input';
 import Label from 'components/atoms/Label/Label';
+import PageTitle from 'components/atoms/PageTitle/PageTitle';
 
 const SettingsPage = () => (
-  <div>
-    <h2>Settings</h2>
+  <PageTemplate isSubPage>
+    <PageTitle>Settings</PageTitle>
     <Label htmlFor="projectName">
       Project
       <Input id="projectName" placeholder="Choose project" type="number" />
@@ -20,7 +22,7 @@ const SettingsPage = () => (
         max="20:00:00"
       />
     </Label>
-  </div>
+  </PageTemplate>
 );
 
 export default SettingsPage;

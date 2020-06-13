@@ -1,4 +1,4 @@
-import { Timer } from 'actions/timer';
+import { CLEAR_COUNTDOWN_QUEUE } from 'actions/timer';
 import { countdownQueueItem } from 'models/countdownQueueItem.model';
 
 const initialState: {
@@ -26,7 +26,7 @@ function timer(
   action: { type: string; payload: Object }
 ) {
   switch (action.type) {
-    case Timer.CLEAR_COUNTDOWN_QUEUE:
+    case CLEAR_COUNTDOWN_QUEUE:
       return { ...state, countdownQueue: [] };
     default:
       return state;

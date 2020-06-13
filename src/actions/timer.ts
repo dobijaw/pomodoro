@@ -1,17 +1,19 @@
 import { countdownQueueItem } from 'models/countdownQueueItem.model';
 
-export enum Timer {
-  UPDATE_COUNTDOWN_QUEUE = 'UPDATE_COUNTDOWN_QUEUE',
-  CLEAR_COUNTDOWN_QUEUE = 'CLEAR_COUNTDOWN_QUEUE',
+export const UPDATE_COUNTDOWN_QUEUE = 'UPDATE_COUNTDOWN_QUEUE';
+export const CLEAR_COUNTDOWN_QUEUE = 'CLEAR_COUNTDOWN_QUEUE';
+
+interface IUpdateCountdownQueue {
+  count: countdownQueueItem[];
 }
 
-export const updateCountdownQueue = (count: countdownQueueItem[]) => ({
-  type: Timer.UPDATE_COUNTDOWN_QUEUE,
+export const updateCountdownQueue = (count: IUpdateCountdownQueue) => ({
+  type: UPDATE_COUNTDOWN_QUEUE,
   payload: {
     count,
   },
 });
 
 export const clearCountdownQueue = () => ({
-  type: Timer.CLEAR_COUNTDOWN_QUEUE,
+  type: CLEAR_COUNTDOWN_QUEUE,
 });

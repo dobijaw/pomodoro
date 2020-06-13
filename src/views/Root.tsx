@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import TimerPage from './TimerPage';
 import MainTemplate, { ThemeOptions } from '../templates/MainTemplate';
-import PageTemplate from 'templates/PageTemplate';
 import { Routes } from 'routes';
 import { AppContext } from 'context';
 import { useInterval } from 'hooks/useInterval';
@@ -122,15 +121,13 @@ function Root({
     <BrowserRouter>
       <AppContext.Provider value={AppContextElements}>
         <MainTemplate themeColorSelected={ThemeOptions.DARK}>
-          <PageTemplate>
-            <Switch>
-              <Route exact path={Routes.timer} component={TimerPage} />
-              <Route exact path={Routes.projects} component={ProjectsPage} />
-              <Route exact path={Routes.history} component={HistoryPage} />
-              <Route exact path={Routes.settings} component={SettingsPage} />
-            </Switch>
-            {isModalVisible && <CycleModal onClose={handleCloseModal} />}
-          </PageTemplate>
+          <Switch>
+            <Route exact path={Routes.timer} component={TimerPage} />
+            <Route exact path={Routes.projects} component={ProjectsPage} />
+            <Route exact path={Routes.history} component={HistoryPage} />
+            <Route exact path={Routes.settings} component={SettingsPage} />
+          </Switch>
+          {isModalVisible && <CycleModal onClose={handleCloseModal} />}
         </MainTemplate>
       </AppContext.Provider>
     </BrowserRouter>
