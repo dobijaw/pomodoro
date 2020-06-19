@@ -24,7 +24,7 @@ function Root({
   defaultCountdownQueue,
   clearCountdownQueue,
 }: RootProps) {
-  const [isModalVisible, toggleModalVisibility] = useState(true);
+  const [isModalVisible, toggleModalVisibility] = useState(false);
   const [count, setCount] = useState<countdownQueueItem>(countdownQueue[0]);
   const [nextCount, setNextCount] = useState<countdownQueueItem>(
     countdownQueue[1]

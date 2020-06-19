@@ -43,7 +43,8 @@ const Input = styled.input<{ focusBackgorund?: boolean }>`
   }
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.copy};
+    color: ${({ theme }) => theme.colors.background60};
+    font-weight: 300;
   }
 
   &:focus {
