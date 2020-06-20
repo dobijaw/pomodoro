@@ -1,55 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { countdownQueueItem } from 'models/countdownQueueItem.model';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import TimerPage from './TimerPage';
 import MainTemplate, { ThemeOptions } from '../templates/MainTemplate';
 import { Routes } from 'routes';
 import { AppContext } from 'context';
 import { useInterval } from 'hooks/useInterval';
-import { clearCountdownQueue } from 'actions/timer';
 import CycleModal from 'components/organisms/CycleModal/CycleModal';
 import ProjectsPage from './ProjectsPage';
 import HistoryPage from './HistoryPage';
 import SettingsPage from './SettingsPage';
+import { countdownQueueItem } from 'store/timer/types';
+import { clearCountdownQueue } from 'store/timer/actions';
 
-type RootProps = {
-  countdownQueue: countdownQueueItem[];
-  defaultCountdownQueue: countdownQueueItem[];
-  clearCountdownQueue: Function;
+interface RootState {
+  timer: {
+    customCountdownQueue: countdownQueueItem[];
+    defaultCountdownQueue: countdownQueueItem[];
+  };
+}
+
+const mapState = (state: RootState) => ({
+  customCountdownQueue: state.timer.customCountdownQueue,
+  defaultCountdownQueue: state.timer.defaultCountdownQueue,
+});
+
+const mapDispatch = {
+  clearCountdownQueue: () => clearCountdownQueue(),
 };
 
+const connector = connect(mapState, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
 function Root({
-  countdownQueue,
+  customCountdownQueue,
   defaultCountdownQueue,
   clearCountdownQueue,
-}: RootProps) {
+}: Props) {
   const [isModalVisible, toggleModalVisibility] = useState(false);
-  const [count, setCount] = useState<countdownQueueItem>(countdownQueue[0]);
+  const [count, setCount] = useState<countdownQueueItem>(
+    customCountdownQueue[0]
+  );
   const [nextCount, setNextCount] = useState<countdownQueueItem>(
-    countdownQueue[1]
+    customCountdownQueue[1]
   );
   const [currentPosition, setCurrentPosition] = useState<number>(0);
   const [nextPosition, setNextPosition] = useState<number>(1);
 
   useEffect(() => {
-    countdownQueue.length >= 1
-      ? setCount(countdownQueue[currentPosition])
+    customCountdownQueue.length >= 1
+      ? setCount(customCountdownQueue[currentPosition])
       : setCount(defaultCountdownQueue[currentPosition]);
-  }, [countdownQueue, currentPosition, defaultCountdownQueue]);
+  }, [customCountdownQueue, currentPosition, defaultCountdownQueue]);
 
   useEffect(() => {
     if (
-      countdownQueue.length >= 1 &&
-      countdownQueue.length === currentPosition + 1
+      customCountdownQueue.length >= 1 &&
+      customCountdownQueue.length === currentPosition + 1
     ) {
       setNextCount(defaultCountdownQueue[0]);
-    } else if (countdownQueue.length >= 1) {
-      setNextCount(countdownQueue[nextPosition]);
+    } else if (customCountdownQueue.length >= 1) {
+      setNextCount(customCountdownQueue[nextPosition]);
     } else {
       setNextCount(defaultCountdownQueue[nextPosition]);
     }
-  }, [countdownQueue, currentPosition, defaultCountdownQueue, nextPosition]);
+  }, [
+    customCountdownQueue,
+    currentPosition,
+    defaultCountdownQueue,
+    nextPosition,
+  ]);
 
   const getQueuePosition = (queue: countdownQueueItem[], position: number) =>
     position === queue.length - 1 ? 0 : position + 1;
@@ -62,36 +85,22 @@ function Root({
   const onPauseCountdown = () => stop();
 
   const onStopCountdown = () => {
-    if (countdownQueue.length - 1 === currentPosition) {
+    if (customCountdownQueue.length - 1 === currentPosition) {
       clearCountdownQueue();
     }
 
     const position =
-      countdownQueue.length >= 1
-        ? getQueuePosition(countdownQueue, currentPosition)
+      customCountdownQueue.length >= 1
+        ? getQueuePosition(customCountdownQueue, currentPosition)
         : getQueuePosition(defaultCountdownQueue, currentPosition);
 
-    if (countdownQueue.length === nextPosition + 1) {
+    if (customCountdownQueue.length === nextPosition + 1) {
       setNextPosition(0);
     }
 
-    // if (countdownQueue.length >= 1) {
-    //   if(countdownQueue.length === nextPosition + 1)
-    //   console.log(countdownQueue.length);
-    //   const nextCyclePosition = getQueuePosition(countdownQueue, nextPosition);
-    //   console.log(nextCyclePosition);
-    //   setNextPosition(nextCyclePosition);
-    // } else {
-    //   const nextCyclePosition = getQueuePosition(
-    //     defaultCountdownQueue,
-    //     nextPosition
-    //   );
-    //   setNextPosition(nextCyclePosition);
-    // }
-
     const nextCyclePosition =
-      countdownQueue.length >= 1
-        ? getQueuePosition(countdownQueue, nextPosition)
+      customCountdownQueue.length >= 1
+        ? getQueuePosition(customCountdownQueue, nextPosition)
         : getQueuePosition(defaultCountdownQueue, nextPosition);
 
     setCurrentPosition(position);
@@ -134,20 +143,4 @@ function Root({
   );
 }
 
-type Props = {
-  timer: {
-    countdownQueue: countdownQueueItem[];
-    defaultCountdownQueue: countdownQueueItem[];
-  };
-};
-
-const mapDispatchToProps = (dispatch: Function) => ({
-  clearCountdownQueue: () => dispatch(clearCountdownQueue()),
-});
-
-const mapStateToProps = ({ timer }: Props) => ({
-  countdownQueue: timer.countdownQueue,
-  defaultCountdownQueue: timer.defaultCountdownQueue,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Root);
+export default connector(Root);
