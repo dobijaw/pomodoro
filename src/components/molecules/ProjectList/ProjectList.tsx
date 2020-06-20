@@ -1,9 +1,20 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Project } from 'store/projects/types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { removeProject } from 'store/projects/actions';
 import IconButton from 'components/atoms/IconButton/IconButton';
+import Count from 'components/atoms/Count/Count';
+
+const itemIn = keyframes`
+  0% {
+    transform: translateY(10px);
+  }
+
+  10% {
+    transform: translateY(0);
+  }
+`;
 
 const List = styled.ul`
   padding: 0;
@@ -21,6 +32,22 @@ const ListItem = styled.li`
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.2em;
+  animation: ${itemIn} 5s;
+
+  &:not(:first-of-type) {
+    padding: 20px 0;
+    border-top: 1px solid ${({ theme }) => theme.colors.background20};
+  }
+`;
+
+const ItemWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const StyledCount = styled(Count)`
+  margin-right: 60px;
 `;
 
 const mapDispatch = {
@@ -40,12 +67,14 @@ const ProjectList = ({ projects, removeProject }: ProjectListProps) => (
     {projects.map((p) => (
       <ListItem key={p.id}>
         <span>{p.name}</span>
-        <span>{p.sessionCount}</span>
-        <IconButton
-          type="button"
-          onClick={() => removeProject(p.id)}
-          asDelete
-        />
+        <ItemWrapper>
+          <StyledCount>{p.sessionCount}</StyledCount>
+          <IconButton
+            type="button"
+            onClick={() => removeProject(p.id)}
+            asDelete
+          />
+        </ItemWrapper>
       </ListItem>
     ))}
   </List>

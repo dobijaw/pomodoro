@@ -9,6 +9,7 @@ declare module 'styled-components' {
       background60: string;
       primary: string;
       secondary: string;
+      error: string;
       copy: string;
     };
   }

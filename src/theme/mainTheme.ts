@@ -8,6 +8,7 @@ export const themeDark: DefaultTheme = {
     background60: '#424550',
     primary: '#E8C7C8',
     secondary: '#9E8588',
+    error: '#F16B8A',
     copy: '#ffffff',
   },
 };
@@ -20,6 +21,7 @@ export const themeLight: DefaultTheme = {
     background60: '#D1CFE6',
     primary: '#270CD6',
     secondary: '#1A00C4',
+    error: '#F16B8A',
     copy: '#1A1A1A',
   },
 };

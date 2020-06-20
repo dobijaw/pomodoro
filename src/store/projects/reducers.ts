@@ -1,22 +1,6 @@
 import { ProjectsState, ProjectsActionTypes, ProjectsTypes } from './types';
 
-const initialState: ProjectsState = [
-  {
-    id: 1,
-    name: 'string',
-    sessionCount: 2,
-  },
-  {
-    id: 2,
-    name: 'string',
-    sessionCount: 12,
-  },
-  {
-    id: 3,
-    name: 'string',
-    sessionCount: 123,
-  },
-];
+const initialState: ProjectsState = [];
 
 export function projectReducer(
   state = initialState,

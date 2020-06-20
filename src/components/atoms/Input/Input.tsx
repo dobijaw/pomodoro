@@ -43,13 +43,19 @@ const Input = styled.input<{ focusBackgorund?: boolean }>`
   }
 
   &::placeholder {
+    opacity: 1;
     color: ${({ theme }) => theme.colors.background60};
     font-weight: 300;
+    transition: opacity 0.35s ease-in-out;
   }
 
   &:focus {
     outline: 0;
     border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
+
+    &::placeholder {
+      opacity: 0;
+    }
   }
 `;
 
