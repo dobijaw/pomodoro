@@ -29,7 +29,7 @@ function AddProject() {
   const getProjects = ({ projects }: RootState) => projects;
   const projects = useSelector(getProjects);
 
-  const [newProjectValues, setNewProjectValues] = useState<string>('');
+  const [newProjectValue, setNewProjectValue] = useState<string>('');
   const [isTooLong, toggleLongStatus] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -56,39 +56,39 @@ function AddProject() {
 
     if (value.length >= 21) {
       toggleLongStatus(true);
-      setNewProjectValues(value);
+      setNewProjectValue(value);
       return;
     }
 
     toggleLongStatus(false);
-    setNewProjectValues(value);
+    setNewProjectValue(value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (isTheSameNameExist(newProjectValues)) {
+    if (isTheSameNameExist(newProjectValue)) {
       setError('The same project exist. Enter another name.');
       return;
     }
 
-    if (isTooLong) return;
+    if (isTooLong || !newProjectValue) return;
 
     dispatch(
       addProject({
         id: generateUnicId(),
-        name: newProjectValues,
+        name: newProjectValue,
         sessionCount: 0,
       })
     );
 
     toggleLongStatus(false);
-    setNewProjectValues('');
+    setNewProjectValue('');
   };
 
   useEffect(() => {
-    if (!!error && !isTheSameNameExistCallback(newProjectValues)) setError('');
-  }, [error, isTheSameNameExistCallback, newProjectValues]);
+    if (!!error && !isTheSameNameExistCallback(newProjectValue)) setError('');
+  }, [error, isTheSameNameExistCallback, newProjectValue]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -97,7 +97,7 @@ function AddProject() {
         <Input
           type="text"
           onChange={handleChange}
-          value={newProjectValues}
+          value={newProjectValue}
           placeholder="Type new project name"
         />
         {!!error && <FormError>{error}</FormError>}
