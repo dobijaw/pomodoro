@@ -2,6 +2,8 @@ import React, { ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '../theme/GlobalStyle';
 import { themeDark, themeLight } from '../theme/mainTheme';
+import { useSelector } from 'react-redux';
+import { ThemeColor, ThemeColorTypes } from 'store/settings/types';
 
 export enum ThemeOptions {
   DARK = 'DARK',
@@ -10,23 +12,22 @@ export enum ThemeOptions {
 
 type MainTemplateProps = {
   children: ReactNode;
-  themeColorSelected: string;
 };
 
-function MainTemplate({ children, themeColorSelected }: MainTemplateProps) {
-  function whichThemeIsInUse(themeColorSelected: string) {
-    switch (themeColorSelected) {
-      case ThemeOptions.DARK:
-        return themeDark;
-      case ThemeOptions.LIGHT:
-        return themeLight;
-      default:
-        return themeDark;
-    }
-  }
+interface RootState {
+  settings: {
+    colorTheme: ThemeColor;
+  };
+}
+
+function MainTemplate({ children }: MainTemplateProps) {
+  const getThemeColor = (state: RootState) => state.settings.colorTheme;
+  const themeColor = useSelector(getThemeColor);
 
   return (
-    <ThemeProvider theme={whichThemeIsInUse(themeColorSelected)}>
+    <ThemeProvider
+      theme={themeColor === ThemeColorTypes.DARK ? themeDark : themeLight}
+    >
       <GlobalStyle />
       {children}
     </ThemeProvider>

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { AppContext } from 'context';
+import { useSelector } from 'react-redux';
 
 import Button from 'components/atoms/Button/Button';
 import TimerBox from 'components/molecules/TimerBox/TimerBox';
@@ -10,16 +11,21 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
+interface RootState {
+  cycle: {
+    currentTime: number;
+  };
+}
+
 function TimerPanel() {
-  const {
-    onStartCountdow,
-    onPauseCountdown,
-    onStopCountdown,
-    nextCount,
-    count,
-  } = useContext(AppContext);
+  const { onStartCountdow, onPauseCountdown, onStopCountdown } = useContext(
+    AppContext
+  );
   const [isInitialView, setInitialView] = useState<boolean>(true);
   const [isTurnOn, toggleTurn] = useState<boolean>(false);
+
+  const getCurrentTime = (state: RootState) => state.cycle.currentTime;
+  const currentTime = useSelector(getCurrentTime);
 
   const startClickHandler = () => {
     onStartCountdow();
@@ -45,8 +51,8 @@ function TimerPanel() {
 
   return (
     <div>
-      <TimerBox nextCount={nextCount} />
-      <TimerBox isMain isCycle time={count.time} />
+      {/* <TimerBox nextSession={nextSession} /> */}
+      <TimerBox isMain isCycle time={currentTime} />
       <Wrapper>
         {isInitialView ? (
           <Button

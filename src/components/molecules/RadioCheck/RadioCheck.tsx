@@ -48,7 +48,7 @@ const StyledLabel = styled(Label)`
   }
 `;
 
-type RadioCheckProps = {
+type Props = {
   label: string;
   type: 'radio' | 'checkbox';
   name: string;
@@ -57,14 +57,7 @@ type RadioCheckProps = {
   id: string;
 };
 
-const RadioCheck = ({
-  id,
-  label,
-  type,
-  name,
-  onChange,
-  checked,
-}: RadioCheckProps) => (
+const RadioCheck = ({ id, label, type, name, onChange, checked }: Props) => (
   <StyledLabel>
     {label}
     <Input

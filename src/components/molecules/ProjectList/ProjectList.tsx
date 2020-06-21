@@ -26,7 +26,7 @@ const ListItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 20px 0;
   color: ${({ theme }) => theme.colors.copy};
   font-size: 22px;
   font-weight: 400;
@@ -35,7 +35,6 @@ const ListItem = styled.li`
   animation: ${itemIn} 5s;
 
   &:not(:first-of-type) {
-    padding: 20px 0;
     border-top: 1px solid ${({ theme }) => theme.colors.background20};
   }
 `;

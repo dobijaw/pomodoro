@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 import { projectReducer } from './projects/reducers';
-import { timerReducer } from './timer/reducers';
+import { cycleReducer } from './cycle/reducers';
+import { settingsReducer } from './settings/reducers';
 import reports from 'reducers/reports';
 
 export const rootReducer = combineReducers({
   projects: projectReducer,
-  timer: timerReducer,
+  cycle: cycleReducer,
+  settings: settingsReducer,
   reports,
 });
 

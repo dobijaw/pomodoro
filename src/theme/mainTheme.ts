@@ -16,12 +16,12 @@ export const themeDark: DefaultTheme = {
 export const themeLight: DefaultTheme = {
   colors: {
     background: '#ffffff',
-    background20: '#E9E8F5',
-    background40: '#DAD8EC',
-    background60: '#D1CFE6',
-    primary: '#270CD6',
-    secondary: '#1A00C4',
+    background20: '#E7E8EA',
+    background40: '#D1D3D6',
+    background60: '#B9BDC1',
+    primary: '#192532',
+    secondary: '#192532',
     error: '#F16B8A',
-    copy: '#1A1A1A',
+    copy: '#192532',
   },
 };

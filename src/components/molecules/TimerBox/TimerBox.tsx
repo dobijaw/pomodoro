@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { countdownQueueItem } from 'models/countdownQueueItem.model';
 import styled, { css } from 'styled-components';
 import Timer from 'components/molecules/Timer/Timer';
@@ -22,58 +22,27 @@ type TimerBox = {
   isMain?: boolean;
   isCycle?: boolean;
   time?: number;
-  nextCount?: countdownQueueItem;
+  nextSession?: countdownQueueItem;
 };
 
-type currentTimeInterface = {
-  stringMinutes: string;
-  stringSeconds: string;
-};
+const TimerBox = ({ isMain, isCycle, time = 0, nextSession }: TimerBox) => {
+  function getSeconds(ms: number): string {
+    const seconds = Math.floor((ms % 60000) / 1000);
 
-const TimerBox = ({ isMain, isCycle, time = 0, nextCount }: TimerBox) => {
-  const [currentTime, setCurrentTime] = useState<currentTimeInterface>({
-    stringMinutes: '00',
-    stringSeconds: '00',
-  });
-  const [nextTime, setNextTime] = useState<currentTimeInterface>({
-    stringMinutes: '00',
-    stringSeconds: '00',
-  });
+    return seconds < 10 ? `0${seconds}` : `${seconds}`;
+  }
 
-  const generateOutputTime = (timeInput: number) => {
-    const minutes = Math.floor(timeInput / 60);
-    const seconds = Math.floor(timeInput % 60);
+  function getMinutes(ms: number): string {
+    const minutes = Math.floor(ms / 60 / 1000);
 
-    const stringMinutes = minutes <= 9 ? `0${minutes}` : `${minutes}`;
-    const stringSeconds = seconds <= 9 ? `0${seconds}` : `${seconds}`;
-
-    return {
-      stringMinutes,
-      stringSeconds,
-    };
-  };
-
-  useEffect(() => {
-    const curTimeOutput = generateOutputTime(time);
-    setCurrentTime(curTimeOutput);
-  }, [time]);
-
-  useEffect(() => {
-    if (nextCount) {
-      const curTimeOutput = generateOutputTime(nextCount?.time);
-      setNextTime(curTimeOutput);
-    }
-  }, [nextCount]);
+    return minutes < 10 ? `0${minutes}` : `${minutes}`;
+  }
 
   return (
     <>
       {isMain ? (
         <Wraper asMain>
-          <Timer
-            minutes={currentTime.stringMinutes}
-            seconds={currentTime.stringSeconds}
-            asMain
-          />
+          <Timer minutes={getMinutes(time)} seconds={getSeconds(time)} asMain />
           {isCycle && (
             <CycleProgress
               cycle={[
@@ -100,12 +69,9 @@ const TimerBox = ({ isMain, isCycle, time = 0, nextCount }: TimerBox) => {
       ) : (
         <Wraper>
           <Label as="span" asCopy asMedium>
-            Next {nextCount?.type}
+            Next {nextSession?.type}
           </Label>
-          <Timer
-            minutes={nextTime.stringMinutes}
-            seconds={nextTime.stringSeconds}
-          />
+          <Timer minutes={getMinutes(time)} seconds={getSeconds(time)} />
         </Wraper>
       )}
     </>
