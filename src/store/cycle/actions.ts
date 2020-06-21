@@ -22,3 +22,10 @@ export const setCurrentType = (type: SessionTypes) => ({
     type,
   },
 });
+
+export const toggleTimerRunning = (isRunning: boolean) => ({
+  type: CyclesTypes.TOGGLE_TIMER_RUNNING,
+  payload: {
+    isRunning,
+  },
+});

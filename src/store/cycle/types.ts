@@ -3,6 +3,11 @@ export enum SessionEnum {
   REST = 'REST',
 }
 
+export enum CycleEnum {
+  CUSTOM = 'CUSTOM',
+  DEFAULT = 'DEFAULT',
+}
+
 export interface Action {
   type: SessionEnum.ACTION;
   time: number;
@@ -15,8 +20,10 @@ export interface Rest {
 
 export type Session = [Action, Rest];
 export type SessionTypes = SessionEnum.ACTION | SessionEnum.REST;
+export type CycleTypes = CycleEnum.CUSTOM | CycleEnum.DEFAULT;
 
 export interface CyclesState {
+  isRunning: boolean;
   currentTime: number;
   currentType: SessionTypes;
   customCycle: Session[];
@@ -28,6 +35,7 @@ export enum CyclesTypes {
   CLEAR_CYCLE = 'CLEAR_CYCLE',
   SET_CURRENT_TIME = 'SET_CURRENT_TIME',
   SET_CURRENT_TYPE = 'SET_CURRENT_TYPE',
+  TOGGLE_TIMER_RUNNING = ' TOGGLE_TIMER_RUNNING',
 }
 
 interface AddToCycleAction {
@@ -46,10 +54,17 @@ interface SetCurrentTimeAction {
   };
 }
 
-interface SetCurrentType {
+interface SetCurrentTypeAction {
   type: typeof CyclesTypes.SET_CURRENT_TYPE;
   payload: {
     type: SessionTypes;
+  };
+}
+
+interface ToggleTimerRunningAction {
+  type: typeof CyclesTypes.TOGGLE_TIMER_RUNNING;
+  payload: {
+    isRunning: boolean;
   };
 }
 
@@ -57,4 +72,5 @@ export type CycleActionTypes =
   | AddToCycleAction
   | ClearCycleAction
   | SetCurrentTimeAction
-  | SetCurrentType;
+  | SetCurrentTypeAction
+  | ToggleTimerRunningAction;

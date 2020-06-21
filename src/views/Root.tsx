@@ -15,6 +15,7 @@ import {
   clearCycle,
   setCurrentTime,
   setCurrentType,
+  toggleTimerRunning,
 } from 'store/cycle/actions';
 
 interface RootState {
@@ -32,6 +33,7 @@ const mapDispatch = {
   clearCycle: () => clearCycle(),
   setCurrentTime: (time: number) => setCurrentTime(time),
   setCurrentType: (type: SessionTypes) => setCurrentType(type),
+  toggleTimerRunning: (isRunning: boolean) => toggleTimerRunning(isRunning),
 };
 
 const connector = connect(mapState, mapDispatch);
@@ -45,17 +47,18 @@ function Root({
   clearCycle,
   setCurrentTime,
   setCurrentType,
+  toggleTimerRunning,
 }: PropsFromRedux) {
   const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
 
   const getCycle = (customCycle: Session[], defaultCycle: Session[]) =>
     !!customCycle.length ? customCycle : defaultCycle;
 
-  const getCycleType = (customCycle: Session[], defaultCycle: Session[]) =>
+  const getCycleType = (customCycle: Session[]) =>
     !!customCycle.length ? 'CUSTOM' : 'DEFAULT';
 
   const [cycleType, setCycleType] = useState<'CUSTOM' | 'DEFAULT'>(
-    getCycleType(customCycle, defaultCycle)
+    getCycleType(customCycle)
   );
   const [cycle, setCycle] = useState<Session[]>(
     getCycle(customCycle, defaultCycle)
@@ -66,7 +69,7 @@ function Root({
 
   useEffect(() => {
     setCycle(getCycle(customCycle, defaultCycle));
-    setCycleType(getCycleType(customCycle, defaultCycle));
+    setCycleType(getCycleType(customCycle));
   }, [customCycle, defaultCycle]);
 
   useEffect(() => {
@@ -88,14 +91,24 @@ function Root({
 
   function onStartCountdow() {
     start();
+    toggleTimerRunning(true);
   }
+
+  useEffect(() => {
+    if (currentTime - 10 < 0) {
+      stop();
+      toggleTimerRunning(false);
+    }
+  }, [currentTime, stop, toggleTimerRunning]);
 
   function onPauseCountdown() {
     stop();
+    toggleTimerRunning(false);
   }
 
   function onStopCountdown() {
     stop();
+    toggleTimerRunning(false);
 
     if (curSessionPosition === 0) {
       setCurSessionPosition(1);

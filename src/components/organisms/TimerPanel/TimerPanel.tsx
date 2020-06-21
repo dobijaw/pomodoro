@@ -14,6 +14,7 @@ const Wrapper = styled.div`
 interface RootState {
   cycle: {
     currentTime: number;
+    isRunning: boolean;
   };
 }
 
@@ -22,31 +23,28 @@ function TimerPanel() {
     AppContext
   );
   const [isInitialView, setInitialView] = useState<boolean>(true);
-  const [isTurnOn, toggleTurn] = useState<boolean>(false);
 
   const getCurrentTime = (state: RootState) => state.cycle.currentTime;
+  const checkIsRunning = (state: RootState) => state.cycle.isRunning;
   const currentTime = useSelector(getCurrentTime);
+  const isRunning = useSelector(checkIsRunning);
 
   const startClickHandler = () => {
     onStartCountdow();
     setInitialView(false);
-    toggleTurn(true);
   };
 
   const pauseClickHandler = () => {
     onPauseCountdown();
-    toggleTurn(false);
   };
 
   const continueClickHandler = () => {
     onStartCountdow();
-    toggleTurn(true);
   };
 
   const stopClickHandler = () => {
     onStopCountdown();
     setInitialView(true);
-    toggleTurn(false);
   };
 
   return (
@@ -54,7 +52,7 @@ function TimerPanel() {
       {/* <TimerBox nextSession={nextSession} /> */}
       <TimerBox isMain isCycle time={currentTime} />
       <Wrapper>
-        {isInitialView ? (
+        {!isRunning && isInitialView ? (
           <Button
             asPrimary
             withMargin
@@ -63,7 +61,7 @@ function TimerPanel() {
           >
             Start
           </Button>
-        ) : isTurnOn ? (
+        ) : isRunning ? (
           <>
             <Button
               asPrimary

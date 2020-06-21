@@ -6,11 +6,12 @@ import {
 } from './types';
 
 const initialState: CyclesState = {
+  isRunning: false,
   currentTime: 0,
   currentType: SessionEnum.ACTION,
   customCycle: [
     [
-      { type: SessionEnum.ACTION, time: 45 * 60 * 1000 },
+      { type: SessionEnum.ACTION, time: 0.1 * 60 * 1000 },
       { type: SessionEnum.REST, time: 9 * 60 * 1000 },
     ],
     [
@@ -50,6 +51,11 @@ export function cycleReducer(state = initialState, action: CycleActionTypes) {
       return {
         ...state,
         currentType: action.payload.type,
+      };
+    case CyclesTypes.TOGGLE_TIMER_RUNNING:
+      return {
+        ...state,
+        isRunning: action.payload.isRunning,
       };
     default:
       return state;
