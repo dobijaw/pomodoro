@@ -6,6 +6,7 @@ import {
 } from './types';
 
 const initialState: CyclesState = {
+  cyclePosition: 0,
   isRunning: false,
   currentTime: 0,
   currentType: SessionEnum.ACTION,
@@ -56,6 +57,11 @@ export function cycleReducer(state = initialState, action: CycleActionTypes) {
       return {
         ...state,
         isRunning: action.payload.isRunning,
+      };
+    case CyclesTypes.SET_CYCLE_POSITION:
+      return {
+        ...state,
+        cyclePosition: action.payload.position,
       };
     default:
       return state;

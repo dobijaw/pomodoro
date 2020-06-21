@@ -16,6 +16,7 @@ import {
   setCurrentTime,
   setCurrentType,
   toggleTimerRunning,
+  setCyclePosition,
 } from 'store/cycle/actions';
 
 interface RootState {
@@ -27,6 +28,7 @@ const mapState = (state: RootState) => ({
   defaultCycle: state.cycle.defaultCycle,
   currentTime: state.cycle.currentTime,
   currentType: state.cycle.currentType,
+  cyclePosition: state.cycle.cyclePosition,
 });
 
 const mapDispatch = {
@@ -34,12 +36,14 @@ const mapDispatch = {
   setCurrentTime: (time: number) => setCurrentTime(time),
   setCurrentType: (type: SessionTypes) => setCurrentType(type),
   toggleTimerRunning: (isRunning: boolean) => toggleTimerRunning(isRunning),
+  setCyclePosition: (position: number) => setCyclePosition(position),
 };
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Root({
+  cyclePosition,
   customCycle,
   currentTime,
   currentType,
@@ -48,6 +52,7 @@ function Root({
   setCurrentTime,
   setCurrentType,
   toggleTimerRunning,
+  setCyclePosition,
 }: PropsFromRedux) {
   const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
 
@@ -82,6 +87,10 @@ function Root({
     setCurrentTime,
     setCurrentType,
   ]);
+
+  useEffect(() => {
+    setCyclePosition(curCyclePosition);
+  }, [curCyclePosition, setCyclePosition]);
 
   function countdown() {
     setCurrentTime(currentTime - 10);

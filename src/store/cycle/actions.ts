@@ -29,3 +29,10 @@ export const toggleTimerRunning = (isRunning: boolean) => ({
     isRunning,
   },
 });
+
+export const setCyclePosition = (position: number) => ({
+  type: CyclesTypes.SET_CYCLE_POSITION,
+  payload: {
+    position,
+  },
+});

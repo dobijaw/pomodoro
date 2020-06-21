@@ -23,9 +23,16 @@ type TimerBox = {
   isCycle?: boolean;
   time?: number;
   nextSession?: countdownQueueItem;
+  cycle?: { released: boolean; key: number }[];
 };
 
-const TimerBox = ({ isMain, isCycle, time = 0, nextSession }: TimerBox) => {
+const TimerBox = ({
+  isMain,
+  isCycle,
+  time = 0,
+  nextSession,
+  cycle,
+}: TimerBox) => {
   function getSeconds(ms: number): string {
     const seconds = Math.floor((ms % 60000) / 1000);
 
@@ -43,28 +50,7 @@ const TimerBox = ({ isMain, isCycle, time = 0, nextSession }: TimerBox) => {
       {isMain ? (
         <Wraper asMain>
           <Timer minutes={getMinutes(time)} seconds={getSeconds(time)} asMain />
-          {isCycle && (
-            <CycleProgress
-              cycle={[
-                {
-                  released: true,
-                  key: Math.random(),
-                },
-                {
-                  released: false,
-                  key: Math.random(),
-                },
-                {
-                  released: false,
-                  key: Math.random(),
-                },
-                {
-                  released: false,
-                  key: Math.random(),
-                },
-              ]}
-            />
-          )}
+          {isCycle && <CycleProgress cycle={cycle} />}
         </Wraper>
       ) : (
         <Wraper>

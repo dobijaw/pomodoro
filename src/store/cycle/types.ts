@@ -23,6 +23,7 @@ export type SessionTypes = SessionEnum.ACTION | SessionEnum.REST;
 export type CycleTypes = CycleEnum.CUSTOM | CycleEnum.DEFAULT;
 
 export interface CyclesState {
+  cyclePosition: number;
   isRunning: boolean;
   currentTime: number;
   currentType: SessionTypes;
@@ -35,7 +36,8 @@ export enum CyclesTypes {
   CLEAR_CYCLE = 'CLEAR_CYCLE',
   SET_CURRENT_TIME = 'SET_CURRENT_TIME',
   SET_CURRENT_TYPE = 'SET_CURRENT_TYPE',
-  TOGGLE_TIMER_RUNNING = ' TOGGLE_TIMER_RUNNING',
+  TOGGLE_TIMER_RUNNING = 'TOGGLE_TIMER_RUNNING',
+  SET_CYCLE_POSITION = 'SET_CYCLE_POSITION',
 }
 
 interface AddToCycleAction {
@@ -68,9 +70,17 @@ interface ToggleTimerRunningAction {
   };
 }
 
+interface SetCyclePositionAction {
+  type: typeof CyclesTypes.SET_CYCLE_POSITION;
+  payload: {
+    position: number;
+  };
+}
+
 export type CycleActionTypes =
   | AddToCycleAction
   | ClearCycleAction
   | SetCurrentTimeAction
   | SetCurrentTypeAction
-  | ToggleTimerRunningAction;
+  | ToggleTimerRunningAction
+  | SetCyclePositionAction;
