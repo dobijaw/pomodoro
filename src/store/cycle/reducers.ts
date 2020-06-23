@@ -3,13 +3,16 @@ import {
   CycleActionTypes,
   CyclesTypes,
   SessionEnum,
-} from './types';
+} from "./types";
 
 const initialState: CyclesState = {
+  sessionPosition: 0,
   cyclePosition: 0,
   isRunning: false,
   currentTime: 0,
+  nextTime: 0,
   currentType: SessionEnum.ACTION,
+  nextType: SessionEnum.REST,
   customCycle: [
     [
       { type: SessionEnum.ACTION, time: 0.1 * 60 * 1000 },

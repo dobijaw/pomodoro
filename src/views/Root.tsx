@@ -1,34 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import TimerPage from './TimerPage';
-import MainTemplate from '../templates/MainTemplate';
-import { Routes } from 'routes';
-import { AppContext } from 'context';
-import { useInterval } from 'hooks/useInterval';
-import CycleModal from 'components/organisms/CycleModal/CycleModal';
-import ProjectsPage from './ProjectsPage';
-import HistoryPage from './HistoryPage';
-import SettingsPage from './SettingsPage';
-import { CyclesState, Session, SessionTypes } from 'store/cycle/types';
+import React, { useState, useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import TimerPage from "./TimerPage";
+import MainTemplate from "../templates/MainTemplate";
+import { Routes } from "routes";
+import { AppContext } from "context";
+import { useInterval } from "hooks/useInterval";
+import CycleModal from "components/organisms/CycleModal/CycleModal";
+import ProjectsPage from "./ProjectsPage";
+import HistoryPage from "./HistoryPage";
+import SettingsPage from "./SettingsPage";
+import { CyclesState, Session, SessionTypes } from "store/cycle/types";
 import {
   clearCycle,
   setCurrentTime,
   setCurrentType,
   toggleTimerRunning,
   setCyclePosition,
-} from 'store/cycle/actions';
+} from "store/cycle/actions";
 
 interface RootState {
   cycle: CyclesState;
 }
 
-const mapState = (state: RootState) => ({
-  customCycle: state.cycle.customCycle,
-  defaultCycle: state.cycle.defaultCycle,
-  currentTime: state.cycle.currentTime,
-  currentType: state.cycle.currentType,
-  cyclePosition: state.cycle.cyclePosition,
+const mapState = ({ cycle }: RootState) => ({
+  customCycle: cycle.customCycle,
+  defaultCycle: cycle.defaultCycle,
+  currentTime: cycle.currentTime,
 });
 
 const mapDispatch = {
@@ -43,10 +41,8 @@ const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 function Root({
-  cyclePosition,
   customCycle,
   currentTime,
-  currentType,
   defaultCycle,
   clearCycle,
   setCurrentTime,
@@ -60,9 +56,9 @@ function Root({
     !!customCycle.length ? customCycle : defaultCycle;
 
   const getCycleType = (customCycle: Session[]) =>
-    !!customCycle.length ? 'CUSTOM' : 'DEFAULT';
+    !!customCycle.length ? "CUSTOM" : "DEFAULT";
 
-  const [cycleType, setCycleType] = useState<'CUSTOM' | 'DEFAULT'>(
+  const [cycleType, setCycleType] = useState<"CUSTOM" | "DEFAULT">(
     getCycleType(customCycle)
   );
   const [cycle, setCycle] = useState<Session[]>(
@@ -124,7 +120,7 @@ function Root({
     } else if (curSessionPosition === 1) {
       setCurSessionPosition(0);
 
-      if (cycleType === 'CUSTOM' && curCyclePosition + 1 > cycle.length - 1)
+      if (cycleType === "CUSTOM" && curCyclePosition + 1 > cycle.length - 1)
         clearCycle();
 
       setCurCyclePosition(
