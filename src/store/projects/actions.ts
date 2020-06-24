@@ -5,7 +5,7 @@ export const addProject = (newProject: Project): ProjectsActionTypes => ({
   payload: newProject,
 });
 
-export const removeProject = (projectId: number): ProjectsActionTypes => ({
+export const removeProject = (projectId: string): ProjectsActionTypes => ({
   type: ProjectsTypes.REMOVE_PROJECT,
   payload: {
     id: projectId,

@@ -1,5 +1,5 @@
 export interface Project {
-  id: number;
+  id: string;
   name: string;
   sessionCount: number;
 }
@@ -20,7 +20,7 @@ export interface AddProjectAction {
 export interface RemoveProjectAction {
   type: typeof ProjectsTypes.REMOVE_PROJECT;
   payload: {
-    id: number;
+    id: string;
   };
 }
 

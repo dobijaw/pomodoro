@@ -50,7 +50,7 @@ const StyledCount = styled(Count)`
 `;
 
 const mapDispatch = {
-  removeProject: (id: number) => removeProject(id),
+  removeProject: (id: string) => removeProject(id),
 };
 
 const connector = connect(null, mapDispatch);

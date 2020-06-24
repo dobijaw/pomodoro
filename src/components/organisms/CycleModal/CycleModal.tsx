@@ -138,7 +138,7 @@ interface CustomValue {
 }
 
 const customData = {
-  id: String(generateUnicId([])),
+  id: generateUnicId([]),
   sessionTime: 0,
   restTime: 0,
 };
@@ -168,7 +168,7 @@ function CycleModal({ onClose }: CycleModal) {
 
   function addNewCustomSession() {
     if (customValues.length < 5) {
-      const unicId = generateUnicId(customValues.map((el) => Number(el.id)));
+      const unicId = generateUnicId(customValues.map((el) => el.id));
 
       setCustomValues([
         ...customValues,

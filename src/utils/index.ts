@@ -20,11 +20,11 @@ export function getSeconds(
   return seconds < 10 ? `0${seconds}` : `${seconds}`;
 }
 
-export function generateUnicId(ids: number[]) {
-  let id: number;
+export function generateUnicId(ids: string[]) {
+  let id: string;
 
   do {
-    id = Math.floor(Math.random() * 10 ** 20);
+    id = String(Math.floor(Math.random() * 10 ** 20));
   } while (ids.includes(id));
 
   return id;

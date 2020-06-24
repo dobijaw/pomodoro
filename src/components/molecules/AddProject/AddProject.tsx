@@ -7,6 +7,7 @@ import Input from 'components/atoms/Input/Input';
 import Label from 'components/atoms/Label/Label';
 import IconButton from 'components/atoms/IconButton/IconButton';
 import FormError from 'components/atoms/FormError/FormError';
+import { generateUnicId } from 'utils';
 
 const Form = styled.form`
   display: flex;
@@ -32,17 +33,6 @@ function AddProject() {
   const [newProjectValue, setNewProjectValue] = useState<string>('');
   const [isTooLong, toggleLongStatus] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-
-  const generateUnicId = () => {
-    const projectsId = projects.map((p) => p.id);
-    let id: number;
-
-    do {
-      id = Math.floor(Math.random() * 10 ** 20);
-    } while (projectsId.includes(id));
-
-    return id;
-  };
 
   const isTheSameNameExist = (name: string) =>
     projects.map((p) => p.name).includes(name);
@@ -76,7 +66,7 @@ function AddProject() {
 
     dispatch(
       addProject({
-        id: generateUnicId(),
+        id: generateUnicId(projects.map((i) => i.id)),
         name: newProjectValue,
         sessionCount: 0,
       })
