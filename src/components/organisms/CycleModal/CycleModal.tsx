@@ -1,12 +1,7 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  FormEvent,
-} from 'react';
+import React, { useState, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { useClickOutside } from 'hooks/useClickOutside';
 
 import { SessionEnum, Session } from 'store/cycle/types';
 import { addToCycle, clearAndAddToCycle } from 'store/cycle/actions';
@@ -113,7 +108,7 @@ const SesionNumber = styled.span`
   color: ${({ theme }) => theme.colors.secondary};
 `;
 
-interface RootState {
+interface State {
   cycle: {
     customCycle: Session[];
   };
@@ -123,87 +118,50 @@ interface CycleModal {
   onClose: () => void;
 }
 
-interface SameValues {
+interface SameValue {
   sessionNumber: number;
   sessionTime: number;
   restTime: number;
 }
 
-const SameValuesData = {
+const sameData = {
   sessionNumber: 0,
   sessionTime: 0,
   restTime: 0,
 };
 
-function CycleModal({ onClose }: CycleModal) {
-  const [isSameSession, toggleSession] = useState<boolean>(true);
-  const [sameValues, setSameValues] = useState<SameValues>(SameValuesData);
+interface CustomValue {
+  id: number;
+  sessionTime: number;
+  restTime: number;
+}
 
-  const [clearCycleInput, setClearCycleInput] = useState<boolean>(false);
-  const boxModalRef = useRef(null);
-  const checkIfCustomCycle = (state: RootState) =>
-    !!state.cycle.customCycle.length;
-  const isCustomCycle = useSelector(checkIfCustomCycle);
+const customData = {
+  id: Math.random(),
+  sessionTime: 0,
+  restTime: 0,
+};
+
+function CycleModal({ onClose }: CycleModal) {
+  const customCycle = useSelector(({ cycle }: State) => cycle.customCycle);
   const dispatch = useDispatch();
 
-  function closeClickingOutside(event: MouseEvent) {
-    if (!(boxModalRef.current! as any).contains(event.target)) onClose();
-  }
+  const [isClearChecked, toggleClearChecked] = useState<boolean>(false);
+  const [isSameSession, toggleSession] = useState<boolean>(true);
+  const [sameValues, setSameValues] = useState<SameValue>(sameData);
+  const [customValues, setCustomValues] = useState<CustomValue[]>([customData]);
 
-  const closeClickingOutsideCallback = useCallback(closeClickingOutside, []);
+  const modalRef = useClickOutside(onClose);
 
-  useEffect(() => {
-    document.addEventListener('click', closeClickingOutsideCallback);
+  const getSameValue = (state: SameValue, value: number, name: string) => ({
+    ...state,
+    [name]: value,
+  });
 
-    return () =>
-      document.removeEventListener('click', closeClickingOutsideCallback);
-  }, [closeClickingOutsideCallback]);
-
-  function getValue(value: number, name: string) {
-    setSameValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    if (isSameSession) {
-      const output = Array(sameValues.sessionNumber).fill([
-        { type: SessionEnum.ACTION, time: sameValues.sessionTime },
-        { type: SessionEnum.REST, time: sameValues.restTime },
-      ]);
-
-      if (clearCycleInput) {
-        dispatch(clearAndAddToCycle(output));
-      } else {
-        dispatch(addToCycle(output));
-      }
-    }
-
-    setSameValues(SameValuesData);
-    onClose();
-  }
-
-  const [customSessionFields, setCustomSessionFields] = useState<
-    {
-      id: number;
-      sessionTime: number;
-      restTime: number;
-    }[]
-  >([
-    {
-      id: Math.random(),
-      sessionTime: 0,
-      restTime: 0,
-    },
-  ]);
-
-  function handleAddNewItem() {
-    if (customSessionFields.length < 5) {
-      setCustomSessionFields([
-        ...customSessionFields,
+  function addNewCustomSession() {
+    if (customValues.length < 5) {
+      setCustomValues([
+        ...customValues,
         {
           id: Math.random(),
           sessionTime: 0,
@@ -213,16 +171,8 @@ function CycleModal({ onClose }: CycleModal) {
     }
   }
 
-  // function handleRemoveItem(id: number) {
-  //   // setCustomSessionFields(
-  //   //   customSessionFields.filter((item) => item.id !== id)
-  //   // );
-
-  //   setCustomSessionFields([]);
-  // }
-
   function getCustomValue(value: number, id: number, type: string) {
-    const data = customSessionFields.map((item) => {
+    const data = customValues.map((item) => {
       if (item.id === id) {
         return { ...item, [type]: value };
       } else {
@@ -230,12 +180,33 @@ function CycleModal({ onClose }: CycleModal) {
       }
     });
 
-    setCustomSessionFields(data);
+    setCustomValues(data);
+  }
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    let output: Session[] | [] = [];
+
+    if (isSameSession) {
+      output = Array(sameValues.sessionNumber).fill([
+        { type: SessionEnum.ACTION, time: sameValues.sessionTime },
+        { type: SessionEnum.REST, time: sameValues.restTime },
+      ]);
+    }
+
+    if (isClearChecked) {
+      dispatch(clearAndAddToCycle(output));
+    } else {
+      dispatch(addToCycle(output));
+    }
+
+    setSameValues(sameData);
+    onClose();
   }
 
   return (
     <Wrapper>
-      <BoxModal ref={boxModalRef}>
+      <BoxModal ref={modalRef}>
         <Close onClick={onClose} />
         <Headline>Create Cycle</Headline>
         <RadioForm>
@@ -262,24 +233,34 @@ function CycleModal({ onClose }: CycleModal) {
             <>
               <NumberInputBox
                 label="session number"
-                onChange={(value: number) => getValue(value, 'sessionNumber')}
+                onChange={(value: number) =>
+                  setSameValues(
+                    getSameValue(sameValues, value, 'sessionNumber')
+                  )
+                }
                 maxValue={5}
                 value={String(sameValues.sessionNumber)}
               />
               <TimerWrapper>
                 <TimeInputBox
                   label="session time"
-                  onChange={(value: number) => getValue(value, 'sessionTime')}
+                  onChange={(value: number) =>
+                    setSameValues(
+                      getSameValue(sameValues, value, 'sessionTime')
+                    )
+                  }
                 />
                 <TimeInputBox
                   label="rest time"
-                  onChange={(value: number) => getValue(value, 'restTime')}
+                  onChange={(value: number) =>
+                    setSameValues(getSameValue(sameValues, value, 'restTime'))
+                  }
                 />
               </TimerWrapper>
             </>
           ) : (
             <>
-              {customSessionFields.map((item, index) => (
+              {customValues.map((item, index) => (
                 <TimerWrapper key={item.id}>
                   <SesionNumber>{index + 1}</SesionNumber>
                   <TimeInputBox
@@ -305,24 +286,24 @@ function CycleModal({ onClose }: CycleModal) {
                   /> */}
                 </TimerWrapper>
               ))}
-              {console.log(customSessionFields)}
+              {console.log(customValues)}
               <IconButton
                 type="button"
                 asAdd
-                onClick={handleAddNewItem}
-                disabled={customSessionFields.length >= 5}
+                onClick={addNewCustomSession}
+                disabled={customValues.length >= 5}
               />
             </>
           )}
 
-          {isCustomCycle && (
+          {!!customCycle.length && (
             <RadioCheck
               label="Clear existing custom cycle"
               type="checkbox"
               name="clearCycle"
-              onChange={() => setClearCycleInput(!clearCycleInput)}
+              onChange={() => toggleClearChecked(!isClearChecked)}
               id="string"
-              checked={clearCycleInput}
+              checked={isClearChecked}
               marginTop="40px"
             />
           )}
