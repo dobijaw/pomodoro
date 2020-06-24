@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const Input = styled.input<{ focusBackgorund?: boolean; asBox?: boolean }>`
   width: 100%;
@@ -7,11 +7,12 @@ const Input = styled.input<{ focusBackgorund?: boolean; asBox?: boolean }>`
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.copy};
   background: none;
-  font-family: "Exo 2", sans-serif;
+  font-family: 'Exo 2', sans-serif;
   font-size: 22px;
   font-weight: 400;
   text-transform: uppercase;
   transition: all 0.35s ease-in-out;
+  cursor: pointer;
 
   &:focus {
     outline: 0;
@@ -36,8 +37,11 @@ const Input = styled.input<{ focusBackgorund?: boolean; asBox?: boolean }>`
         background: ${({ theme }) => theme.colors.background40};
       }
     `}
+  &[type="button"] {
+    text-align: left;
+  }
 
-  &[type="number"] {
+  &[type='number'] {
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
       -webkit-appearance: none;
@@ -45,21 +49,21 @@ const Input = styled.input<{ focusBackgorund?: boolean; asBox?: boolean }>`
     }
   }
 
-  &[type="time"] {
+  &[type='time'] {
     margin: 8px 0 0 -10px;
   }
 
-  &[type="time"]::-webkit-datetime-edit-fields-wrapper {
+  &[type='time']::-webkit-datetime-edit-fields-wrapper {
     display: flex;
   }
 
-  &[type="time"]::-webkit-datetime-edit-text {
+  &[type='time']::-webkit-datetime-edit-text {
     padding: 19px 4px;
   }
 
-  &[type="time"]::-webkit-datetime-edit-hour-field,
-  &[type="time"]::-webkit-datetime-edit-minute-field,
-  &[type="time"]::-webkit-datetime-edit-second-field {
+  &[type='time']::-webkit-datetime-edit-hour-field,
+  &[type='time']::-webkit-datetime-edit-minute-field,
+  &[type='time']::-webkit-datetime-edit-second-field {
     border-radius: 100px;
     padding: 20px 10px;
 
@@ -69,8 +73,8 @@ const Input = styled.input<{ focusBackgorund?: boolean; asBox?: boolean }>`
     }
   }
 
-  &[type="time"]::-webkit-clear-button,
-  &[type="time"]::-webkit-inner-spin-button {
+  &[type='time']::-webkit-clear-button,
+  &[type='time']::-webkit-inner-spin-button {
     display: none;
   }
 

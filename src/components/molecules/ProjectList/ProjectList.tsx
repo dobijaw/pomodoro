@@ -5,6 +5,7 @@ import styled, { keyframes } from 'styled-components';
 import { removeProject } from 'store/projects/actions';
 import IconButton from 'components/atoms/IconButton/IconButton';
 import Count from 'components/atoms/Count/Count';
+import NoData from 'components/atoms/NoData/NoData';
 
 const itemIn = keyframes`
   0% {
@@ -22,11 +23,11 @@ const List = styled.ul`
   list-style: none;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.li<{ noRemove?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
+  padding: ${({ noRemove }) => (noRemove ? '0' : '20px 0')};
   color: ${({ theme }) => theme.colors.copy};
   font-size: 22px;
   font-weight: 400;
@@ -37,6 +38,18 @@ const ListItem = styled.li`
   &:not(:first-of-type) {
     border-top: 1px solid ${({ theme }) => theme.colors.background20};
   }
+`;
+
+const Button = styled.button`
+  display: block;
+  width: 100%;
+  padding: 20px 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
 `;
 
 const ItemWrapper = styled.div`
@@ -59,23 +72,49 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type ProjectListProps = PropsFromRedux & {
   projects: Project[];
+  noRemove?: boolean;
+  getProject?: (project: Project) => void;
 };
 
-const ProjectList = ({ projects, removeProject }: ProjectListProps) => (
+const ProjectList = ({
+  projects,
+  removeProject,
+  noRemove,
+  getProject,
+}: ProjectListProps) => (
   <List>
-    {projects.map((p) => (
-      <ListItem key={p.id}>
-        <span>{p.name}</span>
-        <ItemWrapper>
-          <StyledCount>{p.sessionCount}</StyledCount>
-          <IconButton
-            type="button"
-            onClick={() => removeProject(p.id)}
-            asDelete
-          />
-        </ItemWrapper>
-      </ListItem>
-    ))}
+    {!!projects.length ? (
+      projects.map((p) => (
+        <ListItem key={p.id} noRemove={noRemove}>
+          {noRemove ? (
+            <Button
+              type="button"
+              onClick={() => {
+                if (getProject) getProject(p);
+              }}
+            >
+              <span>{p.name}</span>
+            </Button>
+          ) : (
+            <>
+              <span>{p.name}</span>
+              <ItemWrapper>
+                <StyledCount>{p.sessionCount}</StyledCount>
+                {!noRemove && (
+                  <IconButton
+                    type="button"
+                    onClick={() => removeProject(p.id)}
+                    asDelete
+                  />
+                )}
+              </ItemWrapper>
+            </>
+          )}
+        </ListItem>
+      ))
+    ) : (
+      <NoData>No project yet</NoData>
+    )}
   </List>
 );
 

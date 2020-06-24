@@ -15,9 +15,11 @@ const GlobalStyle = createGlobalStyle`
     body {
         padding: 0;
         margin: 0;
+        overflow-y: scroll;
         background: ${({ theme }) => theme.colors.background};
         font-family: 'Exo 2', sans-serif;
     }
+    
 
     ::-webkit-scrollbar {
         width: 4px;

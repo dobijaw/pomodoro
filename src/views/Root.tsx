@@ -50,7 +50,7 @@ function Root({
   toggleTimerRunning,
   setCyclePosition,
 }: PropsFromRedux) {
-  const [isModalVisible, toggleModalVisibility] = useState<boolean>(true);
+  const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
 
   const getCycle = (customCycle: Session[], defaultCycle: Session[]) =>
     !!customCycle.length ? customCycle : defaultCycle;
