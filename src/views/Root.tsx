@@ -17,6 +17,7 @@ import {
   setCurrentType,
   toggleTimerRunning,
   setCyclePosition,
+  setSessionInProgress,
 } from 'store/cycle/actions';
 
 interface RootState {
@@ -27,6 +28,8 @@ const mapState = ({ cycle }: RootState) => ({
   customCycle: cycle.customCycle,
   defaultCycle: cycle.defaultCycle,
   currentTime: cycle.currentTime,
+  isSessionInProgress: cycle.isSessionInProgress,
+  isRunning: cycle.isRunning,
 });
 
 const mapDispatch = {
@@ -35,6 +38,8 @@ const mapDispatch = {
   setCurrentType: (type: SessionTypes) => setCurrentType(type),
   toggleTimerRunning: (isRunning: boolean) => toggleTimerRunning(isRunning),
   setCyclePosition: (position: number) => setCyclePosition(position),
+  setSessionInProgress: (isInProgress: boolean) =>
+    setSessionInProgress(isInProgress),
 };
 
 const connector = connect(mapState, mapDispatch);
@@ -44,11 +49,14 @@ function Root({
   customCycle,
   currentTime,
   defaultCycle,
+  isRunning,
+  isSessionInProgress,
   clearCycle,
   setCurrentTime,
   setCurrentType,
   toggleTimerRunning,
   setCyclePosition,
+  setSessionInProgress,
 }: PropsFromRedux) {
   const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
 
@@ -69,9 +77,11 @@ function Root({
   const [curSessionPosition, setCurSessionPosition] = useState<number>(0);
 
   useEffect(() => {
+    if (isSessionInProgress || isRunning) return;
+
     setCycle(getCycle(customCycle, defaultCycle));
     setCycleType(getCycleType(customCycle));
-  }, [customCycle, defaultCycle]);
+  }, [customCycle, defaultCycle, isRunning, isSessionInProgress]);
 
   useEffect(() => {
     setCurrentTime(cycle[curCyclePosition][curSessionPosition].time);
@@ -95,6 +105,7 @@ function Root({
   const [start, stop] = useInterval(countdown, 10, false);
 
   function onStartCountdow() {
+    setSessionInProgress(true);
     start();
     toggleTimerRunning(true);
   }
@@ -112,6 +123,7 @@ function Root({
   }
 
   function onStopCountdown() {
+    setSessionInProgress(false);
     stop();
     toggleTimerRunning(false);
 

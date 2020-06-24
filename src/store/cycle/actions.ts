@@ -41,3 +41,10 @@ export const setCyclePosition = (position: number) => ({
     position,
   },
 });
+
+export const setSessionInProgress = (isInProgress: boolean) => ({
+  type: CyclesTypes.SET_SESSION_IN_PROGRESS,
+  payload: {
+    isInProgress,
+  },
+});

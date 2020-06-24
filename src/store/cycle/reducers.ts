@@ -9,15 +9,12 @@ const initialState: CyclesState = {
   sessionPosition: 0,
   cyclePosition: 0,
   isRunning: false,
+  isSessionInProgress: false,
   currentTime: 0,
   nextTime: 0,
   currentType: SessionEnum.ACTION,
   nextType: SessionEnum.REST,
   customCycle: [
-    [
-      { type: SessionEnum.ACTION, time: 0.1 * 60 * 1000 },
-      { type: SessionEnum.REST, time: 9 * 60 * 1000 },
-    ],
     [
       { type: SessionEnum.ACTION, time: 40 * 60 * 1000 },
       { type: SessionEnum.REST, time: 8 * 60 * 1000 },
@@ -75,6 +72,11 @@ export function cycleReducer(state = initialState, action: CycleActionTypes) {
       return {
         ...state,
         cyclePosition: action.payload.position,
+      };
+    case CyclesTypes.SET_SESSION_IN_PROGRESS:
+      return {
+        ...state,
+        isSessionInProgress: action.payload.isInProgress,
       };
     default:
       return state;

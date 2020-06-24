@@ -26,6 +26,7 @@ export interface CyclesState {
   sessionPosition: number;
   cyclePosition: number;
   isRunning: boolean;
+  isSessionInProgress: boolean;
   currentTime: number;
   nextTime: number;
   currentType: SessionTypes;
@@ -42,6 +43,7 @@ export enum CyclesTypes {
   TOGGLE_TIMER_RUNNING = 'TOGGLE_TIMER_RUNNING',
   SET_CYCLE_POSITION = 'SET_CYCLE_POSITION',
   CLEAR_AND_ADD_TO_CYCLE = 'CLEAR_AND_ADD_TO_CYCLE',
+  SET_SESSION_IN_PROGRESS = 'SET_SESSION_IN_PROGRESS',
 }
 
 interface AddToCycleAction {
@@ -86,6 +88,13 @@ interface SetCyclePositionAction {
   };
 }
 
+interface SetSessionInProgressAction {
+  type: typeof CyclesTypes.SET_SESSION_IN_PROGRESS;
+  payload: {
+    isInProgress: boolean;
+  };
+}
+
 export type CycleActionTypes =
   | AddToCycleAction
   | ClearAndAddToCycleAction
@@ -93,4 +102,5 @@ export type CycleActionTypes =
   | SetCurrentTimeAction
   | SetCurrentTypeAction
   | ToggleTimerRunningAction
-  | SetCyclePositionAction;
+  | SetCyclePositionAction
+  | SetSessionInProgressAction;
