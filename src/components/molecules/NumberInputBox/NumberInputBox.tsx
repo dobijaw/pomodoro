@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 import Label from 'components/atoms/Label/Label';
@@ -34,33 +34,31 @@ const StyledInput = styled(Input)`
 interface Props {
   label: string;
   onChange: (value: number) => void;
+  value: string;
+  maxValue: number;
 }
 
-function NumberInputBox({ label, onChange }: Props) {
-  const [maxValue] = useState<number>(25);
-  const [firstInputValue, setFirstInputValue] = useState<string>('0');
-
+function NumberInputBox({ label, onChange, value, maxValue }: Props) {
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const value = Number(e.currentTarget.value);
-    const currentValue = value < 0 ? 0 : value > maxValue ? maxValue : value;
+    const eventValue = Number(e.currentTarget.value);
 
-    setFirstInputValue(String(currentValue));
+    const currentValue =
+      eventValue < 0 ? 0 : eventValue > maxValue ? maxValue : eventValue;
+
     onChange(currentValue);
   }
 
   function onIncrease() {
-    const prevValue = Number(firstInputValue);
+    const prevValue = Number(value);
     const currentValue = prevValue + 1 > maxValue ? maxValue : prevValue + 1;
 
-    setFirstInputValue(String(currentValue));
     onChange(currentValue);
   }
 
   function onDecrease() {
-    const prevValue = Number(firstInputValue);
+    const prevValue = Number(value);
     const currentValue = prevValue - 1 < 0 ? 0 : prevValue - 1;
 
-    setFirstInputValue(String(currentValue));
     onChange(currentValue);
   }
 
@@ -77,7 +75,7 @@ function NumberInputBox({ label, onChange }: Props) {
         <StyledInput
           asBox
           type="number"
-          value={firstInputValue}
+          value={value}
           onChange={handleChange}
         />
         <StyledIconButton type="button" asAdd withBorder onClick={onIncrease} />

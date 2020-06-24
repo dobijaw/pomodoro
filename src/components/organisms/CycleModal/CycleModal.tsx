@@ -121,7 +121,6 @@ interface RootState {
 
 interface CycleModal {
   onClose: () => void;
-  onOpen: () => void;
 }
 
 interface SameValues {
@@ -136,10 +135,10 @@ const SameValuesData = {
   restTime: 0,
 };
 
-function CycleModal({ onClose, onOpen }: CycleModal) {
+function CycleModal({ onClose }: CycleModal) {
   const [isSameSession, toggleSession] = useState<boolean>(true);
   const [sameValues, setSameValues] = useState<SameValues>(SameValuesData);
-  const [customValues, setCustomValues] = useState<[]>([]);
+
   const [clearCycleInput, setClearCycleInput] = useState<boolean>(false);
   const boxModalRef = useRef(null);
   const checkIfCustomCycle = (state: RootState) =>
@@ -166,11 +165,6 @@ function CycleModal({ onClose, onOpen }: CycleModal) {
       [name]: value,
     }));
   }
-
-  useEffect(() => {
-    console.log(sameValues);
-    console.log(customValues);
-  }, [customValues, sameValues]);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -269,6 +263,8 @@ function CycleModal({ onClose, onOpen }: CycleModal) {
               <NumberInputBox
                 label="session number"
                 onChange={(value: number) => getValue(value, 'sessionNumber')}
+                maxValue={5}
+                value={String(sameValues.sessionNumber)}
               />
               <TimerWrapper>
                 <TimeInputBox

@@ -155,9 +155,7 @@ function Root({
             <Route exact path={Routes.history} component={HistoryPage} />
             <Route exact path={Routes.settings} component={SettingsPage} />
           </Switch>
-          {isModalVisible && (
-            <CycleModal onClose={handleCloseModal} onOpen={handleOpenModal} />
-          )}
+          {isModalVisible && <CycleModal onClose={handleCloseModal} />}
         </MainTemplate>
       </AppContext.Provider>
     </BrowserRouter>
