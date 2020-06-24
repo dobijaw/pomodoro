@@ -14,6 +14,7 @@ import { addToCycle, clearAndAddToCycle } from 'store/cycle/actions';
 import Close from 'components/atoms/Close/Close';
 import Button from 'components/atoms/Button/Button';
 import Headline from 'components/atoms/Headline/Headline';
+import IconButton from 'components/atoms/IconButton/IconButton';
 
 import RadioCheck from 'components/molecules/RadioCheck/RadioCheck';
 import NumberInputBox from 'components/molecules/NumberInputBox/NumberInputBox';
@@ -67,6 +68,7 @@ const BoxModal = styled.div`
 
 const RadioForm = styled.form`
   display: block;
+  margin-top: 20px;
 
   @media (min-width: 600px) {
     display: flex;
@@ -119,6 +121,7 @@ interface RootState {
 
 interface CycleModal {
   onClose: () => void;
+  onOpen: () => void;
 }
 
 interface SameValues {
@@ -127,13 +130,15 @@ interface SameValues {
   restTime: number;
 }
 
-function CycleModal({ onClose }: CycleModal) {
+const SameValuesData = {
+  sessionNumber: 0,
+  sessionTime: 0,
+  restTime: 0,
+};
+
+function CycleModal({ onClose, onOpen }: CycleModal) {
   const [isSameSession, toggleSession] = useState<boolean>(true);
-  const [sameValues, setSameValues] = useState<SameValues>({
-    sessionNumber: 0,
-    sessionTime: 0,
-    restTime: 0,
-  });
+  const [sameValues, setSameValues] = useState<SameValues>(SameValuesData);
   const [customValues, setCustomValues] = useState<[]>([]);
   const [clearCycleInput, setClearCycleInput] = useState<boolean>(false);
   const boxModalRef = useRef(null);
@@ -156,14 +161,10 @@ function CycleModal({ onClose }: CycleModal) {
   }, [closeClickingOutsideCallback]);
 
   function getValue(value: number, name: string) {
-    if (isSameSession) {
-      setSameValues((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    } else {
-      console.log(setCustomValues);
-    }
+    setSameValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }
 
   useEffect(() => {
@@ -186,6 +187,56 @@ function CycleModal({ onClose }: CycleModal) {
         dispatch(addToCycle(output));
       }
     }
+
+    setSameValues(SameValuesData);
+    onClose();
+  }
+
+  const [customSessionFields, setCustomSessionFields] = useState<
+    {
+      id: number;
+      sessionTime: number;
+      restTime: number;
+    }[]
+  >([
+    {
+      id: Math.random(),
+      sessionTime: 0,
+      restTime: 0,
+    },
+  ]);
+
+  function handleAddNewItem() {
+    if (customSessionFields.length < 5) {
+      setCustomSessionFields([
+        ...customSessionFields,
+        {
+          id: Math.random(),
+          sessionTime: 0,
+          restTime: 0,
+        },
+      ]);
+    }
+  }
+
+  // function handleRemoveItem(id: number) {
+  //   // setCustomSessionFields(
+  //   //   customSessionFields.filter((item) => item.id !== id)
+  //   // );
+
+  //   setCustomSessionFields([]);
+  // }
+
+  function getCustomValue(value: number, id: number, type: string) {
+    const data = customSessionFields.map((item) => {
+      if (item.id === id) {
+        return { ...item, [type]: value };
+      } else {
+        return item;
+      }
+    });
+
+    setCustomSessionFields(data);
   }
 
   return (
@@ -211,14 +262,14 @@ function CycleModal({ onClose }: CycleModal) {
             onChange={() => toggleSession(!isSameSession)}
           />
         </RadioForm>
-        <>
+
+        <Form onSubmit={handleSubmit}>
           {isSameSession ? (
-            <Form onSubmit={handleSubmit}>
+            <>
               <NumberInputBox
                 label="session number"
                 onChange={(value: number) => getValue(value, 'sessionNumber')}
               />
-
               <TimerWrapper>
                 <TimeInputBox
                   label="session time"
@@ -229,31 +280,59 @@ function CycleModal({ onClose }: CycleModal) {
                   onChange={(value: number) => getValue(value, 'restTime')}
                 />
               </TimerWrapper>
-
-              {isCustomCycle && (
-                <RadioCheck
-                  label="Clear existing custom cycle"
-                  type="checkbox"
-                  name="clearCycle"
-                  onChange={() => setClearCycleInput(!clearCycleInput)}
-                  id="string"
-                  checked={clearCycleInput}
-                  marginTop="40px"
-                />
-              )}
-
-              <StyledButton type="submit">Create Cycle</StyledButton>
-            </Form>
+            </>
           ) : (
-            <Form onSubmit={handleSubmit}>
-              <TimerWrapper>
-                <SesionNumber>1</SesionNumber>
-                <TimeInputBox label="session time" onChange={() => {}} />
-                <TimeInputBox label="break time" onChange={() => {}} />
-              </TimerWrapper>
-            </Form>
+            <>
+              {customSessionFields.map((item, index) => (
+                <TimerWrapper key={item.id}>
+                  <SesionNumber>{index + 1}</SesionNumber>
+                  <TimeInputBox
+                    label="session time"
+                    onChange={(value: number) =>
+                      getCustomValue(value, item.id, 'sessionTime')
+                    }
+                  />
+                  <TimeInputBox
+                    label="break time"
+                    onChange={(value: number) =>
+                      getCustomValue(value, item.id, 'restTime')
+                    }
+                  />
+                  {/* <IconButton
+                    type="button"
+                    asDelete
+                    onClick={() =>
+                      setCustomSessionFields(
+                        customSessionFields.filter((i) => i.id !== item.id)
+                      )
+                    }
+                  /> */}
+                </TimerWrapper>
+              ))}
+              {console.log(customSessionFields)}
+              <IconButton
+                type="button"
+                asAdd
+                onClick={handleAddNewItem}
+                disabled={customSessionFields.length >= 5}
+              />
+            </>
           )}
-        </>
+
+          {isCustomCycle && (
+            <RadioCheck
+              label="Clear existing custom cycle"
+              type="checkbox"
+              name="clearCycle"
+              onChange={() => setClearCycleInput(!clearCycleInput)}
+              id="string"
+              checked={clearCycleInput}
+              marginTop="40px"
+            />
+          )}
+
+          <StyledButton type="submit">Create Cycle</StyledButton>
+        </Form>
       </BoxModal>
     </Wrapper>
   );

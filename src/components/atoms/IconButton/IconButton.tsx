@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const IconButton = styled.button<{
   asAdd?: boolean;
@@ -12,7 +12,7 @@ const IconButton = styled.button<{
   width: 40px;
   height: 40px;
   border: ${({ theme, withBorder }) =>
-    withBorder ? `1px solid ${theme.colors.secondary}` : "none"};
+    withBorder ? `1px solid ${theme.colors.secondary}` : 'none'};
   border-radius: 50%;
   background: transparent;
   transition: background 0.35s ease-in-out;
@@ -38,6 +38,13 @@ const IconButton = styled.button<{
     height: 2px;
     background: ${({ theme }) => theme.colors.secondary};
     transition: background 0.35s ease-in-out;
+  }
+
+  &:disabled {
+    &::before,
+    &::after {
+      background: ${({ theme }) => theme.colors.background40};
+    }
   }
 
   ${({ asAdd }) =>

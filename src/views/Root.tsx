@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
-import TimerPage from "./TimerPage";
-import MainTemplate from "../templates/MainTemplate";
-import { Routes } from "routes";
-import { AppContext } from "context";
-import { useInterval } from "hooks/useInterval";
-import CycleModal from "components/organisms/CycleModal/CycleModal";
-import ProjectsPage from "./ProjectsPage";
-import HistoryPage from "./HistoryPage";
-import SettingsPage from "./SettingsPage";
-import { CyclesState, Session, SessionTypes } from "store/cycle/types";
+import React, { useState, useEffect } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import TimerPage from './TimerPage';
+import MainTemplate from '../templates/MainTemplate';
+import { Routes } from 'routes';
+import { AppContext } from 'context';
+import { useInterval } from 'hooks/useInterval';
+import CycleModal from 'components/organisms/CycleModal/CycleModal';
+import ProjectsPage from './ProjectsPage';
+import HistoryPage from './HistoryPage';
+import SettingsPage from './SettingsPage';
+import { CyclesState, Session, SessionTypes } from 'store/cycle/types';
 import {
   clearCycle,
   setCurrentTime,
   setCurrentType,
   toggleTimerRunning,
   setCyclePosition,
-} from "store/cycle/actions";
+} from 'store/cycle/actions';
 
 interface RootState {
   cycle: CyclesState;
@@ -56,9 +56,9 @@ function Root({
     !!customCycle.length ? customCycle : defaultCycle;
 
   const getCycleType = (customCycle: Session[]) =>
-    !!customCycle.length ? "CUSTOM" : "DEFAULT";
+    !!customCycle.length ? 'CUSTOM' : 'DEFAULT';
 
-  const [cycleType, setCycleType] = useState<"CUSTOM" | "DEFAULT">(
+  const [cycleType, setCycleType] = useState<'CUSTOM' | 'DEFAULT'>(
     getCycleType(customCycle)
   );
   const [cycle, setCycle] = useState<Session[]>(
@@ -120,7 +120,7 @@ function Root({
     } else if (curSessionPosition === 1) {
       setCurSessionPosition(0);
 
-      if (cycleType === "CUSTOM" && curCyclePosition + 1 > cycle.length - 1)
+      if (cycleType === 'CUSTOM' && curCyclePosition + 1 > cycle.length - 1)
         clearCycle();
 
       setCurCyclePosition(
@@ -155,7 +155,9 @@ function Root({
             <Route exact path={Routes.history} component={HistoryPage} />
             <Route exact path={Routes.settings} component={SettingsPage} />
           </Switch>
-          {isModalVisible && <CycleModal onClose={handleCloseModal} />}
+          {isModalVisible && (
+            <CycleModal onClose={handleCloseModal} onOpen={handleOpenModal} />
+          )}
         </MainTemplate>
       </AppContext.Provider>
     </BrowserRouter>
