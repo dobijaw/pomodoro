@@ -1,12 +1,12 @@
-import React from 'react';
-import PageTemplate from 'templates/PageTemplate';
-import Input from 'components/atoms/Input/Input';
-import Label from 'components/atoms/Label/Label';
-import PageTitle from 'components/atoms/PageTitle/PageTitle';
-import RadioForm from 'components/molecules/RadioForm/RadioForm';
-import { setThemeColor } from 'store/settings/actions';
-import { ThemeColor, ThemeColorTypes } from 'store/settings/types';
-import { connect, ConnectedProps } from 'react-redux';
+import React from "react";
+import PageTemplate from "templates/PageTemplate";
+import Input from "components/atoms/Input/Input";
+import Label from "components/atoms/Label/Label";
+import PageTitle from "components/atoms/PageTitle/PageTitle";
+import RadioForm from "components/molecules/RadioForm/RadioForm";
+import { setThemeColor } from "store/settings/actions";
+import { ThemeColor, ThemeColorTypes } from "store/settings/types";
+import { connect, ConnectedProps } from "react-redux";
 
 interface RootState {
   settings: {
@@ -32,18 +32,18 @@ const SettingsPage = ({ colorTheme, setThemeColor }: PropsFromRedux) => (
     <RadioForm
       inputs={[
         {
-          id: 'dark',
-          label: 'Dark',
-          type: 'radio',
-          name: 'themeColor',
+          id: "dark",
+          label: "Dark",
+          type: "radio",
+          name: "themeColor",
           onChange: () => setThemeColor(ThemeColorTypes.DARK),
           checked: colorTheme === ThemeColorTypes.DARK,
         },
         {
-          id: 'light',
-          label: 'Light',
-          type: 'radio',
-          name: 'themeColor',
+          id: "light",
+          label: "Light",
+          type: "radio",
+          name: "themeColor",
           onChange: () => setThemeColor(ThemeColorTypes.LIGHT),
           checked: colorTheme === ThemeColorTypes.LIGHT,
         },
@@ -61,7 +61,7 @@ const SettingsPage = ({ colorTheme, setThemeColor }: PropsFromRedux) => (
         type="time"
         step="1"
         min="00:00:00"
-        max="20:00:00"
+        max="00:60:00"
       />
     </Label>
   </PageTemplate>

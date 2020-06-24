@@ -1,15 +1,18 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 const IconButton = styled.button<{
   asAdd?: boolean;
+  asSubtract?: boolean;
   asClose?: boolean;
   asDelete?: boolean;
+  withBorder?: boolean;
 }>`
   position: relative;
   display: block;
   width: 40px;
   height: 40px;
-  border: none;
+  border: ${({ theme, withBorder }) =>
+    withBorder ? `1px solid ${theme.colors.secondary}` : "none"};
   border-radius: 50%;
   background: transparent;
   transition: background 0.35s ease-in-out;
@@ -26,7 +29,7 @@ const IconButton = styled.button<{
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -48,6 +51,19 @@ const IconButton = styled.button<{
         transform: translate(-50%, -50%) rotate(90deg);
       }
     `}
+
+    ${({ asSubtract }) =>
+      asSubtract &&
+      css`
+        &::before {
+          transform: translate(-50%, -50%) rotate(0);
+        }
+
+        &::after {
+          opacity: 0;
+          visibility: hidden;
+        }
+      `}
 
   ${({ asClose, asDelete }) =>
     (asClose || asDelete) &&

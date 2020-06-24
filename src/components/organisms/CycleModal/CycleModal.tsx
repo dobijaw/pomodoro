@@ -1,10 +1,13 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import styled, { keyframes } from 'styled-components';
-import Headline from 'components/atoms/Headline/Headline';
-import Close from 'components/atoms/Close/Close';
-import RadioCheck from 'components/molecules/RadioCheck/RadioCheck';
-import Label from 'components/atoms/Label/Label';
-import Input from 'components/atoms/Input/Input';
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import styled, { keyframes } from "styled-components";
+
+import Close from "components/atoms/Close/Close";
+import Button from "components/atoms/Button/Button";
+import Headline from "components/atoms/Headline/Headline";
+
+import RadioCheck from "components/molecules/RadioCheck/RadioCheck";
+import NumberInputBox from "components/molecules/NumberInputBox/NumberInputBox";
+import TimeInputBox from "components/molecules/TimeInputBox/TimeInputBox";
 
 const scale = keyframes`
   from {
@@ -66,12 +69,36 @@ const RadioForm = styled.form`
   }
 `;
 
-type CycleModal = {
+const TimerWrapper = styled.div`
+  display: flex;
+
+  > label {
+    &:first-child {
+      margin-right: 20px;
+    }
+
+    &:last-child {
+      margin-left: 20px;
+    }
+  }
+`;
+
+const StyledButton = styled(Button)`
+  display: block;
+  margin: 60px 0 0 auto;
+`;
+
+const Form = styled.form`
+  margin-top: 60px;
+`;
+
+interface CycleModal {
   onClose: () => void;
-};
+}
 
 function CycleModal({ onClose }: CycleModal) {
   const [isSameSession, toggleSession] = useState<boolean>(true);
+  const [values, setValues] = useState("");
   const boxModalRef = useRef(null);
 
   function closeClickingOutside(event: MouseEvent) {
@@ -81,10 +108,10 @@ function CycleModal({ onClose }: CycleModal) {
   const closeClickingOutsideCallback = useCallback(closeClickingOutside, []);
 
   useEffect(() => {
-    document.addEventListener('click', closeClickingOutsideCallback);
+    document.addEventListener("click", closeClickingOutsideCallback);
 
     return () =>
-      document.removeEventListener('click', closeClickingOutsideCallback);
+      document.removeEventListener("click", closeClickingOutsideCallback);
   }, [closeClickingOutsideCallback]);
 
   return (
@@ -110,28 +137,22 @@ function CycleModal({ onClose }: CycleModal) {
             onChange={() => toggleSession(!isSameSession)}
           />
         </RadioForm>
-        <div>
+        <>
           {isSameSession ? (
-            <form>
-              <div>
-                <Label>
-                  Session count
-                  <Input type="number" />
-                </Label>
-                <Label>
-                  Session time
-                  <Input type="time" />
-                </Label>
-                <Label>
-                  Session break
-                  <Input type="time" />
-                </Label>
-              </div>
-            </form>
+            <Form onSubmit={() => {}}>
+              <NumberInputBox label="session number" onChange={setValues} />
+
+              <TimerWrapper>
+                <TimeInputBox label="session time" onChange={() => {}} />
+                <TimeInputBox label="break time" onChange={() => {}} />
+              </TimerWrapper>
+
+              <StyledButton type="submit">Create Cycle</StyledButton>
+            </Form>
           ) : (
-            <h2 style={{ color: 'white' }}>Custom Session</h2>
+            <h2 style={{ color: "white" }}>Custom Session</h2>
           )}
-        </div>
+        </>
       </BoxModal>
     </Wrapper>
   );
