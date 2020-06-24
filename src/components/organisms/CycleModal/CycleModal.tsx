@@ -132,13 +132,13 @@ const sameData = {
 };
 
 interface CustomValue {
-  id: number;
+  id: string;
   sessionTime: number;
   restTime: number;
 }
 
 const customData = {
-  id: generateUnicId([]),
+  id: String(generateUnicId([])),
   sessionTime: 0,
   restTime: 0,
 };
@@ -162,16 +162,18 @@ function CycleModal({ onClose }: CycleModal) {
   const getCustomValue = (
     state: CustomValue[],
     value: number,
-    id: number,
+    id: string,
     type: string
   ) => state.map((i) => (i.id === id ? { ...i, [type]: value } : i));
 
   function addNewCustomSession() {
     if (customValues.length < 5) {
+      const unicId = generateUnicId(customValues.map((el) => Number(el.id)));
+
       setCustomValues([
         ...customValues,
         {
-          id: generateUnicId(customValues.map((el) => el.id)),
+          id: String(unicId),
           sessionTime: 0,
           restTime: 0,
         },
@@ -295,7 +297,6 @@ function CycleModal({ onClose }: CycleModal) {
                       customValues.find((el) => el.id === item.id)?.sessionTime
                     )}
                   />
-
                   <TimeInputBox
                     label="break time"
                     onChange={(value: number) =>

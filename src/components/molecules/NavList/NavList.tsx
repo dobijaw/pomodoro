@@ -1,7 +1,12 @@
 import React from 'react';
-import { Routes } from 'routes';
-import Button from 'components/atoms/Button/Button';
 import styled, { css } from 'styled-components';
+import { connect, ConnectedProps } from 'react-redux';
+
+import { Routes } from 'routes';
+import { clearCycle } from 'store/cycle/actions';
+import { CyclesState } from 'store/cycle/types';
+
+import Button from 'components/atoms/Button/Button';
 import NavLinkItem from 'components/atoms/NavLinkItem/NavLinkItem';
 
 const List = styled.ul<{ asMobile?: boolean; isVisible?: boolean }>`
@@ -36,25 +41,43 @@ const ListItem = styled.li`
   margin: 0 20px;
 `;
 
-type NavListProps = {
+interface RootState {
+  cycle: CyclesState;
+}
+
+const mapDispatch = {
+  clearCycle: () => clearCycle(),
+};
+
+const connector = connect(null, mapDispatch);
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & {
   asMobile?: boolean;
   isVisible?: boolean;
   onOpenModal: () => void;
 };
 
-const NavList = ({ asMobile, isVisible, onOpenModal }: NavListProps) => (
-  <List asMobile={asMobile} isVisible={isVisible}>
-    <ListItem>
-      <NavLinkItem to={Routes.projects}>Projects</NavLinkItem>
-    </ListItem>
-    <ListItem>
-      <NavLinkItem to={Routes.history}>Pomodoro history</NavLinkItem>
-    </ListItem>
-    <ListItem>
-      <NavLinkItem to={Routes.settings}>Settings</NavLinkItem>
-    </ListItem>
-    <Button onClick={onOpenModal}>create cycle</Button>
-  </List>
-);
+function NavList({ asMobile, isVisible, onOpenModal, clearCycle }: Props) {
+  return (
+    <List asMobile={asMobile} isVisible={isVisible}>
+      <ListItem>
+        <NavLinkItem to={Routes.projects}>Projects</NavLinkItem>
+      </ListItem>
+      <ListItem>
+        <NavLinkItem to={Routes.history}>Pomodoro history</NavLinkItem>
+      </ListItem>
+      <ListItem>
+        <NavLinkItem to={Routes.settings}>Settings</NavLinkItem>
+      </ListItem>
+      <Button type="button" onClick={onOpenModal}>
+        create cycle
+      </Button>
+      <Button type="button" onClick={clearCycle}>
+        clear cycle
+      </Button>
+    </List>
+  );
+}
 
-export default NavList;
+export default connector(NavList);
