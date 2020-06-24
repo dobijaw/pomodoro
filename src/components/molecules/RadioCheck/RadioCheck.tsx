@@ -27,13 +27,14 @@ const Checkmark = styled.span<{ type?: string }>`
     `}
 `;
 
-const StyledLabel = styled(Label)`
+const StyledLabel = styled(Label)<{ marginTop?: string }>`
   padding-left: 25px;
   margin: 18px 0;
   line-height: 14px;
   cursor: pointer;
   user-select: none;
   transition: all .35s ease-in-out;
+  margin-top: ${({ marginTop }) => marginTop || '0'};
 
   ${Input}:checked ~ ${Checkmark} {
     background: ${({ theme }) => theme.colors.secondary};
@@ -55,10 +56,19 @@ type Props = {
   onChange: () => void;
   checked?: boolean;
   id: string;
+  marginTop?: string;
 };
 
-const RadioCheck = ({ id, label, type, name, onChange, checked }: Props) => (
-  <StyledLabel>
+const RadioCheck = ({
+  id,
+  label,
+  type,
+  name,
+  onChange,
+  checked,
+  marginTop,
+}: Props) => (
+  <StyledLabel marginTop={marginTop}>
     {label}
     <Input
       id={id}

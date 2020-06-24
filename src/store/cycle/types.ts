@@ -1,11 +1,11 @@
 export enum SessionEnum {
-  ACTION = "ACTION",
-  REST = "REST",
+  ACTION = 'ACTION',
+  REST = 'REST',
 }
 
 export enum CycleEnum {
-  CUSTOM = "CUSTOM",
-  DEFAULT = "DEFAULT",
+  CUSTOM = 'CUSTOM',
+  DEFAULT = 'DEFAULT',
 }
 
 export interface Action {
@@ -35,16 +35,22 @@ export interface CyclesState {
 }
 
 export enum CyclesTypes {
-  ADD_TO_CYCLE = "ADD_TO_CYCLE",
-  CLEAR_CYCLE = "CLEAR_CYCLE",
-  SET_CURRENT_TIME = "SET_CURRENT_TIME",
-  SET_CURRENT_TYPE = "SET_CURRENT_TYPE",
-  TOGGLE_TIMER_RUNNING = "TOGGLE_TIMER_RUNNING",
-  SET_CYCLE_POSITION = "SET_CYCLE_POSITION",
+  ADD_TO_CYCLE = 'ADD_TO_CYCLE',
+  CLEAR_CYCLE = 'CLEAR_CYCLE',
+  SET_CURRENT_TIME = 'SET_CURRENT_TIME',
+  SET_CURRENT_TYPE = 'SET_CURRENT_TYPE',
+  TOGGLE_TIMER_RUNNING = 'TOGGLE_TIMER_RUNNING',
+  SET_CYCLE_POSITION = 'SET_CYCLE_POSITION',
+  CLEAR_AND_ADD_TO_CYCLE = 'CLEAR_AND_ADD_TO_CYCLE',
 }
 
 interface AddToCycleAction {
   type: typeof CyclesTypes.ADD_TO_CYCLE;
+  payload: Session;
+}
+
+interface ClearAndAddToCycleAction {
+  type: typeof CyclesTypes.CLEAR_AND_ADD_TO_CYCLE;
   payload: Session;
 }
 
@@ -82,6 +88,7 @@ interface SetCyclePositionAction {
 
 export type CycleActionTypes =
   | AddToCycleAction
+  | ClearAndAddToCycleAction
   | ClearCycleAction
   | SetCurrentTimeAction
   | SetCurrentTypeAction

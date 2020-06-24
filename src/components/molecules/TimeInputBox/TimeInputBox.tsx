@@ -1,8 +1,8 @@
-import React, { useState, ChangeEvent } from "react";
-import styled from "styled-components";
+import React, { useState, ChangeEvent } from 'react';
+import styled from 'styled-components';
 
-import Input from "components/atoms/Input/Input";
-import Label from "components/atoms/Label/Label";
+import Input from 'components/atoms/Input/Input';
+import Label from 'components/atoms/Label/Label';
 
 const StyledLabel = styled(Label)`
   width: 100%;
@@ -35,21 +35,31 @@ const InputBreak = styled.span`
 
 interface Props {
   label: string;
-  onChange: (values: string[]) => void;
+  onChange: (values: number) => void;
 }
 
 function TimeInputBox({ label, onChange }: Props) {
   const [maxValue] = useState<number>(60);
-  const [values, setValues] = useState<string[]>(["00", "00"]);
+  const [values, setValues] = useState<string[]>(['00', '00']);
+
+  function convertToMilliseconds(valuesData: string[]) {
+    const [minutes, seconds] = valuesData;
+
+    const minutesInMiliseconds = Number(minutes) * 60 * 1000;
+    const secondsInMiliseconds = Number(seconds) * 1000;
+
+    return minutesInMiliseconds + secondsInMiliseconds;
+  }
 
   function handleMinutesChange(e: ChangeEvent<HTMLInputElement>) {
     const value = Number(e.currentTarget.value);
     const currentValue = value < 0 ? 0 : value > maxValue ? maxValue : value;
 
-    setValues((prevValue) => [
-      currentValue < 10 ? `0${currentValue}` : `${currentValue}`,
-      currentValue === maxValue ? "00" : prevValue[1],
-    ]);
+    const min = currentValue < 10 ? `0${currentValue}` : `${currentValue}`;
+    const sec = currentValue === maxValue ? '00' : values[1];
+
+    setValues([min, sec]);
+    onChange(convertToMilliseconds([min, sec]));
   }
 
   function handleSecondsChange(e: ChangeEvent<HTMLInputElement>) {
@@ -58,10 +68,11 @@ function TimeInputBox({ label, onChange }: Props) {
     const currentValue =
       value < 0 || value >= maxValue || minutes === 60 ? 0 : value;
 
-    setValues((prevValue) => [
-      prevValue[0],
-      currentValue < 10 ? `0${currentValue}` : `${currentValue}`,
-    ]);
+    const min = values[0];
+    const sec = currentValue < 10 ? `0${currentValue}` : `${currentValue}`;
+
+    setValues((prevValue) => [min, sec]);
+    onChange(convertToMilliseconds([min, sec]));
   }
 
   return (

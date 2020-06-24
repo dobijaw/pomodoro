@@ -1,9 +1,9 @@
-import React, { useState, ChangeEvent } from "react";
-import styled from "styled-components";
+import React, { useState, ChangeEvent } from 'react';
+import styled from 'styled-components';
 
-import Label from "components/atoms/Label/Label";
-import Input from "components/atoms/Input/Input";
-import IconButton from "components/atoms/IconButton/IconButton";
+import Label from 'components/atoms/Label/Label';
+import Input from 'components/atoms/Input/Input';
+import IconButton from 'components/atoms/IconButton/IconButton';
 
 const StyledLabel = styled(Label)`
   padding-bottom: 10px;
@@ -33,19 +33,19 @@ const StyledInput = styled(Input)`
 
 interface Props {
   label: string;
-  onChange: (value: string) => void;
+  onChange: (value: number) => void;
 }
 
 function NumberInputBox({ label, onChange }: Props) {
   const [maxValue] = useState<number>(25);
-  const [firstInputValue, setFirstInputValue] = useState<string>("0");
+  const [firstInputValue, setFirstInputValue] = useState<string>('0');
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     const value = Number(e.currentTarget.value);
     const currentValue = value < 0 ? 0 : value > maxValue ? maxValue : value;
 
     setFirstInputValue(String(currentValue));
-    onChange(String(currentValue));
+    onChange(currentValue);
   }
 
   function onIncrease() {
@@ -53,7 +53,7 @@ function NumberInputBox({ label, onChange }: Props) {
     const currentValue = prevValue + 1 > maxValue ? maxValue : prevValue + 1;
 
     setFirstInputValue(String(currentValue));
-    onChange(String(currentValue));
+    onChange(currentValue);
   }
 
   function onDecrease() {
@@ -61,7 +61,7 @@ function NumberInputBox({ label, onChange }: Props) {
     const currentValue = prevValue - 1 < 0 ? 0 : prevValue - 1;
 
     setFirstInputValue(String(currentValue));
-    onChange(String(currentValue));
+    onChange(currentValue);
   }
 
   return (

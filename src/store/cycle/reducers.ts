@@ -3,7 +3,7 @@ import {
   CycleActionTypes,
   CyclesTypes,
   SessionEnum,
-} from "./types";
+} from './types';
 
 const initialState: CyclesState = {
   sessionPosition: 0,
@@ -41,6 +41,16 @@ const initialState: CyclesState = {
 
 export function cycleReducer(state = initialState, action: CycleActionTypes) {
   switch (action.type) {
+    case CyclesTypes.ADD_TO_CYCLE:
+      return {
+        ...state,
+        customCycle: [...state.customCycle, ...action.payload],
+      };
+    case CyclesTypes.CLEAR_AND_ADD_TO_CYCLE:
+      return {
+        ...state,
+        customCycle: [...action.payload],
+      };
     case CyclesTypes.CLEAR_CYCLE:
       return {
         ...state,

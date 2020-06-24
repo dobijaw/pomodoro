@@ -1,7 +1,12 @@
 import { Session, CyclesTypes, SessionTypes } from './types';
 
-export const addToCycle = (newSession: Session) => ({
+export const addToCycle = (newSession: Session[]) => ({
   type: CyclesTypes.ADD_TO_CYCLE,
+  payload: newSession,
+});
+
+export const clearAndAddToCycle = (newSession: Session[]) => ({
+  type: CyclesTypes.CLEAR_AND_ADD_TO_CYCLE,
   payload: newSession,
 });
 
