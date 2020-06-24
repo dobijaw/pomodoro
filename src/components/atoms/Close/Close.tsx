@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
 const Close = styled.button`
-  position: absolute;
+  position: -webkit-sticky;
+  position: sticky;
   top: 10px;
   right: 10px;
   display: block;
   width: 28px;
   height: 28px;
   border: none;
+  margin: 0 0 0 auto;
   background: none;
   transition: background 0.35s ease-in-out;
 

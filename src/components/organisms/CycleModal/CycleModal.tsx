@@ -47,18 +47,22 @@ const BoxModal = styled.div`
   max-width: 800px;
   height: calc(100vh - 40px);
   max-height: 600px;
-  padding: 30px;
+
   transform: translate(-50%, -50%) scale(0);
   background: ${({ theme }) => theme.colors.background20};
   box-shadow: 5px 2px 10px 0px rgba(24, 27, 30, 0.3);
   animation: ${scale} 0.4s forwards;
+`;
+
+const BoxModalWrapper = styled.div`
+  padding: 10px 30px;
 
   @media (min-width: 600px) {
-    padding: 50px;
+    padding: 20px 50px;
   }
 
   @media (min-width: 840px) {
-    padding: 70px;
+    padding: 30px 70px;
   }
 `;
 
@@ -221,95 +225,102 @@ function CycleModal({ onClose }: CycleModal) {
     <Wrapper>
       <BoxModal ref={modalRef}>
         <Close onClick={onClose} />
-        <Headline>Create Cycle</Headline>
-        <RadioForm>
-          <RadioCheck
-            label="Same session"
-            id="sameSession"
-            type="radio"
-            name="sessionKind"
-            checked={isSameSession}
-            onChange={() => toggleSession(!isSameSession)}
-          />
-          <RadioCheck
-            label="Custom session"
-            id="customSession"
-            type="radio"
-            name="sessionKind"
-            checked={!isSameSession}
-            onChange={() => toggleSession(!isSameSession)}
-          />
-        </RadioForm>
+        <BoxModalWrapper>
+          <Headline>Create Cycle</Headline>
+          <RadioForm>
+            <RadioCheck
+              label="Same session"
+              id="sameSession"
+              type="radio"
+              name="sessionKind"
+              checked={isSameSession}
+              onChange={() => toggleSession(!isSameSession)}
+            />
+            <RadioCheck
+              label="Custom session"
+              id="customSession"
+              type="radio"
+              name="sessionKind"
+              checked={!isSameSession}
+              onChange={() => toggleSession(!isSameSession)}
+            />
+          </RadioForm>
 
-        <Form onSubmit={handleSubmit}>
-          {isSameSession ? (
-            <>
-              <NumberInputBox
-                label="session number"
-                onChange={(value: number) =>
-                  setSameValues(
-                    getSameValue(sameValues, value, 'sessionNumber')
-                  )
-                }
-                maxValue={5}
-                value={String(sameValues.sessionNumber)}
-              />
-              <TimerWrapper>
-                <TimeInputBox
-                  label="session time"
+          <Form onSubmit={handleSubmit}>
+            {isSameSession ? (
+              <>
+                <NumberInputBox
+                  label="session number"
                   onChange={(value: number) =>
                     setSameValues(
-                      getSameValue(sameValues, value, 'sessionTime')
+                      getSameValue(sameValues, value, 'sessionNumber')
                     )
                   }
-                  maxValue={60}
-                  value={sameValues.sessionTime}
+                  maxValue={5}
+                  value={String(sameValues.sessionNumber)}
                 />
-                <TimeInputBox
-                  label="rest time"
-                  onChange={(value: number) =>
-                    setSameValues(getSameValue(sameValues, value, 'restTime'))
-                  }
-                  maxValue={60}
-                  value={sameValues.restTime}
-                />
-              </TimerWrapper>
-            </>
-          ) : (
-            <>
-              {customValues.map((item, index) => (
-                <TimerWrapper key={item.id}>
-                  <SesionNumber>{index + 1}</SesionNumber>
+                <TimerWrapper>
                   <TimeInputBox
                     label="session time"
                     onChange={(value: number) =>
-                      setCustomValues(
-                        getCustomValue(
-                          customValues,
-                          value,
-                          item.id,
-                          'sessionTime'
-                        )
+                      setSameValues(
+                        getSameValue(sameValues, value, 'sessionTime')
                       )
                     }
                     maxValue={60}
-                    value={Number(
-                      customValues.find((el) => el.id === item.id)?.sessionTime
-                    )}
+                    value={sameValues.sessionTime}
                   />
                   <TimeInputBox
-                    label="break time"
+                    label="rest time"
                     onChange={(value: number) =>
-                      setCustomValues(
-                        getCustomValue(customValues, value, item.id, 'restTime')
-                      )
+                      setSameValues(getSameValue(sameValues, value, 'restTime'))
                     }
                     maxValue={60}
-                    value={Number(
-                      customValues.find((el) => el.id === item.id)?.restTime
-                    )}
+                    value={sameValues.restTime}
                   />
-                  {/* <IconButton
+                </TimerWrapper>
+              </>
+            ) : (
+              <>
+                {customValues.map((item, index) => (
+                  <TimerWrapper key={item.id}>
+                    <SesionNumber>{index + 1}</SesionNumber>
+                    <TimeInputBox
+                      label="session time"
+                      onChange={(value: number) =>
+                        setCustomValues(
+                          getCustomValue(
+                            customValues,
+                            value,
+                            item.id,
+                            'sessionTime'
+                          )
+                        )
+                      }
+                      maxValue={60}
+                      value={Number(
+                        customValues.find((el) => el.id === item.id)
+                          ?.sessionTime
+                      )}
+                    />
+                    <TimeInputBox
+                      label="break time"
+                      onChange={(value: number) =>
+                        setCustomValues(
+                          getCustomValue(
+                            customValues,
+                            value,
+                            item.id,
+                            'restTime'
+                          )
+                        )
+                      }
+                      maxValue={60}
+                      value={Number(
+                        customValues.find((el) => el.id === item.id)?.restTime
+                      )}
+                    />
+                    {/* <IconButton
                     type="button"
                     asDelete
                     onClick={() => {
@@ -318,31 +329,32 @@ function CycleModal({ onClose }: CycleModal) {
                       );
                     }}
                   /> */}
-                </TimerWrapper>
-              ))}
-              <IconButton
-                type="button"
-                asAdd
-                onClick={addNewCustomSession}
-                disabled={customValues.length >= 5}
+                  </TimerWrapper>
+                ))}
+                <IconButton
+                  type="button"
+                  asAdd
+                  onClick={addNewCustomSession}
+                  disabled={customValues.length >= 5}
+                />
+              </>
+            )}
+
+            {!!customCycle.length && (
+              <RadioCheck
+                label="Clear existing custom cycle"
+                type="checkbox"
+                name="clearCycle"
+                onChange={() => toggleClearChecked(!isClearChecked)}
+                id="string"
+                checked={isClearChecked}
+                marginTop="40px"
               />
-            </>
-          )}
+            )}
 
-          {!!customCycle.length && (
-            <RadioCheck
-              label="Clear existing custom cycle"
-              type="checkbox"
-              name="clearCycle"
-              onChange={() => toggleClearChecked(!isClearChecked)}
-              id="string"
-              checked={isClearChecked}
-              marginTop="40px"
-            />
-          )}
-
-          <StyledButton type="submit">Create Cycle</StyledButton>
-        </Form>
+            <StyledButton type="submit">Create Cycle</StyledButton>
+          </Form>
+        </BoxModalWrapper>
       </BoxModal>
     </Wrapper>
   );

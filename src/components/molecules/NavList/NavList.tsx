@@ -4,7 +4,6 @@ import { connect, ConnectedProps } from 'react-redux';
 
 import { Routes } from 'routes';
 import { clearCycle } from 'store/cycle/actions';
-import { CyclesState } from 'store/cycle/types';
 
 import Button from 'components/atoms/Button/Button';
 import NavLinkItem from 'components/atoms/NavLinkItem/NavLinkItem';
@@ -41,9 +40,16 @@ const ListItem = styled.li`
   margin: 0 20px;
 `;
 
-interface RootState {
-  cycle: CyclesState;
-}
+const StyledButton = styled(Button)`
+  min-width: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+`;
+
+const StyleButtonMargin = styled(StyledButton)`
+  margin-right: 20px;
+  margin-left: 20px;
+`;
 
 const mapDispatch = {
   clearCycle: () => clearCycle(),
@@ -70,12 +76,12 @@ function NavList({ asMobile, isVisible, onOpenModal, clearCycle }: Props) {
       <ListItem>
         <NavLinkItem to={Routes.settings}>Settings</NavLinkItem>
       </ListItem>
-      <Button type="button" onClick={onOpenModal}>
-        create cycle
-      </Button>
-      <Button type="button" onClick={clearCycle}>
+      <StyleButtonMargin asDelete type="button" onClick={clearCycle}>
         clear cycle
-      </Button>
+      </StyleButtonMargin>
+      <StyledButton type="button" onClick={onOpenModal}>
+        create cycle
+      </StyledButton>
     </List>
   );
 }

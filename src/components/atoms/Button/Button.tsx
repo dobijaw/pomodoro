@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 
-const Button = styled.button<{ asPrimary?: boolean; withMargin?: boolean }>`
+const Button = styled.button<{
+  asPrimary?: boolean;
+  asDelete?: boolean;
+  withMargin?: boolean;
+}>`
   display: inline-block;
   min-width: 220px;
   padding: 18px 32px;
@@ -17,12 +21,30 @@ const Button = styled.button<{ asPrimary?: boolean; withMargin?: boolean }>`
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
+  transition: all 0.35s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.background};
+    background: ${({ theme }) => theme.colors.primary};
+  }
 
   ${({ asPrimary }) =>
     asPrimary &&
     css`
       background-color: ${({ theme }) => theme.colors.primary};
       color: ${({ theme }) => theme.colors.background};
+    `}
+
+  ${({ asDelete }) =>
+    asDelete &&
+    css`
+      border-color: ${({ theme }) => theme.colors.error};
+      color: ${({ theme }) => theme.colors.error};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.colors.error};
+        color: ${({ theme }) => theme.colors.copy};
+      }
     `}
 `;
 
