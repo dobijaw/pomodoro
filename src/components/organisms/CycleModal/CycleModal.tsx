@@ -1,10 +1,11 @@
 import React, { useState, FormEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { useClickOutside } from 'hooks/useClickOutside';
 
+import { useClickOutside } from 'hooks/useClickOutside';
 import { SessionEnum, Session } from 'store/cycle/types';
 import { addToCycle, clearAndAddToCycle } from 'store/cycle/actions';
+import { generateUnicId } from 'utils';
 
 import Close from 'components/atoms/Close/Close';
 import Button from 'components/atoms/Button/Button';
@@ -137,7 +138,7 @@ interface CustomValue {
 }
 
 const customData = {
-  id: Math.random(),
+  id: generateUnicId([]),
   sessionTime: 0,
   restTime: 0,
 };
@@ -158,12 +159,19 @@ function CycleModal({ onClose }: CycleModal) {
     [name]: value,
   });
 
+  const getCustomValue = (
+    state: CustomValue[],
+    value: number,
+    id: number,
+    type: string
+  ) => state.map((i) => (i.id === id ? { ...i, [type]: value } : i));
+
   function addNewCustomSession() {
     if (customValues.length < 5) {
       setCustomValues([
         ...customValues,
         {
-          id: Math.random(),
+          id: generateUnicId(customValues.map((el) => el.id)),
           sessionTime: 0,
           restTime: 0,
         },
@@ -171,26 +179,29 @@ function CycleModal({ onClose }: CycleModal) {
     }
   }
 
-  function getCustomValue(value: number, id: number, type: string) {
-    const data = customValues.map((item) => {
-      if (item.id === id) {
-        return { ...item, [type]: value };
-      } else {
-        return item;
-      }
-    });
-
-    setCustomValues(data);
-  }
-
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     let output: Session[] | [] = [];
 
     if (isSameSession) {
+      if (
+        sameValues.sessionNumber <= 0 ||
+        sameValues.sessionTime <= 0 ||
+        sameValues.restTime <= 0
+      )
+        return;
+
       output = Array(sameValues.sessionNumber).fill([
         { type: SessionEnum.ACTION, time: sameValues.sessionTime },
         { type: SessionEnum.REST, time: sameValues.restTime },
+      ]);
+    } else {
+      if (customValues.some((i) => i.sessionTime === 0 || i.restTime === 0))
+        return;
+
+      output = customValues.map((item) => [
+        { type: SessionEnum.ACTION, time: item.sessionTime },
+        { type: SessionEnum.REST, time: item.restTime },
       ]);
     }
 
@@ -249,12 +260,16 @@ function CycleModal({ onClose }: CycleModal) {
                       getSameValue(sameValues, value, 'sessionTime')
                     )
                   }
+                  maxValue={60}
+                  value={sameValues.sessionTime}
                 />
                 <TimeInputBox
                   label="rest time"
                   onChange={(value: number) =>
                     setSameValues(getSameValue(sameValues, value, 'restTime'))
                   }
+                  maxValue={60}
+                  value={sameValues.restTime}
                 />
               </TimerWrapper>
             </>
@@ -266,27 +281,44 @@ function CycleModal({ onClose }: CycleModal) {
                   <TimeInputBox
                     label="session time"
                     onChange={(value: number) =>
-                      getCustomValue(value, item.id, 'sessionTime')
+                      setCustomValues(
+                        getCustomValue(
+                          customValues,
+                          value,
+                          item.id,
+                          'sessionTime'
+                        )
+                      )
                     }
+                    maxValue={60}
+                    value={Number(
+                      customValues.find((el) => el.id === item.id)?.sessionTime
+                    )}
                   />
+
                   <TimeInputBox
                     label="break time"
                     onChange={(value: number) =>
-                      getCustomValue(value, item.id, 'restTime')
+                      setCustomValues(
+                        getCustomValue(customValues, value, item.id, 'restTime')
+                      )
                     }
+                    maxValue={60}
+                    value={Number(
+                      customValues.find((el) => el.id === item.id)?.restTime
+                    )}
                   />
                   {/* <IconButton
                     type="button"
                     asDelete
-                    onClick={() =>
-                      setCustomSessionFields(
-                        customSessionFields.filter((i) => i.id !== item.id)
-                      )
-                    }
+                    onClick={() => {
+                      setCustomValues(
+                        customValues.filter((s) => s.id !== item.id)
+                      );
+                    }}
                   /> */}
                 </TimerWrapper>
               ))}
-              {console.log(customValues)}
               <IconButton
                 type="button"
                 asAdd

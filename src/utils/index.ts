@@ -1,0 +1,31 @@
+export function getMinutes(
+  ms: number,
+  numberReturn?: boolean
+): string | number {
+  const minutes = Math.floor(ms / 60 / 1000);
+
+  if (numberReturn) return Number(minutes);
+
+  return minutes < 10 ? `0${minutes}` : `${minutes}`;
+}
+
+export function getSeconds(
+  ms: number,
+  numberReturn?: boolean
+): string | number {
+  const seconds = Math.floor((ms % 60000) / 1000);
+
+  if (numberReturn) return Number(seconds);
+
+  return seconds < 10 ? `0${seconds}` : `${seconds}`;
+}
+
+export function generateUnicId(ids: number[]) {
+  let id: number;
+
+  do {
+    id = Math.floor(Math.random() * 10 ** 20);
+  } while (ids.includes(id));
+
+  return id;
+}

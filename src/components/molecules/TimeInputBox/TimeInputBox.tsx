@@ -1,5 +1,6 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
+import { getSeconds, getMinutes } from 'utils';
 
 import Input from 'components/atoms/Input/Input';
 import Label from 'components/atoms/Label/Label';
@@ -36,42 +37,35 @@ const InputBreak = styled.span`
 interface Props {
   label: string;
   onChange: (values: number) => void;
+  maxValue: number;
+  value: number;
 }
 
-function TimeInputBox({ label, onChange }: Props) {
-  const [maxValue] = useState<number>(60);
-  const [values, setValues] = useState<string[]>(['00', '00']);
-
-  function convertToMilliseconds(valuesData: string[]) {
+function TimeInputBox({ label, onChange, maxValue, value }: Props) {
+  function convertToMilliseconds(valuesData: number[]): number {
     const [minutes, seconds] = valuesData;
 
-    const minutesInMiliseconds = Number(minutes) * 60 * 1000;
-    const secondsInMiliseconds = Number(seconds) * 1000;
+    const minutesInMiliseconds = minutes * 60 * 1000;
+    const secondsInMiliseconds = seconds * 1000;
 
     return minutesInMiliseconds + secondsInMiliseconds;
   }
 
   function handleMinutesChange(e: ChangeEvent<HTMLInputElement>) {
-    const value = Number(e.currentTarget.value);
-    const currentValue = value < 0 ? 0 : value > maxValue ? maxValue : value;
+    const eValue = Number(e.currentTarget.value);
 
-    const min = currentValue < 10 ? `0${currentValue}` : `${currentValue}`;
-    const sec = currentValue === maxValue ? '00' : values[1];
+    const min = eValue < 0 ? 0 : eValue > maxValue ? maxValue : eValue;
+    const sec = Number(min === maxValue ? 0 : getSeconds(value, true));
 
-    setValues([min, sec]);
     onChange(convertToMilliseconds([min, sec]));
   }
 
   function handleSecondsChange(e: ChangeEvent<HTMLInputElement>) {
-    const value = Number(e.currentTarget.value);
-    const minutes = Number(values[0]);
-    const currentValue =
-      value < 0 || value >= maxValue || minutes === 60 ? 0 : value;
+    const eValue = Number(e.currentTarget.value);
 
-    const min = values[0];
-    const sec = currentValue < 10 ? `0${currentValue}` : `${currentValue}`;
+    const min = Number(getMinutes(value, true));
+    const sec = eValue < 0 || eValue >= maxValue || min >= 60 ? 0 : eValue;
 
-    setValues((prevValue) => [min, sec]);
     onChange(convertToMilliseconds([min, sec]));
   }
 
@@ -82,7 +76,7 @@ function TimeInputBox({ label, onChange }: Props) {
         <StyledInput
           asBox
           type="number"
-          value={[values[0]]}
+          value={getMinutes(value)}
           name="minutes"
           onChange={handleMinutesChange}
         />
@@ -90,7 +84,7 @@ function TimeInputBox({ label, onChange }: Props) {
         <StyledInput
           asBox
           type="number"
-          value={[values[1]]}
+          value={getSeconds(value)}
           name="seconds"
           onChange={handleSecondsChange}
         />
