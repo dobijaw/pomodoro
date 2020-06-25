@@ -19,6 +19,8 @@ import {
   setCyclePosition,
   setSessionInProgress,
 } from 'store/cycle/actions';
+import { addReport } from 'store/reports/actions';
+import { Report } from 'store/reports/types';
 
 interface RootState {
   cycle: CyclesState;
@@ -40,6 +42,7 @@ const mapDispatch = {
   setCyclePosition: (position: number) => setCyclePosition(position),
   setSessionInProgress: (isInProgress: boolean) =>
     setSessionInProgress(isInProgress),
+  addReport: (newReport: Report) => addReport(newReport),
 };
 
 const connector = connect(mapState, mapDispatch);
@@ -57,6 +60,7 @@ function Root({
   toggleTimerRunning,
   setCyclePosition,
   setSessionInProgress,
+  addReport,
 }: PropsFromRedux) {
   const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
 
@@ -126,6 +130,15 @@ function Root({
     setSessionInProgress(false);
     stop();
     toggleTimerRunning(false);
+
+    addReport({
+      date: new Date(),
+      project: 'ZIOMAL',
+      session: {
+        actionTime: 720000,
+        restTime: 360000,
+      },
+    });
 
     if (curSessionPosition === 0) {
       setCurSessionPosition(1);

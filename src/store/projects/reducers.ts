@@ -1,6 +1,13 @@
 import { ProjectsState, ProjectsActionTypes, ProjectsTypes } from './types';
 
-const initialState: ProjectsState = [];
+const initialState: ProjectsState = {
+  projectsList: [],
+  projectSelected: {
+    id: 'NOPROJECT',
+    name: 'NO PROJECT SELECTED',
+    sessionCount: 0,
+  },
+};
 
 export function projectReducer(
   state = initialState,
@@ -8,13 +15,26 @@ export function projectReducer(
 ): ProjectsState {
   switch (action.type) {
     case ProjectsTypes.ADD_PROJECT:
-      return [...state, action.payload];
+      return {
+        ...state,
+        projectsList: [...state.projectsList, action.payload],
+      };
     case ProjectsTypes.REMOVE_PROJECT:
-      return [...state.filter((p) => p.id !== action.payload.id)];
+      return {
+        ...state,
+        projectsList: [
+          ...state.projectsList.filter((p) => p.id !== action.payload.id),
+        ],
+      };
     case ProjectsTypes.UPDATE_PROJECT:
-      return [
-        ...state.map((p) => (p.id === action.payload.id ? action.payload : p)),
-      ];
+      return {
+        ...state,
+        projectsList: [
+          ...state.projectsList.map((p) =>
+            p.id === action.payload.id ? action.payload : p
+          ),
+        ],
+      };
     default:
       return state;
   }

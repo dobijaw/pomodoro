@@ -27,7 +27,7 @@ interface RootState {
 function AddProject() {
   const dispatch = useDispatch();
 
-  const getProjects = ({ projects }: RootState) => projects;
+  const getProjects = ({ projects }: RootState) => projects.projectsList;
   const projects = useSelector(getProjects);
 
   const [newProjectValue, setNewProjectValue] = useState<string>('');

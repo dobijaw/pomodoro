@@ -4,7 +4,16 @@ export interface Project {
   sessionCount: number;
 }
 
-export type ProjectsState = Project[];
+export interface NoProject {
+  id: 'NOPROJECT';
+  name: 'NO PROJECT SELECTED';
+  sessionCount: number;
+}
+
+export type ProjectsState = {
+  projectsList: Project[];
+  projectSelected: Project | NoProject;
+};
 
 export enum ProjectsTypes {
   ADD_PROJECT = 'ADD_PROJECT',

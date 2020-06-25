@@ -11,7 +11,9 @@ interface RootState {
 }
 
 function ProjectsPage() {
-  const projects = useSelector(({ projects }: RootState) => projects);
+  const projects = useSelector(
+    ({ projects }: RootState) => projects.projectsList
+  );
 
   return (
     <PageTemplate isSubPage>

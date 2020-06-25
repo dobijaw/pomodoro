@@ -1,5 +1,5 @@
 export interface Report {
-  date: string;
+  date: Date;
   project: string;
   session: {
     actionTime: number;

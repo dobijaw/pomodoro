@@ -45,7 +45,7 @@ interface State {
 function ProjectsDropDown() {
   const [isListVisible, toggleListVisibility] = useState<boolean>(false);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
-  const projects = useSelector(({ projects }: State) => projects);
+  const projects = useSelector(({ projects }: State) => projects.projectsList);
 
   useEffect(() => {
     toggleListVisibility(false);
