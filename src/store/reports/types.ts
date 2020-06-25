@@ -1,6 +1,6 @@
 export interface Report {
   date: Date;
-  project: string;
+  projectId: string;
   session: {
     actionTime: number;
     restTime: number;

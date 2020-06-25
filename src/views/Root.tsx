@@ -21,17 +21,20 @@ import {
 } from 'store/cycle/actions';
 import { addReport } from 'store/reports/actions';
 import { Report } from 'store/reports/types';
+import { ProjectsState } from 'store/projects/types';
 
 interface RootState {
   cycle: CyclesState;
+  projects: ProjectsState;
 }
 
-const mapState = ({ cycle }: RootState) => ({
+const mapState = ({ cycle, projects }: RootState) => ({
   customCycle: cycle.customCycle,
   defaultCycle: cycle.defaultCycle,
   currentTime: cycle.currentTime,
   isSessionInProgress: cycle.isSessionInProgress,
   isRunning: cycle.isRunning,
+  projectSelected: projects.projectSelected,
 });
 
 const mapDispatch = {
@@ -54,6 +57,7 @@ function Root({
   defaultCycle,
   isRunning,
   isSessionInProgress,
+  projectSelected,
   clearCycle,
   setCurrentTime,
   setCurrentType,
@@ -133,7 +137,7 @@ function Root({
 
     addReport({
       date: new Date(),
-      project: 'ZIOMAL',
+      projectId: projectSelected.id,
       session: {
         actionTime: 720000,
         restTime: 360000,
