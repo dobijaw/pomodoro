@@ -245,11 +245,7 @@ function Root({
         },
       });
 
-      if (
-        cycleType === 'CUSTOM' &&
-        curCyclePosition + 1 > cycle.length - 1 &&
-        !isRunning
-      ) {
+      if (cycleType === 'CUSTOM' && curCyclePosition + 1 > cycle.length - 1) {
         clearCycle();
       }
 
