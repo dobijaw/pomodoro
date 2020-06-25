@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux';
 
 import { Routes } from 'routes';
 import { clearCycle } from 'store/cycle/actions';
+import { CyclesState } from 'store/cycle/types';
 
 import Button from 'components/atoms/Button/Button';
 import NavLinkItem from 'components/atoms/NavLinkItem/NavLinkItem';
@@ -49,13 +50,30 @@ const StyledButton = styled(Button)`
 const StyleButtonMargin = styled(StyledButton)`
   margin-right: 20px;
   margin-left: 20px;
+
+  &:disabled {
+    opacity: 0.2;
+
+    &:hover {
+      background: none;
+      color: ${({ theme }) => theme.colors.error};
+    }
+  }
 `;
+
+interface State {
+  cycle: CyclesState;
+}
+
+const mapState = ({ cycle }: State) => ({
+  isRunning: cycle.isRunning,
+});
 
 const mapDispatch = {
   clearCycle: () => clearCycle(),
 };
 
-const connector = connect(null, mapDispatch);
+const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
@@ -64,7 +82,13 @@ type Props = PropsFromRedux & {
   onOpenModal: () => void;
 };
 
-function NavList({ asMobile, isVisible, onOpenModal, clearCycle }: Props) {
+function NavList({
+  asMobile,
+  isVisible,
+  isRunning,
+  onOpenModal,
+  clearCycle,
+}: Props) {
   return (
     <List asMobile={asMobile} isVisible={isVisible}>
       <ListItem>
@@ -76,7 +100,12 @@ function NavList({ asMobile, isVisible, onOpenModal, clearCycle }: Props) {
       <ListItem>
         <NavLinkItem to={Routes.settings}>Settings</NavLinkItem>
       </ListItem>
-      <StyleButtonMargin asDelete type="button" onClick={clearCycle}>
+      <StyleButtonMargin
+        asDelete
+        type="button"
+        onClick={clearCycle}
+        disabled={isRunning}
+      >
         clear cycle
       </StyleButtonMargin>
       <StyledButton type="button" onClick={onOpenModal}>

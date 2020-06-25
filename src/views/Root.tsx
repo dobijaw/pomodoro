@@ -151,6 +151,21 @@ function Root({
   ]);
 
   useEffect(() => {
+    if (customCycle.length === 0) {
+      setCurSessionPosition(0);
+      setSessionPosition(0);
+      setNextSessionPosition(1);
+      setCurCyclePosition(0);
+    }
+  }, [customCycle, setNextSessionPosition, setSessionPosition]);
+
+  useEffect(() => {
+    console.log('sttart data');
+    console.log(cycle);
+    console.log(curCyclePosition);
+    console.log(curSessionPosition);
+    console.log('stop data');
+
     setCurrentTime(cycle[curCyclePosition][curSessionPosition].time);
     setCurrentType(cycle[curCyclePosition][curSessionPosition].type);
 
@@ -230,8 +245,13 @@ function Root({
         },
       });
 
-      if (cycleType === 'CUSTOM' && curCyclePosition + 1 > cycle.length - 1)
+      if (
+        cycleType === 'CUSTOM' &&
+        curCyclePosition + 1 > cycle.length - 1 &&
+        !isRunning
+      ) {
         clearCycle();
+      }
 
       setCurCyclePosition(
         curCyclePosition + 1 > cycle.length - 1 ? 0 : curCyclePosition + 1
