@@ -19,22 +19,26 @@ import {
   setCyclePosition,
   setSessionInProgress,
 } from 'store/cycle/actions';
-import { addReport } from 'store/reports/actions';
+import { addReport, updateReport } from 'store/reports/actions';
 import { Report } from 'store/reports/types';
 import { ProjectsState } from 'store/projects/types';
+import { generateUnicId } from 'utils';
+import { ReportsState } from 'store/reports/types';
 
 interface RootState {
   cycle: CyclesState;
   projects: ProjectsState;
+  reports: ReportsState;
 }
 
-const mapState = ({ cycle, projects }: RootState) => ({
+const mapState = ({ cycle, projects, reports }: RootState) => ({
   customCycle: cycle.customCycle,
   defaultCycle: cycle.defaultCycle,
   currentTime: cycle.currentTime,
   isSessionInProgress: cycle.isSessionInProgress,
   isRunning: cycle.isRunning,
   projectSelected: projects.projectSelected,
+  reports: reports.reports,
 });
 
 const mapDispatch = {
@@ -46,10 +50,16 @@ const mapDispatch = {
   setSessionInProgress: (isInProgress: boolean) =>
     setSessionInProgress(isInProgress),
   addReport: (newReport: Report) => addReport(newReport),
+  updateReport: (newReport: Report) => updateReport(newReport),
 };
 
 const connector = connect(mapState, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
+
+interface CurrentSessionType {
+  session: Session;
+  sessionId: string;
+}
 
 function Root({
   customCycle,
@@ -58,6 +68,7 @@ function Root({
   isRunning,
   isSessionInProgress,
   projectSelected,
+  reports,
   clearCycle,
   setCurrentTime,
   setCurrentType,
@@ -65,8 +76,13 @@ function Root({
   setCyclePosition,
   setSessionInProgress,
   addReport,
+  updateReport,
 }: PropsFromRedux) {
   const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
+  const [currentSession, setCurrentSession] = useState<CurrentSessionType>({
+    session: defaultCycle[0],
+    sessionId: 'SESSION_ID',
+  });
 
   const getCycle = (customCycle: Session[], defaultCycle: Session[]) =>
     !!customCycle.length ? customCycle : defaultCycle;
@@ -89,7 +105,21 @@ function Root({
 
     setCycle(getCycle(customCycle, defaultCycle));
     setCycleType(getCycleType(customCycle));
-  }, [customCycle, defaultCycle, isRunning, isSessionInProgress]);
+
+    if (curSessionPosition === 0)
+      setCurrentSession({
+        session: cycle[curCyclePosition],
+        sessionId: generateUnicId([]),
+      });
+  }, [
+    curCyclePosition,
+    curSessionPosition,
+    customCycle,
+    cycle,
+    defaultCycle,
+    isRunning,
+    isSessionInProgress,
+  ]);
 
   useEffect(() => {
     setCurrentTime(cycle[curCyclePosition][curSessionPosition].time);
@@ -135,19 +165,33 @@ function Root({
     stop();
     toggleTimerRunning(false);
 
-    addReport({
-      date: new Date(),
-      projectId: projectSelected.id,
-      session: {
-        actionTime: 720000,
-        restTime: 360000,
-      },
-    });
-
     if (curSessionPosition === 0) {
       setCurSessionPosition(1);
+      console.log(currentSession);
+      addReport({
+        date: new Date(),
+        projectId: projectSelected.id,
+        session: {
+          sessionId: currentSession?.sessionId,
+          actionTime: currentSession?.session[0].time - currentTime,
+          restTime: 0,
+        },
+      });
     } else if (curSessionPosition === 1) {
       setCurSessionPosition(0);
+
+      updateReport({
+        date: new Date(),
+        projectId: projectSelected.id,
+        session: {
+          sessionId: currentSession?.sessionId,
+          actionTime:
+            reports.find(
+              (i) => i.session.sessionId === currentSession?.sessionId
+            )?.session.actionTime || 0,
+          restTime: currentSession?.session[1].time - currentTime,
+        },
+      });
 
       if (cycleType === 'CUSTOM' && curCyclePosition + 1 > cycle.length - 1)
         clearCycle();
@@ -184,6 +228,7 @@ function Root({
             <Route exact path={Routes.history} component={HistoryPage} />
             <Route exact path={Routes.settings} component={SettingsPage} />
           </Switch>
+          {console.log(reports)}
           {isModalVisible && <CycleModal onClose={handleCloseModal} />}
         </MainTemplate>
       </AppContext.Provider>
