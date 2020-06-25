@@ -4,7 +4,7 @@ const initialState: ProjectsState = {
   projectsList: [],
   projectSelected: {
     id: 'NOPROJECT',
-    name: 'NO PROJECT SELECTED',
+    name: 'NO PROJECT',
     sessionCount: 0,
   },
 };
@@ -34,6 +34,11 @@ export function projectReducer(
             p.id === action.payload.id ? action.payload : p
           ),
         ],
+      };
+    case ProjectsTypes.SET_SELECTED_PROJECT:
+      return {
+        ...state,
+        projectSelected: action.payload,
       };
     default:
       return state;

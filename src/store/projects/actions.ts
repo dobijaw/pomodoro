@@ -18,3 +18,8 @@ export const updateProject = (
   type: ProjectsTypes.UPDATE_PROJECT,
   payload: newProjectData,
 });
+
+export const setSelectedProject = (project: Project): ProjectsActionTypes => ({
+  type: ProjectsTypes.SET_SELECTED_PROJECT,
+  payload: project,
+});

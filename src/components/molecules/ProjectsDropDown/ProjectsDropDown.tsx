@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Project, ProjectsState } from 'store/projects/types';
+import { ProjectsState } from 'store/projects/types';
+import { setSelectedProject } from 'store/projects/actions';
 
 import Input from 'components/atoms/Input/Input';
 import ProjectList from 'components/molecules/ProjectList/ProjectList';
@@ -43,9 +44,13 @@ interface State {
 }
 
 function ProjectsDropDown() {
+  const dispatch = useDispatch();
+
   const [isListVisible, toggleListVisibility] = useState<boolean>(false);
-  const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const projects = useSelector(({ projects }: State) => projects.projectsList);
+  const currentProject = useSelector(
+    ({ projects }: State) => projects.projectSelected
+  );
 
   useEffect(() => {
     toggleListVisibility(false);
@@ -56,7 +61,7 @@ function ProjectsDropDown() {
       <InputWrapper>
         <StyledInput
           type="button"
-          value={currentProject?.name || 'NO PROJECT SELECTED'}
+          value={currentProject?.name}
           onClick={() => toggleListVisibility(!isListVisible)}
         />
         <Icon isActive={isListVisible} />
@@ -65,7 +70,7 @@ function ProjectsDropDown() {
         <ProjectList
           projects={projects}
           noRemove
-          getProject={setCurrentProject}
+          getProject={(p) => dispatch(setSelectedProject(p))}
         />
       )}
     </Wrapper>

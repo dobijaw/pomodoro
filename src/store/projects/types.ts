@@ -4,21 +4,16 @@ export interface Project {
   sessionCount: number;
 }
 
-export interface NoProject {
-  id: 'NOPROJECT';
-  name: 'NO PROJECT SELECTED';
-  sessionCount: number;
-}
-
 export type ProjectsState = {
   projectsList: Project[];
-  projectSelected: Project | NoProject;
+  projectSelected: Project;
 };
 
 export enum ProjectsTypes {
   ADD_PROJECT = 'ADD_PROJECT',
   REMOVE_PROJECT = 'REMOVE_PROJECT',
   UPDATE_PROJECT = 'UPDATE_PROJECT',
+  SET_SELECTED_PROJECT = 'SET_SELECTED_PROJECT',
 }
 
 export interface AddProjectAction {
@@ -38,7 +33,13 @@ export interface UpdateProjectAction {
   payload: Project;
 }
 
+export interface SetSelectedProjectAction {
+  type: typeof ProjectsTypes.SET_SELECTED_PROJECT;
+  payload: Project;
+}
+
 export type ProjectsActionTypes =
   | AddProjectAction
   | RemoveProjectAction
-  | UpdateProjectAction;
+  | UpdateProjectAction
+  | SetSelectedProjectAction;
