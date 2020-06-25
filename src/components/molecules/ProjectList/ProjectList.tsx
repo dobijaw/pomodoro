@@ -50,6 +50,12 @@ const Button = styled.button`
   font-size: inherit;
   font-weight: inherit;
   text-transform: inherit;
+  cursor: pointer;
+  transition: background 0.35s;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.background20};
+  }
 `;
 
 const ItemWrapper = styled.div`

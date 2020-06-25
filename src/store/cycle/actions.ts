@@ -21,6 +21,11 @@ export const setCurrentTime = (time: number) => ({
   },
 });
 
+export const setDefaultCycle = (newSession: Session[]) => ({
+  type: CyclesTypes.SET_DEFAULT_CYCLE,
+  payload: newSession,
+});
+
 export const setCurrentType = (type: SessionTypes) => ({
   type: CyclesTypes.SET_CURRENT_TYPE,
   payload: {

@@ -58,6 +58,11 @@ export function cycleReducer(state = initialState, action: CycleActionTypes) {
         ...state,
         currentTime: action.payload.time,
       };
+    case CyclesTypes.SET_DEFAULT_CYCLE:
+      return {
+        ...state,
+        defaultCycle: [...action.payload],
+      };
     case CyclesTypes.SET_CURRENT_TYPE:
       return {
         ...state,

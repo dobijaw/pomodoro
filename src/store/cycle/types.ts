@@ -44,6 +44,7 @@ export enum CyclesTypes {
   SET_CYCLE_POSITION = 'SET_CYCLE_POSITION',
   CLEAR_AND_ADD_TO_CYCLE = 'CLEAR_AND_ADD_TO_CYCLE',
   SET_SESSION_IN_PROGRESS = 'SET_SESSION_IN_PROGRESS',
+  SET_DEFAULT_CYCLE = 'SET_DEFAULT_CYCLE',
 }
 
 interface AddToCycleAction {
@@ -65,6 +66,11 @@ interface SetCurrentTimeAction {
   payload: {
     time: number;
   };
+}
+
+interface SetDefaultCycleAction {
+  type: typeof CyclesTypes.SET_DEFAULT_CYCLE;
+  payload: Session;
 }
 
 interface SetCurrentTypeAction {
@@ -100,6 +106,7 @@ export type CycleActionTypes =
   | ClearAndAddToCycleAction
   | ClearCycleAction
   | SetCurrentTimeAction
+  | SetDefaultCycleAction
   | SetCurrentTypeAction
   | ToggleTimerRunningAction
   | SetCyclePositionAction
