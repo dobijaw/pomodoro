@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
-import styled from "styled-components";
-import { AppContext } from "context";
-import { connect, ConnectedProps } from "react-redux";
-import { CyclesState } from "store/cycle/types";
-import Button from "components/atoms/Button/Button";
-import TimerBox from "components/molecules/TimerBox/TimerBox";
+import React, { useState, useContext } from 'react';
+import styled from 'styled-components';
+import { AppContext } from 'context';
+import { connect, ConnectedProps } from 'react-redux';
+import { CyclesState } from 'store/cycle/types';
+import Button from 'components/atoms/Button/Button';
+import TimerBox from 'components/molecules/TimerBox/TimerBox';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,6 +16,8 @@ interface RootState {
 }
 
 const mapState = ({ cycle }: RootState) => ({
+  nextSessionPosition: cycle.nextSessionPosition,
+  nextTime: cycle.nextTime,
   currentTime: cycle.currentTime,
   isRunning: cycle.isRunning,
   customCycle: cycle.customCycle.map((_, index) => ({
@@ -27,7 +29,13 @@ const mapState = ({ cycle }: RootState) => ({
 const connector = connect(mapState);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-function TimerPanel({ currentTime, isRunning, customCycle }: PropsFromRedux) {
+function TimerPanel({
+  currentTime,
+  isRunning,
+  customCycle,
+  nextSessionPosition,
+  nextTime,
+}: PropsFromRedux) {
   const { onStartCountdow, onPauseCountdown, onStopCountdown } = useContext(
     AppContext
   );
@@ -53,7 +61,12 @@ function TimerPanel({ currentTime, isRunning, customCycle }: PropsFromRedux) {
 
   return (
     <div>
-      {/* <TimerBox nextSession={nextSession} /> */}
+      <TimerBox
+        nextSession={{
+          type: nextSessionPosition === 0 ? 'ACTION' : 'REST',
+          time: nextTime,
+        }}
+      />
       <TimerBox isMain isCycle time={currentTime} cycle={customCycle} />
       <Wrapper>
         {!isRunning && isInitialView ? (

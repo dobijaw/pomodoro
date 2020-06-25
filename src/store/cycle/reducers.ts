@@ -7,6 +7,7 @@ import {
 
 const initialState: CyclesState = {
   sessionPosition: 0,
+  nextSessionPosition: 1,
   cyclePosition: 0,
   isRunning: false,
   isSessionInProgress: false,
@@ -87,6 +88,16 @@ export function cycleReducer(state = initialState, action: CycleActionTypes) {
       return {
         ...state,
         sessionPosition: action.payload.position,
+      };
+    case CyclesTypes.SET_NEXT_SESSION_POSITION:
+      return {
+        ...state,
+        nextSessionPosition: action.payload.position,
+      };
+    case CyclesTypes.SET_NEXT_TIME:
+      return {
+        ...state,
+        nextTime: action.payload.nextTime,
       };
     default:
       return state;

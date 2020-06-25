@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import TimerPage from './TimerPage';
@@ -19,6 +19,8 @@ import {
   setCyclePosition,
   setSessionInProgress,
   setSessionPosition,
+  setNextSessionPosition,
+  setNextTime,
 } from 'store/cycle/actions';
 import { addReport, updateReport } from 'store/reports/actions';
 import { Report } from 'store/reports/types';
@@ -40,6 +42,7 @@ const mapState = ({ cycle, projects, reports }: RootState) => ({
   isRunning: cycle.isRunning,
   projectSelected: projects.projectSelected,
   reports: reports.reports,
+  nextSessionPosition: cycle.nextSessionPosition,
 });
 
 const mapDispatch = {
@@ -53,6 +56,9 @@ const mapDispatch = {
   addReport: (newReport: Report) => addReport(newReport),
   updateReport: (newReport: Report) => updateReport(newReport),
   setSessionPosition: (position: number) => setSessionPosition(position),
+  setNextSessionPosition: (position: number) =>
+    setNextSessionPosition(position),
+  setNextTime: (nextTime: number) => setNextTime(nextTime),
 };
 
 const connector = connect(mapState, mapDispatch);
@@ -71,6 +77,7 @@ function Root({
   isSessionInProgress,
   projectSelected,
   reports,
+  nextSessionPosition,
   clearCycle,
   setCurrentTime,
   setCurrentType,
@@ -80,6 +87,8 @@ function Root({
   addReport,
   updateReport,
   setSessionPosition,
+  setNextSessionPosition,
+  setNextTime,
 }: PropsFromRedux) {
   const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
   const [currentSession, setCurrentSession] = useState<CurrentSessionType>({
@@ -124,15 +133,36 @@ function Root({
     isSessionInProgress,
   ]);
 
+  function getNextTime() {
+    if (cycle.length - 1 === curCyclePosition && curSessionPosition === 1) {
+      return defaultCycle[0][0].time;
+    } else if (curSessionPosition === 1) {
+      return cycle[curCyclePosition + 1][0].time;
+    } else {
+      return cycle[curCyclePosition][1].time;
+    }
+  }
+
+  const getNextTimeCallback = useCallback(getNextTime, [
+    cycle,
+    curCyclePosition,
+    curSessionPosition,
+    defaultCycle,
+  ]);
+
   useEffect(() => {
     setCurrentTime(cycle[curCyclePosition][curSessionPosition].time);
     setCurrentType(cycle[curCyclePosition][curSessionPosition].type);
+
+    setNextTime(getNextTimeCallback());
   }, [
     curCyclePosition,
     curSessionPosition,
     cycle,
+    getNextTimeCallback,
     setCurrentTime,
     setCurrentType,
+    setNextTime,
   ]);
 
   useEffect(() => {
@@ -171,7 +201,8 @@ function Root({
     if (curSessionPosition === 0) {
       setCurSessionPosition(1);
       setSessionPosition(1);
-      // console.log(currentSession);
+      setNextSessionPosition(0);
+
       addReport({
         date: new Date(),
         projectId: projectSelected.id,
@@ -184,6 +215,7 @@ function Root({
     } else if (curSessionPosition === 1) {
       setCurSessionPosition(0);
       setSessionPosition(0);
+      setNextSessionPosition(1);
 
       updateReport({
         date: new Date(),

@@ -17,8 +17,8 @@ const Wraper = styled.div<{ asMain?: boolean }>`
     `}
 `;
 
-interface countdownQueueItem {
-  type: 'SESSION' | 'BREAK';
+interface NextSession {
+  type: 'ACTION' | 'REST';
   time: number;
 }
 
@@ -26,7 +26,7 @@ type TimerBox = {
   isMain?: boolean;
   isCycle?: boolean;
   time?: number;
-  nextSession?: countdownQueueItem;
+  nextSession?: NextSession;
   cycle?: { released: boolean; key: number }[];
 };
 
@@ -61,7 +61,10 @@ const TimerBox = ({
           <Label as="span" asCopy asMedium>
             Next {nextSession?.type}
           </Label>
-          <Timer minutes={getMinutes(time)} seconds={getSeconds(time)} />
+          <Timer
+            minutes={getMinutes(nextSession?.time || 0)}
+            seconds={getSeconds(nextSession?.time || 0)}
+          />
         </Wraper>
       )}
     </>

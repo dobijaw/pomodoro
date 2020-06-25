@@ -24,6 +24,7 @@ export type CycleTypes = CycleEnum.CUSTOM | CycleEnum.DEFAULT;
 
 export interface CyclesState {
   sessionPosition: number;
+  nextSessionPosition: number;
   cyclePosition: number;
   isRunning: boolean;
   isSessionInProgress: boolean;
@@ -46,6 +47,8 @@ export enum CyclesTypes {
   SET_SESSION_IN_PROGRESS = 'SET_SESSION_IN_PROGRESS',
   SET_DEFAULT_CYCLE = 'SET_DEFAULT_CYCLE',
   SET_SESSION_POSITION = 'SET_SESSION_POSITION',
+  SET_NEXT_SESSION_POSITION = 'SET_NEXT_SESSION_POSITION',
+  SET_NEXT_TIME = 'SET_NEXT_TIME',
 }
 
 interface AddToCycleAction {
@@ -109,6 +112,20 @@ interface SetSessionPositionAction {
   };
 }
 
+interface SetNextSessionPositionAction {
+  type: typeof CyclesTypes.SET_NEXT_SESSION_POSITION;
+  payload: {
+    position: number;
+  };
+}
+
+interface SetNextTimeAction {
+  type: typeof CyclesTypes.SET_NEXT_TIME;
+  payload: {
+    nextTime: number;
+  };
+}
+
 export type CycleActionTypes =
   | AddToCycleAction
   | ClearAndAddToCycleAction
@@ -119,4 +136,6 @@ export type CycleActionTypes =
   | ToggleTimerRunningAction
   | SetCyclePositionAction
   | SetSessionInProgressAction
-  | SetSessionPositionAction;
+  | SetSessionPositionAction
+  | SetNextSessionPositionAction
+  | SetNextTimeAction;
