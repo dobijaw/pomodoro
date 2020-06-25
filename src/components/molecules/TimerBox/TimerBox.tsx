@@ -1,5 +1,4 @@
 import React from 'react';
-import { countdownQueueItem } from 'models/countdownQueueItem.model';
 import styled, { css } from 'styled-components';
 import Timer from 'components/molecules/Timer/Timer';
 import CycleProgress from 'components/molecules/CycleProgress/CycleProgress';
@@ -17,6 +16,11 @@ const Wraper = styled.div<{ asMain?: boolean }>`
       margin: 80px 0;
     `}
 `;
+
+interface countdownQueueItem {
+  type: 'SESSION' | 'BREAK';
+  time: number;
+}
 
 type TimerBox = {
   isMain?: boolean;

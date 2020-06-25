@@ -167,7 +167,7 @@ function Root({
 
     if (curSessionPosition === 0) {
       setCurSessionPosition(1);
-      console.log(currentSession);
+      // console.log(currentSession);
       addReport({
         date: new Date(),
         projectId: projectSelected.id,
@@ -228,7 +228,7 @@ function Root({
             <Route exact path={Routes.history} component={HistoryPage} />
             <Route exact path={Routes.settings} component={SettingsPage} />
           </Switch>
-          {console.log(reports)}
+          {/* {console.log(reports)} */}
           {isModalVisible && <CycleModal onClose={handleCloseModal} />}
         </MainTemplate>
       </AppContext.Provider>
