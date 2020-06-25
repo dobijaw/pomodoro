@@ -1,5 +1,5 @@
 export interface Session {
-  sessionTime: number;
+  actionTime: number;
   restTime: number;
 }
 

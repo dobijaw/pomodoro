@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { ProjectsState } from 'store/projects/types';
+
+import { getFormat } from 'utils';
 
 import List from 'components/atoms/List/List';
 import ListItem from 'components/atoms/ListItem/ListItem';
@@ -7,98 +11,48 @@ import ListItem from 'components/atoms/ListItem/ListItem';
 import ReportHead from 'components/molecules/ReportHead/ReportHead';
 import ReportList from 'components/molecules/ReportList/ReportList';
 
-const data = [
-  {
-    id: '2435363463464',
-    name: 'Pomodoro App',
-    count: 5,
-    sessions: [
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-    ],
-  },
-  {
-    id: '24353634623233464',
-    name: 'AppAPP App',
-    count: 5,
-    sessions: [
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-      {
-        id: '23476',
-        date: '2020/06/200',
-        sessionTime: 25,
-        restTime: 25,
-      },
-    ],
-  },
-];
+interface State {
+  projects: ProjectsState;
+}
 
-const ReportsByProjects = () => {
+interface Props {
+  reports?: any[];
+}
+
+const ReportsByProjects = ({ reports }: Props) => {
   const [openList, setOpenList] = useState<string>('');
+  const projectsList = useSelector(
+    ({ projects }: State) => projects.projectsList
+  );
 
   return (
     <List>
-      {data.map((projects) => (
-        <ListItem key={projects.id}>
-          <ReportHead
-            title={projects.name}
-            count={projects.count}
-            listOpen={openList === projects.id}
-            onClick={() =>
-              setOpenList((prev) => (prev === projects.id ? '' : projects.id))
-            }
-          />
+      {reports &&
+        reports.map((projects) => (
+          <ListItem key={projects.id}>
+            <ReportHead
+              title={
+                projectsList.find((p) => p.id === projects.id)?.name ||
+                'No project'
+              }
+              count={projects.count}
+              listOpen={openList === projects.id}
+              onClick={() =>
+                setOpenList((prev) => (prev === projects.id ? '' : projects.id))
+              }
+            />
 
-          <ReportList
-            listOpen={openList === projects.id}
-            sessions={projects.sessions.map((i) => ({
-              id: String(Math.random()),
-              date: `${i.date}`,
-              sessionTime: i.sessionTime,
-              restTime: i.restTime,
-            }))}
-          />
-        </ListItem>
-      ))}
+            <ReportList
+              listOpen={openList === projects.id}
+              sessions={projects?.sessions.map((i: any) => ({
+                id: String(Math.random()),
+                date: getFormat(i.date),
+                sessionTime: i.actionTime,
+                restTime: i.restTime,
+              }))}
+            />
+          </ListItem>
+        ))}
     </List>
   );
 };

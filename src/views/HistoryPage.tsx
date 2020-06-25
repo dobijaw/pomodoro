@@ -18,9 +18,59 @@ interface State {
 function HistoryPage() {
   const [isByDate, toggleByDate] = useState<boolean>(true);
   const reports = useSelector(({ reports }: State) => reports.reports);
-  const projects = useSelector(({ projects }: State) => projects.projectsList);
 
   const [sortByDate, setSortByDate] = useState<Reports>([]);
+  const [sortByProjects, setSortByProjects] = useState<any>([]);
+
+  // reports {
+  //   date: Date;
+  //   proejctId: 'sdsdsd';
+  //   session: {
+  //     actionTime: 1234235,
+  //     restTime: 123235
+  //   }
+  // }
+
+  useEffect(() => {
+    const arr: any[] = [];
+
+    if (!!reports.length) {
+      reports.forEach((r) => {
+        const isIndexProjectExist = arr.findIndex((i) => i.id === r.projectId);
+
+        if (isIndexProjectExist === -1) {
+          const newProject = {
+            id: r.projectId,
+            count: 1,
+            sessions: [
+              {
+                id: `${r.date}_${r.projectId}`,
+                date: r.date,
+                actionTime: r.session.actionTime,
+                restTime: r.session.restTime,
+              },
+            ],
+          };
+
+          arr.push(newProject);
+        } else {
+          const existingProject = arr[isIndexProjectExist];
+          existingProject.count = existingProject.count + 1;
+          existingProject.sessions = [
+            ...existingProject.sessions,
+            {
+              id: `${r.date}_${r.projectId}`,
+              date: r.date,
+              actionTime: r.session.actionTime,
+              restTime: r.session.restTime,
+            },
+          ];
+        }
+      });
+    }
+
+    setSortByProjects(arr);
+  }, [reports]);
 
   useEffect(() => {
     const arr: Reports = [];
@@ -41,7 +91,7 @@ function HistoryPage() {
                 count: 1,
                 sessions: [
                   {
-                    sessionTime: el.session.actionTime,
+                    actionTime: el.session.actionTime,
                     restTime: el.session.restTime,
                   },
                 ],
@@ -65,7 +115,7 @@ function HistoryPage() {
               count: 1,
               sessions: [
                 {
-                  sessionTime: el.session.actionTime,
+                  actionTime: el.session.actionTime,
                   restTime: el.session.restTime,
                 },
               ],
@@ -78,7 +128,7 @@ function HistoryPage() {
             projectExist.sessions = [
               ...projectExist.sessions,
               {
-                sessionTime: el.session.actionTime,
+                actionTime: el.session.actionTime,
                 restTime: el.session.restTime,
               },
             ];
@@ -88,7 +138,7 @@ function HistoryPage() {
     }
 
     setSortByDate(arr);
-  }, [projects, reports]);
+  }, [reports]);
 
   return (
     <PageTemplate isSubPage>
@@ -116,7 +166,7 @@ function HistoryPage() {
       {isByDate ? (
         <ReportsByDate reports={sortByDate} />
       ) : (
-        <ReportsByProjects />
+        <ReportsByProjects reports={sortByProjects} />
       )}
     </PageTemplate>
   );

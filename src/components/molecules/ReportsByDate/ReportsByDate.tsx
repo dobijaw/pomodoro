@@ -58,7 +58,7 @@ const ReportsByDate = ({ reports }: Props) => {
                     listOpen={openList === project.id}
                     sessions={project.sessions.map((session) => ({
                       id: String(Math.random()),
-                      sessionTime: session.sessionTime,
+                      sessionTime: session.actionTime,
                       restTime: session.restTime,
                     }))}
                   />
