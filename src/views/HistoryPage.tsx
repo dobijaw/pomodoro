@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import PageTemplate from 'templates/PageTemplate';
 import PageTitle from 'components/atoms/PageTitle/PageTitle';
 import RadioForm from 'components/molecules/RadioForm/RadioForm';
+import { Reports } from 'models/ReportsByDate.model';
 
-import { ReportsState, Report } from 'store/reports/types';
+import { ReportsState } from 'store/reports/types';
 import { ProjectsState } from 'store/projects/types';
-import { getMinutes, getSeconds } from 'utils';
 import ReportsByDate from 'components/molecules/ReportsByDate/ReportsByDate';
 import ReportsByProjects from 'components/molecules/ReportsByProjects/ReportsByProjects';
 
@@ -19,47 +19,11 @@ function HistoryPage() {
   const [isByDate, toggleByDate] = useState<boolean>(true);
   const reports = useSelector(({ reports }: State) => reports.reports);
   const projects = useSelector(({ projects }: State) => projects.projectsList);
-  // reports.reports.map(i => i.date, i.projectId, i.session.sessionId, i.actionTime, i.restTime)
 
-  const [sortByDate, setSortByDate] = useState<any[]>([]);
-
-  const data = [
-    {
-      date: '2020/06/20',
-      projects: [
-        {
-          id: '2020/06/20_12345678',
-          projectId: 'Pomodoro App',
-          count: 5,
-          sessions: [
-            {
-              sessionTime: 25,
-              restTime: 5,
-            },
-            {
-              sessionTime: 25,
-              restTime: 5,
-            },
-            {
-              sessionTime: 25,
-              restTime: 5,
-            },
-            {
-              sessionTime: 25,
-              restTime: 5,
-            },
-            {
-              sessionTime: 25,
-              restTime: 5,
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const [sortByDate, setSortByDate] = useState<Reports>([]);
 
   useEffect(() => {
-    const arr: any[] = [];
+    const arr: Reports = [];
 
     if (!!reports.length) {
       reports.forEach((el) => {
@@ -73,9 +37,7 @@ function HistoryPage() {
             projects: [
               {
                 id: `${el.date.setHours(0, 0, 0, 0)}_${el.projectId}`,
-                name:
-                  projects.find((p) => p.id === el.projectId)?.name ||
-                  'No project',
+                projectId: el.projectId,
                 count: 1,
                 sessions: [
                   {
@@ -99,9 +61,7 @@ function HistoryPage() {
           if (indexIfProjectExist === -1) {
             const newProject = {
               id: `${el.date.setHours(0, 0, 0, 0)}_${el.projectId}`,
-              name:
-                projects.find((p: any) => p.id === el.projectId)?.name ||
-                'NO_PROJECT',
+              projectId: el.projectId,
               count: 1,
               sessions: [
                 {

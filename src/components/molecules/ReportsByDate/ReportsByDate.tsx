@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+
+import { getFormat } from 'utils';
+import { ProjectsState } from 'store/projects/types';
+import { Reports } from 'models/ReportsByDate.model';
 
 import List from 'components/atoms/List/List';
 import ReportHead from 'components/molecules/ReportHead/ReportHead';
@@ -14,147 +19,47 @@ const ListItem = styled.li`
   color: ${({ theme }) => theme.colors.copy};
 `;
 
-interface Sessions {
-  sessionTime: number;
-  restTime: number;
-}
-
-interface Projects {
-  id: string;
-  name: string;
-  count: number;
-  sessions: Sessions[];
-}
-
-interface ProjectsList {
-  date: string;
-  projects: Projects[];
+interface State {
+  projects: ProjectsState;
 }
 
 interface Props {
-  reports?: ProjectsList[];
+  reports?: Reports;
 }
-
-const data = [
-  {
-    date: '2020/06/20',
-    projects: [
-      {
-        id: '2020/06/20_12345678',
-        name: 'Pomodoro App',
-        count: 5,
-        sessions: [
-          {
-            sessionTime: 25,
-            restTime: 5,
-          },
-          {
-            sessionTime: 25,
-            restTime: 5,
-          },
-          {
-            sessionTime: 25,
-            restTime: 5,
-          },
-          {
-            sessionTime: 25,
-            restTime: 5,
-          },
-          {
-            sessionTime: 25,
-            restTime: 5,
-          },
-        ],
-      },
-      {
-        id: '2020/06/20_12343534655678',
-        name: 'Mofie App',
-        count: 2,
-        sessions: [
-          {
-            sessionTime: 25,
-            restTime: 5,
-          },
-          {
-            sessionTime: 30,
-            restTime: 7,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    date: '2020/06/15',
-    projects: [
-      {
-        id: '2020/06/15_12345642635475378',
-        name: 'Pomodoro App',
-        count: 1,
-        sessions: [
-          {
-            sessionTime: 20,
-            restTime: 2,
-          },
-        ],
-      },
-      {
-        id: '2020/06/15_1234564223635475378',
-        name: 'New App',
-        count: 2,
-        sessions: [
-          {
-            sessionTime: 45,
-            restTime: 10,
-          },
-          {
-            sessionTime: 30,
-            restTime: 7,
-          },
-        ],
-      },
-    ],
-  },
-];
 
 const ReportsByDate = ({ reports }: Props) => {
   const [openList, setOpenList] = useState<string>('');
-
-  const getFormat = (date: string): string => {
-    const d = new Date(date);
-
-    const year = d.getFullYear();
-    const month = d.getMonth() + 1;
-    const day = d.getDate();
-
-    return `${year}-${month < 10 ? `0${month}` : month}-${
-      day < 10 ? `0${day}` : day
-    }`;
-  };
+  const projects = useSelector(({ projects }: State) => projects.projectsList);
 
   return (
     <div>
       {reports &&
-        reports.map((group) => (
-          <div key={`${group.date}`}>
-            <Label>{getFormat(group.date)}</Label>
+        reports.map((projectList) => (
+          <div key={`${projectList.date}`}>
+            <Label>{getFormat(projectList.date)}</Label>
+
             <List>
-              {group.projects.map((list) => (
-                <ListItem key={list.id}>
+              {projectList.projects.map((project) => (
+                <ListItem key={project.id}>
                   <ReportHead
-                    title={list.name}
-                    count={list.count}
-                    listOpen={openList === list.id}
+                    title={
+                      projects.find((el) => el.id === project.projectId)
+                        ?.name || 'No project'
+                    }
+                    count={project.count}
+                    listOpen={openList === project.id}
                     onClick={() =>
-                      setOpenList((prev) => (prev === list.id ? '' : list.id))
+                      setOpenList((prev) =>
+                        prev === project.id ? '' : project.id
+                      )
                     }
                   />
-
                   <ReportList
-                    listOpen={openList === list.id}
-                    sessions={list.sessions.map((i) => ({
+                    listOpen={openList === project.id}
+                    sessions={project.sessions.map((session) => ({
                       id: String(Math.random()),
-                      sessionTime: i.sessionTime,
-                      restTime: i.restTime,
+                      sessionTime: session.sessionTime,
+                      restTime: session.restTime,
                     }))}
                   />
                 </ListItem>
