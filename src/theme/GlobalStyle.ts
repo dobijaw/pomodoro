@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
         outline-color: ${({ theme }) => theme.colors.background40};
     }
 
+
     body {
         padding: 0;
         margin: 0;

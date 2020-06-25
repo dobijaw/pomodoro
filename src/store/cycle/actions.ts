@@ -47,6 +47,13 @@ export const setCyclePosition = (position: number) => ({
   },
 });
 
+export const setSessionPosition = (position: number) => ({
+  type: CyclesTypes.SET_SESSION_POSITION,
+  payload: {
+    position,
+  },
+});
+
 export const setSessionInProgress = (isInProgress: boolean) => ({
   type: CyclesTypes.SET_SESSION_IN_PROGRESS,
   payload: {

@@ -18,6 +18,7 @@ import {
   toggleTimerRunning,
   setCyclePosition,
   setSessionInProgress,
+  setSessionPosition,
 } from 'store/cycle/actions';
 import { addReport, updateReport } from 'store/reports/actions';
 import { Report } from 'store/reports/types';
@@ -51,6 +52,7 @@ const mapDispatch = {
     setSessionInProgress(isInProgress),
   addReport: (newReport: Report) => addReport(newReport),
   updateReport: (newReport: Report) => updateReport(newReport),
+  setSessionPosition: (position: number) => setSessionPosition(position),
 };
 
 const connector = connect(mapState, mapDispatch);
@@ -77,6 +79,7 @@ function Root({
   setSessionInProgress,
   addReport,
   updateReport,
+  setSessionPosition,
 }: PropsFromRedux) {
   const [isModalVisible, toggleModalVisibility] = useState<boolean>(false);
   const [currentSession, setCurrentSession] = useState<CurrentSessionType>({
@@ -167,18 +170,20 @@ function Root({
 
     if (curSessionPosition === 0) {
       setCurSessionPosition(1);
+      setSessionPosition(1);
       // console.log(currentSession);
       addReport({
         date: new Date(),
         projectId: projectSelected.id,
         session: {
           sessionId: currentSession?.sessionId,
-          actionTime: currentSession?.session[0].time - currentTime,
+          actionTime: currentSession?.session[0].time - currentTime + 1000,
           restTime: 0,
         },
       });
     } else if (curSessionPosition === 1) {
       setCurSessionPosition(0);
+      setSessionPosition(0);
 
       updateReport({
         date: new Date(),
@@ -189,7 +194,7 @@ function Root({
             reports.find(
               (i) => i.session.sessionId === currentSession?.sessionId
             )?.session.actionTime || 0,
-          restTime: currentSession?.session[1].time - currentTime,
+          restTime: currentSession?.session[1].time - currentTime + 1000,
         },
       });
 
@@ -228,7 +233,6 @@ function Root({
             <Route exact path={Routes.history} component={HistoryPage} />
             <Route exact path={Routes.settings} component={SettingsPage} />
           </Switch>
-          {/* {console.log(reports)} */}
           {isModalVisible && <CycleModal onClose={handleCloseModal} />}
         </MainTemplate>
       </AppContext.Provider>

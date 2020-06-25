@@ -45,6 +45,7 @@ export enum CyclesTypes {
   CLEAR_AND_ADD_TO_CYCLE = 'CLEAR_AND_ADD_TO_CYCLE',
   SET_SESSION_IN_PROGRESS = 'SET_SESSION_IN_PROGRESS',
   SET_DEFAULT_CYCLE = 'SET_DEFAULT_CYCLE',
+  SET_SESSION_POSITION = 'SET_SESSION_POSITION',
 }
 
 interface AddToCycleAction {
@@ -101,6 +102,13 @@ interface SetSessionInProgressAction {
   };
 }
 
+interface SetSessionPositionAction {
+  type: typeof CyclesTypes.SET_SESSION_POSITION;
+  payload: {
+    position: number;
+  };
+}
+
 export type CycleActionTypes =
   | AddToCycleAction
   | ClearAndAddToCycleAction
@@ -110,4 +118,5 @@ export type CycleActionTypes =
   | SetCurrentTypeAction
   | ToggleTimerRunningAction
   | SetCyclePositionAction
-  | SetSessionInProgressAction;
+  | SetSessionInProgressAction
+  | SetSessionPositionAction;

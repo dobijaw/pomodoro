@@ -83,6 +83,11 @@ export function cycleReducer(state = initialState, action: CycleActionTypes) {
         ...state,
         isSessionInProgress: action.payload.isInProgress,
       };
+    case CyclesTypes.SET_SESSION_POSITION:
+      return {
+        ...state,
+        sessionPosition: action.payload.position,
+      };
     default:
       return state;
   }
