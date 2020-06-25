@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { ProjectsState } from 'store/projects/types';
+import { ProjectsList } from 'models/ReportsByProject.model';
 
 import { getFormat } from 'utils';
 
@@ -16,7 +16,7 @@ interface State {
 }
 
 interface Props {
-  reports?: any[];
+  reports?: ProjectsList;
 }
 
 const ReportsByProjects = ({ reports }: Props) => {

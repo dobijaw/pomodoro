@@ -10,6 +10,8 @@ import { ProjectsState } from 'store/projects/types';
 import ReportsByDate from 'components/molecules/ReportsByDate/ReportsByDate';
 import ReportsByProjects from 'components/molecules/ReportsByProjects/ReportsByProjects';
 
+import { ProjectsList } from 'models/ReportsByProject.model';
+
 interface State {
   reports: ReportsState;
   projects: ProjectsState;
@@ -20,19 +22,10 @@ function HistoryPage() {
   const reports = useSelector(({ reports }: State) => reports.reports);
 
   const [sortByDate, setSortByDate] = useState<Reports>([]);
-  const [sortByProjects, setSortByProjects] = useState<any>([]);
-
-  // reports {
-  //   date: Date;
-  //   proejctId: 'sdsdsd';
-  //   session: {
-  //     actionTime: 1234235,
-  //     restTime: 123235
-  //   }
-  // }
+  const [sortByProjects, setSortByProjects] = useState<ProjectsList>([]);
 
   useEffect(() => {
-    const arr: any[] = [];
+    const arr: ProjectsList = [];
 
     if (!!reports.length) {
       reports.forEach((r) => {
