@@ -17,14 +17,6 @@ function Navigation() {
   const [isMenuVisible, toggleMenuVisibility] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isMenuVisible) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [isMenuVisible]);
-
-  useEffect(() => {
     if (isMenuVisible) window.scrollTo(0, 0);
   }, [isMenuVisible]);
 
