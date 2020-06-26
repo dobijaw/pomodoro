@@ -160,12 +160,6 @@ function Root({
   }, [customCycle, setNextSessionPosition, setSessionPosition]);
 
   useEffect(() => {
-    console.log('sttart data');
-    console.log(cycle);
-    console.log(curCyclePosition);
-    console.log(curSessionPosition);
-    console.log('stop data');
-
     setCurrentTime(cycle[curCyclePosition][curSessionPosition].time);
     setCurrentType(cycle[curCyclePosition][curSessionPosition].type);
 

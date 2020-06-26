@@ -16,7 +16,6 @@ function TimerView() {
   );
   return (
     <PageTemplate>
-      {console.log(sessionPosition)}
       <PageTitle screenreaderOnly>Timer</PageTitle>
       <TimerPanel />
       {sessionPosition === 0 && <ProjectsDropDown />}
