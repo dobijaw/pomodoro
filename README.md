@@ -1,6 +1,6 @@
 # Pomodoro App
 
-[Pomodoro](https://app.netlify.com/sites/awesome-euler-846e70/overview) is an application that allows you to work more efficiently. Divide your work time into sessions that consist of actions and rests.
+[Pomodoro](https://app.netlify.com/sites/cranky-albattani-3c62e1) is an application that allows you to work more efficiently. Divide your work time into sessions that consist of actions and rests.
 
 ## Features
 
