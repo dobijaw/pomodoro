@@ -28,7 +28,7 @@ const scale = keyframes`
 
 const Wrapper = styled.div`
   position: fixed;
-  z-index: 10;
+  z-index: 200;
   top: 0;
   left: 0;
   right: 0;
@@ -82,22 +82,32 @@ const RadioForm = styled.form`
 `;
 
 const TimerWrapper = styled.div`
-  display: flex;
-
   > label {
-    &:first-child {
-      margin-right: 20px;
-    }
+    margin: 30px 0;
+  }
 
-    &:last-child {
-      margin-left: 20px;
+  @media (min-width: 960px) {
+    display: flex;
+
+    > label {
+      &:first-child {
+        margin-right: 20px;
+      }
+
+      &:last-child {
+        margin-left: 20px;
+      }
     }
   }
 `;
 
 const StyledButton = styled(Button)`
   display: block;
-  margin: 60px 0 0 auto;
+  margin: 30px auto;
+
+  @media (min-width: 960px) {
+    margin: 60px 0 0 auto;
+  }
 `;
 
 const Form = styled.form`

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 const PageTitle = styled.h1<{ screenreaderOnly?: boolean }>`
   color: ${({ theme }) => theme.colors.copy};
-  font-size: 30px;
+  font-size: 24px;
   font-weight: 400;
   letter-spacing: 0.1em;
 
@@ -18,6 +18,10 @@ const PageTitle = styled.h1<{ screenreaderOnly?: boolean }>`
       clip: rect(1px, 1px, 1px, 1px);
       clip-path: inset(50%);
     `}
+
+  @media(min-width:960px) {
+    font-size: 30px;
+  }
 `;
 
 export default PageTitle;

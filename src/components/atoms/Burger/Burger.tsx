@@ -2,6 +2,8 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 const BurgerButton = styled.button`
+  position: relative;
+  z-index: 110;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,6 +17,10 @@ const BurgerButton = styled.button`
   transform: rotate(0);
   transition: transform 0.25s ease-in-out;
   cursor: pointer;
+
+  @media (min-width: 1200px) {
+    display: none;
+  }
 `;
 
 const BurgerBody = styled.span<{ isActive: boolean }>`
@@ -54,18 +60,13 @@ const BurgerBody = styled.span<{ isActive: boolean }>`
 `;
 
 type BurgerProps = {
-  handleClick: Function;
+  handleClick: () => void;
   isVisible: boolean;
 };
 
 function Burger({ handleClick, isVisible }: BurgerProps) {
   return (
-    <BurgerButton
-      type="button"
-      onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-        handleClick(!isVisible)
-      }
-    >
+    <BurgerButton type="button" onClick={handleClick}>
       <BurgerBody isActive={isVisible} />
     </BurgerButton>
   );

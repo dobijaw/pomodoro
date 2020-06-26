@@ -19,8 +19,12 @@ const itemIn = keyframes`
 
 const List = styled.ul`
   padding: 0;
-  margin: 40px 0 0;
+  margin: 20px 0 0;
   list-style: none;
+
+  @media (min-width: 960px) {
+    margin-top: 40px;
+  }
 `;
 
 const ListItem = styled.li<{ noRemove?: boolean }>`
@@ -29,11 +33,16 @@ const ListItem = styled.li<{ noRemove?: boolean }>`
   align-items: center;
   padding: ${({ noRemove }) => (noRemove ? '0' : '20px 0')};
   color: ${({ theme }) => theme.colors.copy};
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0;
   animation: ${itemIn} 5s;
+
+  @media (min-width: 600px) {
+    font-size: 22px;
+    letter-spacing: 0.2em;
+  }
 
   &:not(:first-of-type) {
     border-top: 1px solid ${({ theme }) => theme.colors.background20};
@@ -60,12 +69,16 @@ const Button = styled.button`
 
 const ItemWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 `;
 
 const StyledCount = styled(Count)`
-  margin-right: 60px;
+  margin-right: 2px;
+
+  @media (min-width: 960px) {
+    margin-right: 60px;
+  }
 `;
 
 const mapDispatch = {

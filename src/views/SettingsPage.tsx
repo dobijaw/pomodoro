@@ -14,21 +14,39 @@ import { connect, ConnectedProps } from 'react-redux';
 import TimeInputBox from 'components/molecules/TimeInputBox/TimeInputBox';
 
 const DefaultTimeBox = styled.div`
-  display: flex;
-
   > label {
-    &:first-child {
-      margin-right: 20px;
-    }
+    margin-top: 30px;
 
     &:last-child {
-      margin-left: 20px;
+      margin-bottom: 30px;
+
+      @media (min-width: 960px) {
+        margin-bottom: 18px;
+      }
+    }
+  }
+
+  @media (min-width: 960px) {
+    display: flex;
+
+    > label {
+      &:first-child {
+        margin-right: 20px;
+      }
+
+      &:last-child {
+        margin-left: 20px;
+      }
     }
   }
 `;
 
 const StyledHeadline = styled(Headline)`
-  margin-bottom: 30px;
+  margin-bottom: 14px;
+
+  @media (min-width: 960px) {
+    margin-bottom: 30px;
+  }
 `;
 
 const Section = styled.section`
@@ -64,7 +82,7 @@ const SettingsPage = ({
   setDefaultCycle,
 }: PropsFromRedux) => (
   <PageTemplate isSubPage>
-    <PageTitle>Settings</PageTitle>
+    <PageTitle screenreaderOnly>Settings</PageTitle>
     <Section>
       <StyledHeadline>Theme color</StyledHeadline>
       <RadioForm

@@ -8,17 +8,25 @@ import ListItem from 'components/atoms/ListItem/ListItem';
 import Label from 'components/atoms/Label/Label';
 
 const SessionItem = styled(ListItem)`
-  display: flex;
-  padding: 5px 10px;
+  padding: 7px 10px;
+
+  @media (min-width: 960px) {
+    display: flex;
+    padding: 5px 10px;
+  }
 `;
 
 const SessionDetails = styled.div`
-  margin-right: 100px;
+  margin-right: 20px;
   font-weight: 300;
   font-size: 14px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.secondary};
+
+  @media (min-width: 960px) {
+    margin-right: 100px;
+  }
 `;
 
 const Time = styled.span`

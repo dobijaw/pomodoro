@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { AppContext } from 'context';
 
@@ -14,38 +14,34 @@ const Nav = styled.nav`
 
 function Navigation() {
   const { handleOpenModal } = useContext(AppContext);
-  const [isMobileView, toggleMobileView] = useState<boolean>(true);
-  const [isMenuVisible, toggleMenuVisibility] = useState<boolean>(true);
-
-  const setMobile = () =>
-    window.innerWidth < 960 ? toggleMobileView(true) : toggleMobileView(false);
+  const [isMenuVisible, toggleMenuVisibility] = useState<boolean>(false);
 
   useEffect(() => {
-    setMobile();
-  }, []);
+    if (isMenuVisible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isMenuVisible]);
 
   useEffect(() => {
-    window.addEventListener('resize', setMobile);
-    return () => window.removeEventListener('resize', setMobile);
-  }, []);
+    if (isMenuVisible) window.scrollTo(0, 0);
+  }, [isMenuVisible]);
+
+  const handleBurgerClick = () => {
+    toggleMenuVisibility((prevState) => !prevState);
+  };
 
   return (
     <header>
       <Nav>
         <Logo />
-        {isMobileView && (
-          <Burger
-            isVisible={isMenuVisible}
-            handleClick={toggleMenuVisibility}
-          />
-        )}
-        {isMenuVisible && (
-          <NavList
-            asMobile={isMobileView}
-            isVisible={isMenuVisible}
-            onOpenModal={handleOpenModal}
-          />
-        )}
+        <Burger handleClick={handleBurgerClick} isVisible={isMenuVisible} />
+        <NavList
+          onOpenModal={handleOpenModal}
+          handleClick={handleBurgerClick}
+          isVisible={isMenuVisible}
+        />
       </Nav>
     </header>
   );

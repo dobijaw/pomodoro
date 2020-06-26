@@ -13,7 +13,11 @@ const Wraper = styled.div<{ asMain?: boolean }>`
   ${({ asMain }) =>
     asMain &&
     css`
-      margin: 80px 0;
+      margin: 20px 0;
+
+      @media (min-width: 960px) {
+        margin: 30px 0;
+      }
     `}
 `;
 

@@ -17,7 +17,11 @@ const Form = styled.form`
 
 const StyledLabel = styled(Label)`
   width: 100%;
-  margin-right: 40px;
+  margin-right: 20px;
+
+  @media (min-width: 960px) {
+    margin-right: 40px;
+  }
 `;
 
 interface RootState {

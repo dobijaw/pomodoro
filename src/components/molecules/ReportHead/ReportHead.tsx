@@ -6,8 +6,12 @@ import Headline from 'components/atoms/Headline/Headline';
 import Count from 'components/atoms/Count/Count';
 
 const StyledHeadline = styled(Headline)`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
+
+  @media (min-width: 960px) {
+    font-size: 20px;
+  }
 `;
 
 const StyledArrow = styled(Arrow)`

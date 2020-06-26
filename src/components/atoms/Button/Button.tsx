@@ -10,7 +10,7 @@ const Button = styled.button<{
   padding: 18px 32px;
   border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 60px;
-  margin: ${({ withMargin }) => (withMargin ? '10px' : '10px 0')};
+  margin: ${({ withMargin }) => (withMargin ? '5px' : '5px 0')};
   background: none;
   color: ${({ theme }) => theme.colors.primary};
   font-family: inherit;
@@ -22,6 +22,10 @@ const Button = styled.button<{
   text-decoration: none;
   cursor: pointer;
   transition: all 0.35s;
+
+  @media (min-width: 960px) {
+    margin: ${({ withMargin }) => (withMargin ? '10px' : '10px 0')};
+  }
 
   &:hover {
     color: ${({ theme }) => theme.colors.background};

@@ -5,8 +5,20 @@ import Navigation from 'components/organisms/Navigation/Navigation';
 
 const Main = styled.main<{ isSubPage?: boolean }>`
   display: block;
-  margin: ${({ isSubPage }) => (isSubPage ? '140px auto 0' : '40px auto 0')};
+  margin: ${({ isSubPage }) => (isSubPage ? '60px auto 0' : '40px auto 0')};
   max-width: 768px;
+
+  @media (min-width: 480px) {
+    margin: ${({ isSubPage }) => (isSubPage ? '80px auto 0' : '60px auto 0')};
+  }
+
+  @media (min-width: 500px) {
+    padding: 20px 30px;
+  }
+
+  @media (min-width: 960px) {
+    margin: ${({ isSubPage }) => (isSubPage ? '140px auto 0' : '40px auto 0')};
+  }
 `;
 
 type PageTemplateProps = {

@@ -2,17 +2,30 @@ import styled, { css } from 'styled-components';
 
 const Input = styled.input<{ focusBackgorund?: boolean; asBox?: boolean }>`
   width: 100%;
-  padding: 20px 0;
+  padding: 18px 0;
   border: none;
   border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
   color: ${({ theme }) => theme.colors.copy};
   background: none;
   font-family: 'Exo 2', sans-serif;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 400;
   text-transform: uppercase;
   transition: all 0.35s ease-in-out;
   cursor: pointer;
+
+  @media (min-width: 420px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 600px) {
+    font-size: 20px;
+  }
+
+  @media (min-width: 960px) {
+    padding: 20px 0;
+    font-size: 22px;
+  }
 
   &:focus {
     outline: 0;

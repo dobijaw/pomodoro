@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Routes } from 'routes';
 
 const StyledLink = styled(Link)`
+  position: relative;
+  z-index: 110;
   display: inline-block;
   padding: 2px 10px 8px 10px;
   margin: 0 0 0 -10px;

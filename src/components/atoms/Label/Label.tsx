@@ -8,7 +8,7 @@ const Label = styled.label<{
   position: relative;
   display: block;
   padding: 0;
-  margin: 18px 0;
+  margin: 7px 0;
   color: ${({ theme, asCopy }) =>
     asCopy ? theme.colors.copy : theme.colors.secondary};
   font-size: 13px;
@@ -17,14 +17,19 @@ const Label = styled.label<{
   letter-spacing: 0.2em;
   text-transform: uppercase;
 
-  @media (min-width: 960px) {
+  @media (min-width: 420px) {
+    margin: 18px 0;
     font-size: 14px;
   }
 
   ${({ asMedium }) =>
     asMedium &&
     css`
-      font-size: 16px;
+      font-size: 14px;
+
+      @media (min-width: 960px) {
+        font-size: 16px;
+      }
     `}
 
   ${({ asLarge }) =>

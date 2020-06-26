@@ -10,7 +10,16 @@ import ProjectList from 'components/molecules/ProjectList/ProjectList';
 
 const Wrapper = styled.div`
   max-width: 400px;
-  margin: 50px auto 0;
+  padding: 20px;
+  margin: 10px auto;
+
+  @media (min-height: 680px) {
+    margin: 40px auto;
+  }
+
+  @media (min-width: 960px) {
+    margin: 50px auto;
+  }
 `;
 
 const InputWrapper = styled.div`

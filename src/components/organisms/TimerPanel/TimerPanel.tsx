@@ -8,7 +8,13 @@ import TimerBox from 'components/molecules/TimerBox/TimerBox';
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+
+  @media (min-width: 960px) {
+    flex-direction: row;
+  }
 `;
 
 interface RootState {
